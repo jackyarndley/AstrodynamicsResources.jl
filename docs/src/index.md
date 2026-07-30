@@ -18,10 +18,12 @@ space-weather file deliberately changes at the same URL, so it is cached with
 retrieval metadata, a checksum, and a freshness deadline instead.
 
 DE440s is the compact recommended ephemeris for most users. Full DE440 is
-separate for applications needing its longer coverage. Older DE430, DE432s,
-DE435, and DE438 releases are exact, separately addressable resources for
-reproducing legacy analyses. The split, multi-gigabyte DE431 and DE441
-releases remain excluded by project policy.
+separate for applications needing its longer coverage. DE430, DE432s, DE435,
+DE438, DE442, and DE442s are exact, separately addressable resources. The
+split, multi-gigabyte DE431 and DE441 releases remain excluded by project
+policy. Planetary-satellite ephemerides here describe natural moons, including
+the explicit multipart Uranus `ura184` product. Artificial Earth-satellite and
+spacecraft kernels are not catalogued.
 
 Production immutable binding is still pending. Verified archives are collected
 under the private repository's `resources-v1` release, but private GitHub asset
@@ -33,6 +35,6 @@ from NAIF's generic-kernel tree. NAIF explicitly permits redistribution of
 NAIF-distributed kernels while they remain unmodified; catalogue metadata links
 the governing policy and preserves the required provenance.
 
-Active immutable source files are limited to 256 MiB. Larger satellite SPKs are
-preserved in `catalog/candidates/oversized.toml` for explicit future review and
-do not appear in normal resource discovery.
+Gravity coefficient models remain candidate metadata rather than active
+resources. The package does not yet provide a materializable spherical-harmonic
+coefficient file.

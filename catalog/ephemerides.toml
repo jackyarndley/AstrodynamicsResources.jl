@@ -161,3 +161,54 @@ citation = "Park et al. (2021), The JPL Planetary and Lunar Ephemerides DE440 an
 license = "NAIF Rules Regarding Use of SPICE"
 redistribution = "permitted"
 system = "solar system"
+
+[[resource]]
+id = "de442s"
+aliases = []
+title = "JPL DE442s planetary ephemeris"
+description = "Compact authoritative NAIF SPK for JPL DE442."
+category = "ephemeris"
+provider = "naif"
+version = "DE442s"
+backend = "artifact"
+artifact_name = "de442s"
+available = false
+files = [{ path = "data/de442s.bsp", role = "spk", primary = true }]
+source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de442s.bsp"
+source_filename = "de442s.bsp"
+source_sha256 = "54d97562a5b094d298b1b8eafa5a2e17e3e010ce85e1a366d07f003ad159323c"
+upstream_checksum_algorithm = "md5"
+upstream_checksum = "cc49327e06088124c0e39d8dde9f0b58"
+format = "SPICE SPK"
+size_bytes = 32701440
+published_at = "2025-02-06"
+retrieved_at = "2026-07-30"
+citation = "NASA/JPL NAIF DE442 technical comments; consult the upstream kernel documentation."
+license = "NAIF Rules Regarding Use of SPICE"
+redistribution = "permitted"
+system = "solar system"
+
+[[resource]]
+id = "de442"
+aliases = []
+title = "JPL DE442 planetary ephemeris"
+description = "Full-span authoritative NAIF SPK for JPL DE442."
+category = "ephemeris"
+provider = "naif"
+version = "DE442"
+backend = "artifact"
+artifact_name = "de442"
+available = false
+files = [{ path = "data/de442.bsp", role = "spk", primary = true }]
+source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de442.bsp"
+source_filename = "de442.bsp"
+upstream_checksum_algorithm = "md5"
+upstream_checksum = "446656322267e7b819a26cb08a0d8718"
+format = "SPICE SPK"
+size_bytes = 119771136
+published_at = "2025-02-06"
+retrieved_at = "2026-07-30"
+citation = "NASA/JPL NAIF DE442 technical comments; consult the upstream kernel documentation."
+license = "NAIF Rules Regarding Use of SPICE"
+redistribution = "permitted"
+system = "solar system"

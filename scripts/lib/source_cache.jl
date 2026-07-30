@@ -32,6 +32,7 @@ end
 
 function _download_resumable(url::String, part::String,
                              expected_size::Union{Nothing,Integer})
+    attempt = 1
     while true
         offset = isfile(part) ? filesize(part) : 0
         if expected_size !== nothing && offset > expected_size
@@ -42,19 +43,52 @@ function _download_resumable(url::String, part::String,
         end
 
         headers = offset > 0 ? ["Range" => "bytes=$(offset)-"] : Pair{String,String}[]
+        timeout = parse(Float64, get(ENV, "ASTRODYNAMICS_RESOURCES_TIMEOUT", "60"))
         mode = offset > 0 ? "a" : "w"
-        response = open(part, mode) do io
-            Downloads.request(url; headers=headers, output=io)
-        end
-        status = response.status
-        offset > 0 && status == 416 && return part
-        if offset > 0 && status == 200
-            # The server ignored Range and appended a full response. Retry cleanly.
-            rm(part; force=true)
+        response = try
+            open(part, mode) do io
+                    Downloads.request(url; headers=headers, output=io, timeout)
+            end
+        catch exception
+            attempt == 5 && rethrow(exception)
+            sleep(min(2.0^(attempt - 1), 15.0))
+            attempt += 1
             continue
         end
-        status in (200, 206) || error("HTTP $status while downloading $url")
-        return part
+        status = response.status
+        if offset > 0 && status == 416
+            # Some servers include an error body. Restore the complete part.
+            open(part, "r+") do io
+                truncate(io, offset)
+            end
+            return part
+        end
+        if offset > 0 && status == 200
+            # The server ignored Range. Keep only the appended complete response.
+            replacement = part * ".complete"
+            open(part, "r") do source
+                seek(source, offset)
+                open(replacement, "w") do destination
+                    write(destination, source)
+                end
+            end
+            mv(replacement, part; force=true)
+            return part
+        elseif offset > 0 && status == 206
+            return part
+        elseif offset == 0 && status == 200
+            return part
+        end
+        if offset > 0
+            open(part, "r+") do io
+                truncate(io, offset)
+            end
+        else
+            rm(part; force=true)
+        end
+        attempt == 5 && error("HTTP $status while downloading $url")
+        sleep(min(2.0^(attempt - 1), 15.0))
+        attempt += 1
     end
 end
 
@@ -79,6 +113,19 @@ function fetch_verified_source(metadata::AbstractDict;
         error("$filename has no independently reviewed source_sha256")
 
     mkpath(cache_root)
+    reference = joinpath(cache_root, "refs",
+                         bytes2hex(SHA.sha256(codeunits(url))) * ".toml")
+    if expected_sha === nothing && isfile(reference)
+        cached_metadata = TOML.parsefile(reference)
+        digest = String(cached_metadata["source_sha256"])
+        cached = joinpath(cache_root, digest, filename)
+        if isfile(cached)
+            reject_bad_source(cached, filename; expected_size)
+            file_sha256(cached) == digest ||
+                error("referenced cache SHA-256 mismatch for $filename")
+            return cached
+        end
+    end
     if expected_sha !== nothing
         cached = joinpath(cache_root, lowercase(String(expected_sha)), filename)
         if isfile(cached)
@@ -118,6 +165,17 @@ function fetch_verified_source(metadata::AbstractDict;
     else
         mv(part, destination)
     end
+    mkpath(dirname(reference))
+    temporary_reference = reference * ".tmp.$(getpid())"
+    open(temporary_reference, "w") do io
+        TOML.print(io, Dict(
+            "source_filename" => filename,
+            "source_sha256" => digest,
+            "source_url" => url,
+            "size_bytes" => filesize(destination),
+        ); sorted=true)
+    end
+    mv(temporary_reference, reference; force=true)
     return destination
 end
 

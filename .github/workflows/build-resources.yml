@@ -7,6 +7,14 @@ on:
         description: Exact reviewed resource ID
         required: true
         type: string
+      mode:
+        description: Hash an unpinned source or build a pinned artifact
+        required: true
+        default: build
+        type: choice
+        options:
+          - build
+          - hash
 
 permissions:
   contents: write
@@ -36,8 +44,20 @@ jobs:
           path: build/source-cache
           key: source-${{ inputs.resource_id }}-${{ hashFiles('catalog/*.toml') }}
       - name: Build and verify deterministic artifact
+        if: inputs.mode == 'build'
         run: julia --project=scripts scripts/build_artifact.jl "${{ inputs.resource_id }}"
+      - name: Hash and cache authoritative source
+        if: inputs.mode == 'hash'
+        run: julia --project=scripts scripts/update_source_hashes.jl "${{ inputs.resource_id }}"
+      - name: Preserve source-hash report
+        if: inputs.mode == 'hash'
+        uses: actions/upload-artifact@v7.0.1
+        with:
+          name: source-hash-${{ inputs.resource_id }}
+          path: build/reports/source-hashes/*.toml
+          if-no-files-found: error
       - name: Read build identity
+        if: inputs.mode == 'build'
         id: identity
         shell: bash
         run: |
@@ -50,6 +70,7 @@ jobs:
             println("archive=", r["archive_path"])
           ' "$REPORT" >> "$GITHUB_OUTPUT"
       - name: Publish immutable release asset
+        if: inputs.mode == 'build'
         id: publish
         env:
           GH_TOKEN: ${{ github.token }}
@@ -94,6 +115,7 @@ jobs:
           URL="https://github.com/${GITHUB_REPOSITORY}/releases/download/${TAG}/${NAME}"
           echo "url=$URL" >> "$GITHUB_OUTPUT"
       - name: Record pending private-repository binding
+        if: inputs.mode == 'build'
         run: |
           echo "Published ${{ steps.publish.outputs.url }}"
           echo "Artifact binding remains pending because private GitHub release URLs cannot be fetched by Julia's standard unauthenticated artifact downloader."

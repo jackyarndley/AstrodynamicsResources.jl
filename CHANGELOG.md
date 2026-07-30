@@ -9,8 +9,11 @@
   associated-file digest verification for immutable builds.
 - Consolidated immutable archives under the non-latest `resources-v1` release;
   private release URLs deliberately remain unbound pending compatible hosting.
-- Applied a 256 MiB active-resource limit and moved 26 oversized satellite SPKs
-  to a machine-readable candidate catalogue.
+- Added exact DE442 and DE442s resources and ordered compact/full bundles.
+- Clarified that satellite resources describe natural moons, restored the
+  compact planetary-system selections, and added the explicitly requested
+  multipart Uranus `ura184` product. Artificial-satellite and spacecraft
+  kernels remain out of scope.
 - Updated every GitHub Action to its current official release tag.
 
 ## 0.1.0 - 2026-07-30

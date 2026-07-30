@@ -50,15 +50,17 @@ placeholder hashes or invented mirrors.
   order; the package never loads them.
 
 DE440s is the compact recommended default for most users. Full DE440 remains a
-separate resource. Reviewed older releases DE430, DE432s, DE435, and DE438 are
-also catalogued for reproducibility with legacy workflows. The split DE431 and
-DE441 releases are intentionally excluded because of their multi-gigabyte
-sizes. No DE431 or DE441 ID or bundle exists.
+separate resource. Reviewed DE430, DE432s, DE435, DE438, and current DE442/DE442s
+releases are separately catalogued. The split DE431 and DE441 releases are
+intentionally excluded because of their multi-gigabyte sizes. Planetary
+natural-satellite ephemerides are included, with an explicit three-part Uranus
+`ura184` bundle. No artificial Earth-satellite or spacecraft kernels are
+catalogued.
 
-The active immutable catalogue also has a 256 MiB per-source limit. Larger
-satellite SPKs are retained only in `catalog/candidates/oversized.toml`, outside
-`list_resources()`, until a user explicitly requests one and its storage and
-scientific use case are reviewed.
+Spherical-harmonic gravity models are currently candidate metadata only. No
+gravity coefficient file is advertised as materializable until its exact
+source, model metadata, redistribution terms, and immutable archive are fully
+reviewed.
 
 ## Configuration
 

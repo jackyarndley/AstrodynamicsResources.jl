@@ -35,8 +35,8 @@ artifact_name = "eros_near_msi_64q"
 files = [{ path = "data/near-a-msi-5-erosshape-v1_0_64q.bds", role = "dsk", primary = true }]
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/dsk/asteroids/eros/near-a-msi-5-erosshape-v1_0_64q.bds"
 source_filename = "near-a-msi-5-erosshape-v1_0_64q.bds"
-source_sha256 = "931d6d12afb1ee14bd17cb58c144b2ae5a96a5433a0a1431f4d5239062092d98"
-size_bytes = 3906874
+source_sha256 = "011364b06fde5dce2c8f5e750e542ee531e648bff16b74274e25ac4a2af64ab7"
+size_bytes = 3906560
 body = "Eros"
 shape_source = "NEAR MSI"
 

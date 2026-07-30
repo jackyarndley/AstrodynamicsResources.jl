@@ -15,11 +15,6 @@
 Raw upstream files remain byte-for-byte unchanged. The deterministic artifact
 layout is `data/`, optional `metadata/`, and `provenance.toml`.
 
-The active catalogue accepts source files up to 256 MiB. Record larger products
-in `catalog/candidates/oversized.toml`; promoting one requires an explicit
-storage and use-case review. `scripts/prune_oversized_resources.jl` applies the
-current limit deterministically.
-
 ## NAIF redistribution
 
 The [NAIF Rules Regarding Use of

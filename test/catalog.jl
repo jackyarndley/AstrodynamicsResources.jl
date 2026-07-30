@@ -10,8 +10,10 @@
                     Dict(:de430 => "de430.bsp",
                          :de432s => "de432s.bsp",
                          :de435 => "de435.bsp",
-                         :de438 => "de438.bsp")[id],
-              (:de430, :de432s, :de435, :de438))
+                         :de438 => "de438.bsp",
+                         :de442s => "de442s.bsp",
+                         :de442 => "de442.bsp")[id],
+              (:de430, :de432s, :de435, :de438, :de442s, :de442))
     @test all(spec -> spec.backend isa ArtifactBackend,
               list_resources(backend=:artifact))
     @test all(spec -> spec.metadata["redistribution"] == "permitted",
@@ -26,13 +28,14 @@
               list_resources(backend=:scratch))
 
     ids = getfield.(list_resources(category=:satellite_ephemeris), :id)
-    @test length(ids) == length(unique(ids))
-    @test :mar099s in ids
-    @test all(spec -> get(spec.metadata, "size_bytes", 0) <= 256 * 1024^2,
-              list_resources(backend=:artifact))
-    @test !(:mar099 in ids)
-    @test_throws KeyError resource(:ura184_part1)
-    @test !haskey(AstrodynamicsResources._BUNDLES, :uranus_satellites)
-    @test !haskey(AstrodynamicsResources._BUNDLES, :neptune_satellites)
+    @test length(ids) == 18
+    @test all(spec -> spec.metadata["object_class"] == "natural satellites",
+              list_resources(category=:satellite_ephemeris))
+    @test_throws KeyError resource(:mar099s)
+    @test resource(:ura184_part1).metadata["source_filename"] == "ura184_part-1.bsp"
+    @test bundle(:jupiter_satellites).members == [:jup349, :jup349_nameid]
+    @test bundle(:uranus_satellites).members ==
+          [:ura184_part1, :ura184_part2, :ura184_part3]
+    @test bundle(:neptune_satellites).members == [:nep105]
     @test !haskey(AstrodynamicsResources._ALIASES, :latest)
 end

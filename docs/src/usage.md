@@ -19,7 +19,7 @@ Path operations explicitly permit lazy materialization:
 de440s = resource_path(:de440s)
 de430 = resource_path(:de430)
 lunar_pa = resource_paths(:moon_de440_pa)
-jupiter = resource_paths(:jupiter_satellites)
+de442 = resource_path(:de442)
 eop = resource_path(:iers_finals2000a)
 ```
 
@@ -28,9 +28,10 @@ or ambiguous multipart resource. `resource_paths` always returns a vector and
 flattens bundle paths in stable order. Members remain separate artifacts and
 only missing members materialize.
 
-The latest-numbered satellite SPK is not automatically the best: target sets,
-coverage, reconstruction, precision, range, associated frames, and size differ.
-Recommendations are reviewed metadata, never lexical aliases.
+Satellite-system resources here are ephemerides for natural moons, not
+artificial Earth satellites or spacecraft. For example,
+`resource_paths(:uranus_satellites)` returns the three `ura184` parts in
+official order.
 
 Large SPKs and DSKs can consume gigabytes in the Julia artifact depot. Inspect
 `size_bytes` and bundle membership before materializing them.

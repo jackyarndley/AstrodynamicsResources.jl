@@ -55,6 +55,22 @@ ordered = true
 purpose = "Full-span planetary ephemeris"
 
 [[bundle]]
+id = "de442_standard"
+title = "Compact DE442 standard bundle"
+description = "Compact DE442s planetary ephemeris and pinned support kernels."
+members = ["de442s", "pinned_leapseconds", "pck00011"]
+ordered = true
+purpose = "Compact planetary ephemeris"
+
+[[bundle]]
+id = "de442_full"
+title = "Full DE442 bundle"
+description = "Full DE442 kernel and pinned support kernels."
+members = ["de442", "pinned_leapseconds", "pck00011"]
+ordered = true
+purpose = "Full-span planetary ephemeris"
+
+[[bundle]]
 id = "moon_de440_orientation"
 title = "DE440 lunar orientation"
 description = "Base lunar orientation resources without a global PA/ME association choice."
@@ -87,36 +103,52 @@ ordered = true
 purpose = "Planetary ephemeris and lunar orientation"
 
 [[bundle]]
+id = "uranus_satellites"
+title = "Uranus satellite kernels"
+description = "Reviewed multipart ura184 Uranus-system product in official part order."
+members = ["ura184_part1", "ura184_part2", "ura184_part3"]
+ordered = true
+purpose = "Uranus satellites"
+
+[[bundle]]
 id = "mars_satellites"
-title = "Mars satellite kernels"
-description = "Reviewed compact exact Mars satellite kernel; not a lexical latest alias."
+title = "Mars natural-satellite kernels"
+description = "Reviewed compact exact Mars moon kernel; not a lexical latest alias."
 members = ["mar099s"]
 ordered = true
-purpose = "Mars satellites"
+purpose = "Mars natural satellites"
 
 [[bundle]]
 id = "jupiter_satellites"
-title = "Jupiter satellite kernels"
-description = "Exact selected Jupiter kernel and associated name-ID frame kernel."
+title = "Jupiter natural-satellite kernels"
+description = "Exact selected Jupiter moon kernel and associated name-ID frame kernel."
 members = ["jup349", "jup349_nameid"]
 ordered = true
-purpose = "Jupiter satellites"
+purpose = "Jupiter natural satellites"
 
 [[bundle]]
 id = "saturn_satellites"
-title = "Saturn satellite kernels"
-description = "Complementary current exact Saturn products and name-ID support."
+title = "Saturn natural-satellite kernels"
+description = "Complementary compact Saturn moon products and name-ID support."
 members = ["sat459", "sat459_nameid", "sat480", "sat480_nameid"]
 ordered = true
-purpose = "Saturn satellites"
+purpose = "Saturn natural satellites"
+
+[[bundle]]
+id = "neptune_satellites"
+title = "Neptune natural-satellite kernels"
+description = "Explicit compact Neptune-system selection; not a lexical latest alias."
+members = ["nep105"]
+ordered = true
+purpose = "Neptune natural satellites"
 
 [[bundle]]
 id = "pluto_satellites"
-title = "Pluto satellite kernels"
-description = "Exact selected Pluto-system satellite ephemeris."
+title = "Pluto natural-satellite kernels"
+description = "Exact selected Pluto-system natural-satellite ephemeris."
 members = ["plu060"]
 ordered = true
-purpose = "Pluto satellites"
+purpose = "Pluto natural satellites"
 
 [[bundle]]
 id = "earth_gravity_standard"
