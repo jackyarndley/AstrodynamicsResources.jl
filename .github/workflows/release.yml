@@ -1,11 +1,11 @@
-name: Release checks
+name: Package release
 
 on:
   push:
     tags: ["v*"]
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   release:
@@ -18,6 +18,11 @@ jobs:
         with:
           version: "1"
       - uses: julia-actions/cache@v2
+      - name: Require a private repository
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          test "$(gh repo view "$GITHUB_REPOSITORY" --json visibility --jq .visibility)" = "PRIVATE"
       - name: Test package
         run: julia --project=. -e 'using Pkg; Pkg.instantiate(); Pkg.test()'
       - name: Validate registration metadata
@@ -26,4 +31,15 @@ jobs:
           test -f LICENSE
           test -f CITATION.cff
           test -f CHANGELOG.md
-
+      - name: Create GitHub package release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            echo "GitHub release $GITHUB_REF_NAME already exists; leaving it unchanged."
+            exit 0
+          fi
+          gh release create "$GITHUB_REF_NAME" \
+            --verify-tag \
+            --generate-notes \
+            --title "AstrodynamicsResources.jl $GITHUB_REF_NAME"

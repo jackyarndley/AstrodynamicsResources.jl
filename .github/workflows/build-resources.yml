@@ -20,6 +20,11 @@ jobs:
       - uses: julia-actions/setup-julia@v2
         with:
           version: "1"
+      - name: Require a private repository
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          test "$(gh repo view "$GITHUB_REPOSITORY" --json visibility --jq .visibility)" = "PRIVATE"
       - name: Instantiate packaging environment
         run: |
           julia --project=scripts -e 'using Pkg; Pkg.develop(path="."); Pkg.instantiate()'
