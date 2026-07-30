@@ -16,6 +16,8 @@ does not mean the resource is currently cached.
 | `:de438` | ephemeris | naif | artifact | pending | `de438.bsp` |
 | `:de440` | ephemeris | naif | artifact | pending | `de440.bsp` |
 | `:de440s` | ephemeris | naif | artifact | pending | `de440s.bsp` |
+| `:de442` | ephemeris | naif | artifact | pending | `de442.bsp` |
+| `:de442s` | ephemeris | naif | artifact | pending | `de442s.bsp` |
 | `:earth_fixed` | constants | naif | artifact | pending | `earth_fixed.tf` |
 | `:eros_near_msi_512q` | geometry | naif | artifact | pending | `near-a-msi-5-erosshape-v1_0_512q.bds` |
 | `:eros_near_msi_64q` | geometry | naif | artifact | pending | `near-a-msi-5-erosshape-v1_0_64q.bds` |
@@ -55,5 +57,8 @@ does not mean the resource is currently cached.
 | `:sat480` | satellite_ephemeris | naif | artifact | pending | `sat480.bsp` |
 | `:sat480_nameid` | satellite_ephemeris | naif | artifact | pending | `sat480_nameid.tf` |
 | `:silso_daily_sunspots` | space_weather | silso | scratch | yes | `SN_d_tot_V2.0.txt` |
+| `:ura184_part1` | satellite_ephemeris | naif | artifact | pending | `ura184_part-1.bsp` |
+| `:ura184_part2` | satellite_ephemeris | naif | artifact | pending | `ura184_part-2.bsp` |
+| `:ura184_part3` | satellite_ephemeris | naif | artifact | pending | `ura184_part-3.bsp` |
 | `:vesta_gaskell_256` | geometry | naif | artifact | pending | `vesta_gaskell_256.bds` |
 | `:vesta_thomas_1997` | geometry | naif | artifact | pending | `vesta_thomas_1997.bds` |

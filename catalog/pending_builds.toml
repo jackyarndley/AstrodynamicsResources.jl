@@ -47,6 +47,22 @@ redistribution = "permitted"
 source_filename = "de440s.bsp"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de440s.bsp"
 [[pending]]
+artifact_name = "de442"
+has_source_sha256 = true
+id = "de442"
+ready = true
+redistribution = "permitted"
+source_filename = "de442.bsp"
+source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de442.bsp"
+[[pending]]
+artifact_name = "de442s"
+has_source_sha256 = true
+id = "de442s"
+ready = true
+redistribution = "permitted"
+source_filename = "de442s.bsp"
+source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de442s.bsp"
+[[pending]]
 artifact_name = "earth_fixed"
 has_source_sha256 = true
 id = "earth_fixed"
@@ -294,6 +310,30 @@ ready = true
 redistribution = "permitted"
 source_filename = "sat480_nameid.tf"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/fk/satellites/sat480_nameid.tf"
+[[pending]]
+artifact_name = "ura184_part1"
+has_source_sha256 = true
+id = "ura184_part1"
+ready = true
+redistribution = "permitted"
+source_filename = "ura184_part-1.bsp"
+source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/ura184_part-1.bsp"
+[[pending]]
+artifact_name = "ura184_part2"
+has_source_sha256 = true
+id = "ura184_part2"
+ready = true
+redistribution = "permitted"
+source_filename = "ura184_part-2.bsp"
+source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/ura184_part-2.bsp"
+[[pending]]
+artifact_name = "ura184_part3"
+has_source_sha256 = true
+id = "ura184_part3"
+ready = true
+redistribution = "permitted"
+source_filename = "ura184_part-3.bsp"
+source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/ura184_part-3.bsp"
 [[pending]]
 artifact_name = "vesta_gaskell_256"
 has_source_sha256 = true

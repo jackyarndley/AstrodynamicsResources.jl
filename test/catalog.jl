@@ -31,7 +31,7 @@
     @test length(ids) == 18
     @test all(spec -> spec.metadata["object_class"] == "natural satellites",
               list_resources(category=:satellite_ephemeris))
-    @test_throws KeyError resource(:mar099s)
+    @test resource(:mar099s).metadata["system"] == "Mars"
     @test resource(:ura184_part1).metadata["source_filename"] == "ura184_part-1.bsp"
     @test bundle(:jupiter_satellites).members == [:jup349, :jup349_nameid]
     @test bundle(:uranus_satellites).members ==

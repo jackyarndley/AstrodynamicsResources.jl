@@ -202,6 +202,7 @@ available = false
 files = [{ path = "data/de442.bsp", role = "spk", primary = true }]
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de442.bsp"
 source_filename = "de442.bsp"
+source_sha256 = "8d5001fab315eeff222cc51f7cf7ffcdb43fb38fb9ac73ff09e09a5b361fd388"
 upstream_checksum_algorithm = "md5"
 upstream_checksum = "446656322267e7b819a26cb08a0d8718"
 format = "SPICE SPK"

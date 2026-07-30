@@ -32,6 +32,7 @@ available = false
 files = [{ path = "data/ura184_part-1.bsp", role = "spk", primary = true }]
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/ura184_part-1.bsp"
 source_filename = "ura184_part-1.bsp"
+source_sha256 = "6f4cc44f49d56202f93a0fcb5d0dc1422f4c897e095172256a494eb837fd7b7c"
 upstream_checksum_algorithm = "md5"
 upstream_checksum = "ec51c999ea103e0fb485487fb10be03d"
 format = "SPICE SPK"
@@ -58,6 +59,7 @@ available = false
 files = [{ path = "data/ura184_part-2.bsp", role = "spk", primary = true }]
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/ura184_part-2.bsp"
 source_filename = "ura184_part-2.bsp"
+source_sha256 = "2bf29a0ca886324b6eadab3b248b5fd5db6971090903587f774dcc75cbca0225"
 upstream_checksum_algorithm = "md5"
 upstream_checksum = "1adbbd31608f0da812d99c0d4e1ba686"
 format = "SPICE SPK"
@@ -84,6 +86,7 @@ available = false
 files = [{ path = "data/ura184_part-3.bsp", role = "spk", primary = true }]
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/ura184_part-3.bsp"
 source_filename = "ura184_part-3.bsp"
+source_sha256 = "273cd4ccc470d1098562cd4e94fa48fc2b4c6b1c2896308e473c949b87937c53"
 upstream_checksum_algorithm = "md5"
 upstream_checksum = "cf24471fb9037543cdbe168bc0fd4c2e"
 format = "SPICE SPK"

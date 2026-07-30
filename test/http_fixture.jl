@@ -8,7 +8,7 @@ mutable struct FixtureServer
     fail::Base.RefValue{Bool}
 end
 
-function start_fixture_server(body::Vector{UInt8})
+function start_fixture_server(body::Vector{UInt8}; range_416::Bool=false)
     listener = listen(ip"127.0.0.1", 0)
     requests = Ref(0)
     fail = Ref(false)
@@ -28,8 +28,13 @@ function start_fixture_server(body::Vector{UInt8})
                     push!(headers, line)
                 end
                 conditional = any(line -> occursin("If-None-Match", line), headers)
+                ranged = any(line -> occursin("Range:", line), headers)
                 if fail[]
                     write(socket, "HTTP/1.1 500 Internal Server Error\r\nContent-Length: 0\r\nConnection: close\r\n\r\n")
+                elseif range_416 && ranged
+                    error_body = Vector{UInt8}(codeunits("requested range unavailable"))
+                    write(socket, "HTTP/1.1 416 Range Not Satisfiable\r\nContent-Type: text/plain\r\nContent-Length: $(length(error_body))\r\nConnection: close\r\n\r\n")
+                    write(socket, error_body)
                 elseif conditional
                     write(socket, "HTTP/1.1 304 Not Modified\r\nETag: \"fixture-v1\"\r\nConnection: close\r\n\r\n")
                 else
