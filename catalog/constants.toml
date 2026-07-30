@@ -17,8 +17,10 @@ format = "SPICE text PCK"
 size_bytes = 12406
 retrieved_at = "2026-07-30"
 citation = "NASA/JPL NAIF generic kernels."
-license = "NAIF data-use and acknowledgement terms; redistribution review pending"
-redistribution = "unresolved"
+license = "NAIF Rules Regarding Use of SPICE"
+redistribution = "permitted"
+redistribution_url = "https://naif.jpl.nasa.gov/naif/rules.html"
+redistribution_conditions = "Redistribution is permitted only while the NAIF-distributed kernel remains unmodified; acknowledgement of SPICE/NAIF/PDS and the kernel-producing teams is encouraged."
 
 [[resource]]
 id = "pck00011"
@@ -40,8 +42,10 @@ size_bytes = 131226
 published_at = "2022-12-27"
 retrieved_at = "2026-07-30"
 citation = "NASA/JPL NAIF generic kernels."
-license = "NAIF data-use and acknowledgement terms; redistribution review pending"
-redistribution = "unresolved"
+license = "NAIF Rules Regarding Use of SPICE"
+redistribution = "permitted"
+redistribution_url = "https://naif.jpl.nasa.gov/naif/rules.html"
+redistribution_conditions = "Redistribution is permitted only while the NAIF-distributed kernel remains unmodified; acknowledgement of SPICE/NAIF/PDS and the kernel-producing teams is encouraged."
 
 [[resource]]
 id = "geophysical"
@@ -62,8 +66,10 @@ format = "SPICE text kernel"
 size_bytes = 3186
 retrieved_at = "2026-07-30"
 citation = "NASA/JPL NAIF generic kernels."
-license = "NAIF data-use and acknowledgement terms; redistribution review pending"
-redistribution = "unresolved"
+license = "NAIF Rules Regarding Use of SPICE"
+redistribution = "permitted"
+redistribution_url = "https://naif.jpl.nasa.gov/naif/rules.html"
+redistribution_conditions = "Redistribution is permitted only while the NAIF-distributed kernel remains unmodified; acknowledgement of SPICE/NAIF/PDS and the kernel-producing teams is encouraged."
 
 [[resource]]
 id = "earth_fixed"
@@ -84,8 +90,10 @@ format = "SPICE frame kernel"
 size_bytes = 975
 retrieved_at = "2026-07-30"
 citation = "NASA/JPL NAIF generic kernels."
-license = "NAIF data-use and acknowledgement terms; redistribution review pending"
-redistribution = "unresolved"
+license = "NAIF Rules Regarding Use of SPICE"
+redistribution = "permitted"
+redistribution_url = "https://naif.jpl.nasa.gov/naif/rules.html"
+redistribution_conditions = "Redistribution is permitted only while the NAIF-distributed kernel remains unmodified; acknowledgement of SPICE/NAIF/PDS and the kernel-producing teams is encouraged."
 
 [[resource]]
 id = "naif0012"
@@ -107,8 +115,10 @@ size_bytes = 5257
 published_at = "2016-07-14"
 retrieved_at = "2026-07-30"
 citation = "NASA/JPL NAIF generic kernels."
-license = "NAIF data-use and acknowledgement terms; redistribution review pending"
-redistribution = "unresolved"
+license = "NAIF Rules Regarding Use of SPICE"
+redistribution = "permitted"
+redistribution_url = "https://naif.jpl.nasa.gov/naif/rules.html"
+redistribution_conditions = "Redistribution is permitted only while the NAIF-distributed kernel remains unmodified; acknowledgement of SPICE/NAIF/PDS and the kernel-producing teams is encouraged."
 
 [[resource]]
 id = "current_leapseconds"

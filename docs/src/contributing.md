@@ -14,6 +14,16 @@
 Raw upstream files remain byte-for-byte unchanged. The deterministic artifact
 layout is `data/`, optional `metadata/`, and `provenance.toml`.
 
+## NAIF redistribution
+
+The [NAIF Rules Regarding Use of
+SPICE](https://naif.jpl.nasa.gov/naif/rules.html) permit redistribution of
+SPICE kernels distributed by NAIF provided the kernels have not been modified.
+The artifact packager therefore copies each source kernel byte-for-byte and
+places package provenance in separate files. Do not treat these terms as an
+MIT licence for the scientific data, and preserve model- and mission-specific
+citations recorded in the catalogue.
+
 ## Live resource
 
 Add a scratch catalogue entry with authoritative URL(s), TTL, content format,
@@ -33,4 +43,3 @@ Discovery scripts write machine-readable TOML and human-readable Markdown
 reports. Additions, removals, same-name checksum changes, old-version moves,
 frame-definition changes, alias changes, and bundle changes require human
 review. Discovery never publishes, deletes, recommends, or changes an alias.
-

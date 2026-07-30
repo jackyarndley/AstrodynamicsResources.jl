@@ -1,3 +1,7 @@
+[defaults]
+redistribution_url = "https://naif.jpl.nasa.gov/naif/rules.html"
+redistribution_conditions = "Redistribution is permitted only while the NAIF-distributed kernel remains unmodified; acknowledgement of SPICE/NAIF/PDS and the kernel-producing teams is encouraged."
+
 [[resource]]
 id = "moon_pa_de440_200625"
 aliases = ["moon_pa_de440"]
@@ -27,8 +31,8 @@ kernel_type = "binary PCK"
 orientation_type = "principal axis"
 frame_family = "DE440 lunar frames"
 citation = "JPL DE440 lunar orientation; NASA/JPL NAIF generic kernels."
-license = "NAIF data-use and acknowledgement terms; redistribution review pending"
-redistribution = "unresolved"
+license = "NAIF Rules Regarding Use of SPICE"
+redistribution = "permitted"
 
 [[resource]]
 id = "moon_de440_250416_frames"
@@ -60,8 +64,8 @@ frame_classes = ["FIXED", "FIXED", "PCK", "FIXED"]
 base_frames = ["MOON_PA_DE440", "MOON_ME_DE440_ME421", "ICRF/J2000", "MOON_PA_DE440"]
 referenced_pck_frame_ids = [31008]
 citation = "NASA/JPL NAIF lunar reference frame specification kernel."
-license = "NAIF data-use and acknowledgement terms; redistribution review pending"
-redistribution = "unresolved"
+license = "NAIF Rules Regarding Use of SPICE"
+redistribution = "permitted"
 
 [[resource]]
 id = "moon_assoc_pa"
@@ -84,8 +88,8 @@ published_at = "2008-03-18"
 retrieved_at = "2026-07-30"
 body = "Moon"
 citation = "NASA/JPL NAIF generic kernels."
-license = "NAIF data-use and acknowledgement terms; redistribution review pending"
-redistribution = "unresolved"
+license = "NAIF Rules Regarding Use of SPICE"
+redistribution = "permitted"
 
 [[resource]]
 id = "moon_assoc_me"
@@ -108,5 +112,5 @@ published_at = "2008-03-18"
 retrieved_at = "2026-07-30"
 body = "Moon"
 citation = "NASA/JPL NAIF generic kernels."
-license = "NAIF data-use and acknowledgement terms; redistribution review pending"
-redistribution = "unresolved"
+license = "NAIF Rules Regarding Use of SPICE"
+redistribution = "permitted"

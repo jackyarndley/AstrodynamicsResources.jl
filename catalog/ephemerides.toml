@@ -1,6 +1,10 @@
 # Reviewed authoritative metadata. These raw kernels require deterministic
 # packaging and immutable publication before `available` can become true.
 
+[defaults]
+redistribution_url = "https://naif.jpl.nasa.gov/naif/rules.html"
+redistribution_conditions = "Redistribution is permitted only while the NAIF-distributed kernel remains unmodified; acknowledgement of SPICE/NAIF/PDS and the kernel-producing teams is encouraged."
+
 [[resource]]
 id = "de430"
 aliases = []
@@ -22,8 +26,8 @@ size_bytes = 119741440
 published_at = "2013-09-03"
 retrieved_at = "2026-07-30"
 citation = "Folkner et al. (2014), The Planetary and Lunar Ephemerides DE430 and DE431."
-license = "NAIF data-use and acknowledgement terms; redistribution review pending"
-redistribution = "unresolved"
+license = "NAIF Rules Regarding Use of SPICE"
+redistribution = "permitted"
 system = "solar system"
 
 [[resource]]
@@ -47,8 +51,8 @@ size_bytes = 10895360
 published_at = "2014-05-01"
 retrieved_at = "2026-07-30"
 citation = "NASA/JPL NAIF generic planetary kernels; consult the upstream DE432 technical comments."
-license = "NAIF data-use and acknowledgement terms; redistribution review pending"
-redistribution = "unresolved"
+license = "NAIF Rules Regarding Use of SPICE"
+redistribution = "permitted"
 system = "solar system"
 
 [[resource]]
@@ -72,8 +76,8 @@ size_bytes = 119769088
 published_at = "2019-01-07"
 retrieved_at = "2026-07-30"
 citation = "NASA/JPL NAIF generic planetary kernels; consult the upstream DE435 technical comments."
-license = "NAIF data-use and acknowledgement terms; redistribution review pending"
-redistribution = "unresolved"
+license = "NAIF Rules Regarding Use of SPICE"
+redistribution = "permitted"
 system = "solar system"
 
 [[resource]]
@@ -97,8 +101,8 @@ size_bytes = 119769088
 published_at = "2019-08-28"
 retrieved_at = "2026-07-30"
 citation = "NASA/JPL NAIF generic planetary kernels; consult the upstream kernel comments."
-license = "NAIF data-use and acknowledgement terms; redistribution review pending"
-redistribution = "unresolved"
+license = "NAIF Rules Regarding Use of SPICE"
+redistribution = "permitted"
 system = "solar system"
 
 [[resource]]
@@ -122,8 +126,8 @@ size_bytes = 32726016
 published_at = "2020-12-21"
 retrieved_at = "2026-07-30"
 citation = "Park et al. (2021), The JPL Planetary and Lunar Ephemerides DE440 and DE441."
-license = "NAIF data-use and acknowledgement terms; redistribution review pending"
-redistribution = "unresolved"
+license = "NAIF Rules Regarding Use of SPICE"
+redistribution = "permitted"
 system = "solar system"
 notes = "DE441 is intentionally excluded."
 
@@ -148,6 +152,6 @@ size_bytes = 119799808
 published_at = "2020-12-21"
 retrieved_at = "2026-07-30"
 citation = "Park et al. (2021), The JPL Planetary and Lunar Ephemerides DE440 and DE441."
-license = "NAIF data-use and acknowledgement terms; redistribution review pending"
-redistribution = "unresolved"
+license = "NAIF Rules Regarding Use of SPICE"
+redistribution = "permitted"
 system = "solar system"

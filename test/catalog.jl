@@ -14,6 +14,11 @@
               (:de430, :de432s, :de435, :de438))
     @test all(spec -> spec.backend isa ArtifactBackend,
               list_resources(backend=:artifact))
+    @test all(spec -> spec.metadata["redistribution"] == "permitted",
+              list_resources(backend=:artifact))
+    @test all(spec -> spec.metadata["redistribution_url"] ==
+                      "https://naif.jpl.nasa.gov/naif/rules.html",
+              list_resources(backend=:artifact))
     @test all(spec -> !spec.available, list_resources(backend=:artifact))
     @test all(spec -> spec.backend isa ScratchBackend,
               list_resources(backend=:scratch))
