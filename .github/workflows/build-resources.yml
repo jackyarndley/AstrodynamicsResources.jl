@@ -50,7 +50,7 @@ jobs:
         run: julia --project=scripts scripts/build_artifact.jl "${{ inputs.resource_id }}"
       - name: Hash and cache authoritative source
         if: inputs.mode == 'hash'
-        run: julia --project=scripts scripts/update_source_hashes.jl "${{ inputs.resource_id }}"
+        run: julia --project=scripts scripts/prefetch_sources.jl "${{ inputs.resource_id }}"
       - name: Preserve source-hash report
         if: inputs.mode == 'hash'
         uses: actions/upload-artifact@v7.0.1

@@ -1,6 +1,8 @@
 #!/usr/bin/env julia
 
 using AstrodynamicsResources
+using Dates
+using TOML
 
 include(joinpath(@__DIR__, "lib", "source_cache.jl"))
 using .SourceCache
@@ -15,7 +17,24 @@ function main(args=ARGS)
             error("$(spec.id) is not an immutable artifact resource")
         path = fetch_verified_source(spec.metadata; cache_root,
                                      require_sha256=false)
-        println(spec.id, " ", file_sha256(path), " ", filesize(path))
+        digest = file_sha256(path)
+        report = joinpath(@__DIR__, "..", "build", "reports", "source-hashes",
+                          String(spec.id) * ".toml")
+        mkpath(dirname(report))
+        open(report, "w") do io
+            TOML.print(io, Dict(
+                "generated_at" => Dates.format(now(UTC),
+                                               dateformat"yyyy-mm-ddTHH:MM:SSZ"),
+                "resource" => Dict(
+                    "id" => String(spec.id),
+                    "source_filename" => spec.metadata["source_filename"],
+                    "source_sha256" => digest,
+                    "size_bytes" => filesize(path),
+                    "cache_path" => path,
+                ),
+            ); sorted=true)
+        end
+        println(spec.id, " ", digest, " ", filesize(path))
     end
 end
 
