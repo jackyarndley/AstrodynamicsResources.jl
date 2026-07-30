@@ -57,10 +57,11 @@ natural-satellite ephemerides are included, with an explicit three-part Uranus
 `ura184` bundle. No artificial Earth-satellite or spacecraft kernels are
 catalogued.
 
-Spherical-harmonic gravity models are currently candidate metadata only. No
-gravity coefficient file is advertised as materializable until its exact
-source, model metadata, redistribution terms, and immutable archive are fully
-reviewed.
+GOCO06s and GGM05C are now reviewed Earth spherical-harmonic coefficient
+resources in their original ICGEM `.gfc` format. Both upstream files state CC
+BY 4.0 terms and retain their DOI citations. They remain pending immutable
+publication like the kernels above; this package returns coefficient-file
+paths and does not evaluate a gravity field.
 
 ## Configuration
 

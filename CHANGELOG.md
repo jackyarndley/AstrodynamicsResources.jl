@@ -9,6 +9,11 @@
   associated-file digest verification for immutable builds.
 - Consolidated immutable archives under the non-latest `resources-v1` release;
   private release URLs deliberately remain unbound pending compatible hosting.
+- Simplified immutable releases to one archive asset per resource; the Julia
+  tree hash is stored in the archive asset label and the archive SHA-256 remains
+  available through GitHub's asset digest.
+- Added the original ICGEM spherical-harmonic coefficient files for GOCO06s and
+  GGM05C as reviewed CC BY 4.0 Earth gravity resources.
 - Added exact DE442 and DE442s resources and ordered compact/full bundles.
 - Clarified that satellite resources describe natural moons, restored the
   compact planetary-system selections, and added the explicitly requested

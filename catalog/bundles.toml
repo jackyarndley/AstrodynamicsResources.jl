@@ -152,12 +152,12 @@ purpose = "Pluto natural satellites"
 
 [[bundle]]
 id = "earth_gravity_standard"
-title = "Earth gravity standard candidates"
-description = "Intentionally empty until redistribution and exact-source reviews promote models from candidates/gravity.toml."
-members = []
+title = "Reviewed Earth gravity models"
+description = "A compact pair of reviewed Earth gravity models representing combined and satellite-only solutions."
+members = ["ggm05c", "goco06s"]
 ordered = true
 purpose = "Gravity model selection policy"
-notes = "No universal best model is implied."
+notes = "GGM05C is a combined model and GOCO06s is satellite-only; bundle order is catalogue order and no universal best model is implied."
 
 [[bundle]]
 id = "lunar_gravity_standard"

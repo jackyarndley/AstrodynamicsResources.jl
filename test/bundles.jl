@@ -13,5 +13,5 @@
     @test_throws ArgumentError resource_path(:moon_de440_pa)
     @test AstrodynamicsResources._bundle_resource_ids(:moon_de440_orientation) ==
           [:pck00011, :moon_pa_de440, :moon_de440_frames]
-    @test isempty(bundle(:earth_gravity_standard).members)
+    @test bundle(:earth_gravity_standard).members == [:ggm05c, :goco06s]
 end

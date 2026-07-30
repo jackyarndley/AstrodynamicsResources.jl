@@ -95,6 +95,14 @@ redistribution = "permitted"
 source_filename = "geophysical.ker"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/geophysical.ker"
 [[pending]]
+artifact_name = "ggm05c"
+has_source_sha256 = true
+id = "ggm05c"
+ready = true
+redistribution = "permitted"
+source_filename = "GGM05C.gfc"
+source_url = "https://icgem.gfz.de/getmodel/gfc/778a683780a5b0ad3163f4772b97b9075a0a13c389d2bd8ea3f891b64cfa383d/GGM05C.gfc"
+[[pending]]
 artifact_name = "gm_de440"
 has_source_sha256 = true
 id = "gm_de440"
@@ -102,6 +110,14 @@ ready = true
 redistribution = "permitted"
 source_filename = "gm_de440.tpc"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/gm_de440.tpc"
+[[pending]]
+artifact_name = "goco06s"
+has_source_sha256 = true
+id = "goco06s"
+ready = true
+redistribution = "permitted"
+source_filename = "GOCO06s.gfc"
+source_url = "https://datapub.gfz-potsdam.de/download/10.5880.ICGEM.2019.002/GOCO06s.gfc"
 [[pending]]
 artifact_name = "itokawa_hayabusa_amica_512q"
 has_source_sha256 = true

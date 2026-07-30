@@ -24,7 +24,9 @@ does not mean the resource is currently cached.
 | `:geophysical` | constants | naif | artifact | pending | `geophysical.ker` |
 | `:gfz_f107` | space_weather | gfz | scratch | yes | `Kp_ap_Ap_SN_F107_since_1932.txt` |
 | `:gfz_kp_ap` | space_weather | gfz | scratch | yes | `Kp_ap_Ap_SN_F107_nowcast.txt` |
+| `:ggm05c` | gravity | icgem | artifact | pending | `GGM05C.gfc` |
 | `:gm_de440` | constants | naif | artifact | pending | `gm_de440.tpc` |
+| `:goco06s` | gravity | icgem | artifact | pending | `GOCO06s.gfc` |
 | `:iers_c04` | earth_orientation | iers | scratch | yes | `eopc04.1962-now` |
 | `:iers_finals2000a` | earth_orientation | iers | scratch | yes | `finals2000A.all` |
 | `:itokawa_hayabusa_amica_512q` | geometry | naif | artifact | pending | `hay_a_amica_5_itokawashape_v1_0_512q.bds` |

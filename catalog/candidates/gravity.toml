@@ -23,22 +23,6 @@ authoritative_page = "https://cddis.nasa.gov/"
 reason = "Original coefficient file and redistribution terms require review."
 
 [[candidate]]
-id = "ggm05c"
-model = "GGM05C"
-body = "Earth"
-provider = "UT/CSR and ICGEM"
-authoritative_page = "https://icgem.gfz-potsdam.de/tom_longtime"
-reason = "ICGEM download identity, checksum, and redistribution terms require review."
-
-[[candidate]]
-id = "goco06s"
-model = "GOCO06s"
-body = "Earth"
-provider = "GOCO consortium and ICGEM"
-authoritative_page = "https://icgem.gfz-potsdam.de/tom_longtime"
-reason = "ICGEM download identity, checksum, and redistribution terms require review."
-
-[[candidate]]
 id = "grgm1200b"
 model = "GRGM1200B"
 body = "Moon"
@@ -77,4 +61,3 @@ body = "Mercury"
 provider = "NASA PDS"
 authoritative_page = "https://pds-geosciences.wustl.edu/"
 reason = "A model must be selected based on complete authoritative metadata, not guessed."
-

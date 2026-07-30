@@ -1,4 +1,80 @@
-# No gravity coefficient file is exposed as a ResourceSpec yet. The requested
-# models are tracked in candidates/gravity.toml until an authoritative byte
-# stream, checksum, citation, and redistribution decision are all reviewed.
+# Provider-independent gravity resources. Original ICGEM coefficient streams
+# are packaged byte-for-byte; this package does not parse or evaluate them.
 
+[[resource]]
+id = "goco06s"
+aliases = []
+title = "GOCO06s satellite-only Earth gravity model"
+description = "Global Earth gravity spherical-harmonic coefficients from the GOCO consortium, including constrained secular and annual variations."
+category = "gravity"
+provider = "icgem"
+version = "2019"
+backend = "artifact"
+artifact_name = "goco06s"
+available = false
+files = [{ path = "data/GOCO06s.gfc", role = "gravity_coefficients", primary = true }]
+source_url = "https://datapub.gfz-potsdam.de/download/10.5880.ICGEM.2019.002/GOCO06s.gfc"
+source_page = "https://dataservices.gfz-potsdam.de/icgem/showshort.php?id=escidoc:4081892"
+source_filename = "GOCO06s.gfc"
+source_sha256 = "351d9d20b84cd2c0f52ce77146b1e3b774f408200b579ffaf98593cf3d271819"
+format = "ICGEM GFC spherical-harmonic coefficients"
+size_bytes = 10451091
+published_at = "2019"
+retrieved_at = "2026-07-30"
+citation = "Kvas, A. et al. (2019), The satellite-only gravity field model GOCO06s, GFZ Data Services, doi:10.5880/ICGEM.2019.002."
+doi = "10.5880/ICGEM.2019.002"
+license = "Creative Commons Attribution 4.0 International"
+license_url = "https://creativecommons.org/licenses/by/4.0/"
+redistribution = "permitted"
+redistribution_url = "https://creativecommons.org/licenses/by/4.0/"
+redistribution_conditions = "Redistribution and adaptation are permitted with attribution under CC BY 4.0."
+body = "Earth"
+system = "Earth"
+model_provider = "GOCO consortium"
+maximum_degree = 300
+maximum_order = 300
+normalisation = "fully normalized"
+reference_radius_m = 6378136.3
+gravitational_parameter_m3_s2 = 3.986004415e14
+tide_system = "zero tide"
+permanent_tide_treatment = "zero-tide coefficients"
+model_variant = "satellite-only, time-variable terms included"
+
+[[resource]]
+id = "ggm05c"
+aliases = []
+title = "GGM05C combined Earth gravity model"
+description = "Combined global Earth gravity spherical-harmonic coefficients derived from GRACE, GOCE, and terrestrial gravity anomalies."
+category = "gravity"
+provider = "icgem"
+version = "2015"
+backend = "artifact"
+artifact_name = "ggm05c"
+available = false
+files = [{ path = "data/GGM05C.gfc", role = "gravity_coefficients", primary = true }]
+source_url = "https://icgem.gfz.de/getmodel/gfc/778a683780a5b0ad3163f4772b97b9075a0a13c389d2bd8ea3f891b64cfa383d/GGM05C.gfc"
+source_page = "https://dataservices.gfz-potsdam.de/icgem/showshort.php?id=escidoc:1423177"
+source_filename = "GGM05C.gfc"
+source_sha256 = "efb1781e748969dab2721f45365cd060b5963ffe4fd497006cc786f9e5241bf2"
+format = "ICGEM GFC spherical-harmonic coefficients"
+size_bytes = 5229360
+published_at = "2016"
+retrieved_at = "2026-07-30"
+citation = "Ries, J. et al. (2016), The Combined Gravity Model GGM05C, GFZ Data Services, doi:10.5880/ICGEM.2016.002."
+doi = "10.5880/ICGEM.2016.002"
+license = "Creative Commons Attribution 4.0 International"
+license_url = "https://creativecommons.org/licenses/by/4.0/"
+redistribution = "permitted"
+redistribution_url = "https://creativecommons.org/licenses/by/4.0/"
+redistribution_conditions = "Redistribution and adaptation are permitted with attribution under CC BY 4.0."
+body = "Earth"
+system = "Earth"
+model_provider = "University of Texas at Austin Center for Space Research"
+maximum_degree = 360
+maximum_order = 360
+normalisation = "fully normalized"
+reference_radius_m = 6378136.3
+gravitational_parameter_m3_s2 = 3.986004415e14
+tide_system = "zero tide"
+permanent_tide_treatment = "zero-tide coefficients"
+model_variant = "combined GRACE, GOCE, and terrestrial gravity"

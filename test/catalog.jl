@@ -18,8 +18,7 @@
               list_resources(backend=:artifact))
     @test all(spec -> spec.metadata["redistribution"] == "permitted",
               list_resources(backend=:artifact))
-    @test all(spec -> spec.metadata["redistribution_url"] ==
-                      "https://naif.jpl.nasa.gov/naif/rules.html",
+    @test all(spec -> startswith(spec.metadata["redistribution_url"], "https://"),
               list_resources(backend=:artifact))
     @test all(spec -> haskey(spec.metadata, "source_sha256"),
               list_resources(backend=:artifact))
@@ -38,4 +37,12 @@
           [:ura184_part1, :ura184_part2, :ura184_part3]
     @test bundle(:neptune_satellites).members == [:nep105]
     @test !haskey(AstrodynamicsResources._ALIASES, :latest)
+
+    @test bundle(:earth_gravity_standard).members == [:ggm05c, :goco06s]
+    @test resource(:ggm05c).metadata["maximum_degree"] == 360
+    @test resource(:goco06s).metadata["maximum_degree"] == 300
+    @test all(spec -> spec.metadata["normalisation"] == "fully normalized",
+              list_resources(category=:gravity))
+    @test all(spec -> occursin("spherical-harmonic", spec.metadata["format"]),
+              list_resources(category=:gravity))
 end

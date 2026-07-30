@@ -30,11 +30,13 @@ under the private repository's `resources-v1` release, but private GitHub asset
 URLs are not usable by Julia's standard unauthenticated artifact downloader.
 The package therefore does not claim that these resources are materializable
 until compatible stable hosting and all hashes exist.
-All currently catalogued immutable resources are unmodified kernels obtained
-from NAIF's generic-kernel tree. NAIF explicitly permits redistribution of
-NAIF-distributed kernels while they remain unmodified; catalogue metadata links
-the governing policy and preserves the required provenance.
+Catalogued NAIF resources are unmodified kernels from the generic-kernel tree.
+NAIF explicitly permits redistribution of NAIF-distributed kernels while they
+remain unmodified; catalogue metadata links the governing policy and preserves
+the required provenance.
 
-Gravity coefficient models remain candidate metadata rather than active
-resources. The package does not yet provide a materializable spherical-harmonic
-coefficient file.
+GOCO06s and GGM05C are active catalogue entries for Earth spherical-harmonic
+gravity coefficients. Their original ICGEM `.gfc` files are CC BY 4.0 and carry
+DOI citations. The package distributes the coefficient paths without parsing
+or evaluating the gravity field; immutable publication is still required
+before `resource_path` can materialize them.
