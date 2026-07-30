@@ -22,7 +22,8 @@ artifact_name = "eros_near_msi_512q"
 files = [{ path = "data/near-a-msi-5-erosshape-v1_0_512q.bds", role = "dsk", primary = true }]
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/dsk/asteroids/eros/near-a-msi-5-erosshape-v1_0_512q.bds"
 source_filename = "near-a-msi-5-erosshape-v1_0_512q.bds"
-size_bytes = 111149056
+source_sha256 = "43aea1117e115ff2fa987bd4ca72daab6faaa94b6978a2a81c9321e6e22d7865"
+size_bytes = 111434752
 body = "Eros"
 shape_source = "NEAR MSI"
 
@@ -34,7 +35,8 @@ artifact_name = "eros_near_msi_64q"
 files = [{ path = "data/near-a-msi-5-erosshape-v1_0_64q.bds", role = "dsk", primary = true }]
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/dsk/asteroids/eros/near-a-msi-5-erosshape-v1_0_64q.bds"
 source_filename = "near-a-msi-5-erosshape-v1_0_64q.bds"
-size_bytes = 3879731
+source_sha256 = "931d6d12afb1ee14bd17cb58c144b2ae5a96a5433a0a1431f4d5239062092d98"
+size_bytes = 3906874
 body = "Eros"
 shape_source = "NEAR MSI"
 
@@ -46,7 +48,8 @@ artifact_name = "itokawa_hayabusa_amica_512q"
 files = [{ path = "data/hay_a_amica_5_itokawashape_v1_0_512q.bds", role = "dsk", primary = true }]
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/dsk/asteroids/itokawa/hay_a_amica_5_itokawashape_v1_0_512q.bds"
 source_filename = "hay_a_amica_5_itokawashape_v1_0_512q.bds"
-size_bytes = 156237824
+source_sha256 = "f73b9d518dadb8b117a3e5285319e8254f90835dfe80f21b390d718fcf1800c4"
+size_bytes = 155977728
 body = "Itokawa"
 shape_source = "Hayabusa AMICA"
 
@@ -58,7 +61,8 @@ artifact_name = "itokawa_hayabusa_amica_64q"
 files = [{ path = "data/hay_a_amica_5_itokawashape_v1_0_64q.bds", role = "dsk", primary = true }]
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/dsk/asteroids/itokawa/hay_a_amica_5_itokawashape_v1_0_64q.bds"
 source_filename = "hay_a_amica_5_itokawashape_v1_0_64q.bds"
-size_bytes = 4718592
+source_sha256 = "e7ca326b0da7e6af556dfe63c0940331e973e1019f0ab8fa0b2e94077bf180a3"
+size_bytes = 4762624
 body = "Itokawa"
 shape_source = "Hayabusa AMICA"
 
@@ -70,7 +74,8 @@ artifact_name = "vesta_gaskell_256"
 files = [{ path = "data/vesta_gaskell_256.bds", role = "dsk", primary = true }]
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/dsk/asteroids/vesta/vesta_gaskell_256.bds"
 source_filename = "vesta_gaskell_256.bds"
-size_bytes = 40894464
+source_sha256 = "6106b2a7d47030419faf083134480f9bceea595276d3d004ea862280c26ea34b"
+size_bytes = 41335808
 body = "Vesta"
 shape_source = "Gaskell"
 
@@ -82,6 +87,7 @@ artifact_name = "vesta_thomas_1997"
 files = [{ path = "data/vesta_thomas_1997.bds", role = "dsk", primary = true }]
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/dsk/asteroids/vesta/vesta_thomas_1997.bds"
 source_filename = "vesta_thomas_1997.bds"
+source_sha256 = "0616e5629e646d219ae344f6ecf1c78c96a0943b6cc08aebe233fdadd120cb15"
 size_bytes = 491520
 body = "Vesta"
 shape_source = "Thomas et al. 1997"
@@ -94,7 +100,8 @@ artifact_name = "phobos512"
 files = [{ path = "data/phobos512.bds", role = "dsk", primary = true }]
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/dsk/satellites/phobos512.bds"
 source_filename = "phobos512.bds"
-size_bytes = 156237824
+source_sha256 = "0dd5fc807667df0935a285e6db057aef5c5b2f5007fbad04bd0e30d9c864c995"
+size_bytes = 156680192
 body = "Phobos"
 
 [[resource]]
@@ -105,7 +112,8 @@ artifact_name = "phobos_2014_09_22"
 files = [{ path = "data/phobos_2014_09_22.bds", role = "dsk", primary = true }]
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/dsk/satellites/phobos_2014_09_22.bds"
 source_filename = "phobos_2014_09_22.bds"
-size_bytes = 10485760
+source_sha256 = "8f8fe4ea2dc97355d37279ee8136a974015a0d1b5f1199f43678ba5ad03fd2b6"
+size_bytes = 10460160
 body = "Phobos"
 
 [[resource]]
@@ -116,5 +124,6 @@ artifact_name = "phobos_3_3"
 files = [{ path = "data/phobos_3_3.bds", role = "dsk", primary = true }]
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/dsk/satellites/phobos_3_3.bds"
 source_filename = "phobos_3_3.bds"
-size_bytes = 16777216
+source_sha256 = "2d9653f4ff4f0a131c142c37a871bc504254a1afcd1e2c5c671eae135825f9c7"
+size_bytes = 17214464
 body = "Phobos"

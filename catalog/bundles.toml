@@ -111,22 +111,6 @@ ordered = true
 purpose = "Saturn satellites"
 
 [[bundle]]
-id = "uranus_satellites"
-title = "Uranus satellite kernels"
-description = "Multipart ura184 product retained as independently addressable artifacts."
-members = ["ura184_part1", "ura184_part2", "ura184_part3"]
-ordered = true
-purpose = "Uranus satellites"
-
-[[bundle]]
-id = "neptune_satellites"
-title = "Neptune satellite kernels"
-description = "Multipart nep098 product and its exact name-ID support."
-members = ["nep098_part1", "nep098_part2", "nep098_part3", "nep098_nameid"]
-ordered = true
-purpose = "Neptune satellites"
-
-[[bundle]]
 id = "pluto_satellites"
 title = "Pluto satellite kernels"
 description = "Exact selected Pluto-system satellite ephemeris."

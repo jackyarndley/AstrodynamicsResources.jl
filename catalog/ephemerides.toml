@@ -19,6 +19,7 @@ available = false
 files = [{ path = "data/de430.bsp", role = "spk", primary = true }]
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de430.bsp"
 source_filename = "de430.bsp"
+source_sha256 = "6e1b277c5f07135a84950604b83e56b736be696a7f3560bcddb1d4aeb944fca1"
 upstream_checksum_algorithm = "md5"
 upstream_checksum = "91e21181f6a96edbfeb1ff5a419ce095"
 format = "SPICE SPK"
@@ -44,6 +45,7 @@ available = false
 files = [{ path = "data/de432s.bsp", role = "spk", primary = true }]
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de432s.bsp"
 source_filename = "de432s.bsp"
+source_sha256 = "363f32e14f5255359ac32c4d38080cf28ab55564a5e16696a75f63394b666e9b"
 upstream_checksum_algorithm = "md5"
 upstream_checksum = "d66c2153188958472fec67016b4b4e7a"
 format = "SPICE SPK"
@@ -69,6 +71,7 @@ available = false
 files = [{ path = "data/de435.bsp", role = "spk", primary = true }]
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de435.bsp"
 source_filename = "de435.bsp"
+source_sha256 = "fd3081dd33293f744c2f876e8d2ebc1337591a389ef7936257d8b0311a1341a4"
 upstream_checksum_algorithm = "md5"
 upstream_checksum = "f04d7ae5bbe84ab289c2d08dc54ca1e2"
 format = "SPICE SPK"
@@ -94,6 +97,7 @@ available = false
 files = [{ path = "data/de438.bsp", role = "spk", primary = true }]
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de438.bsp"
 source_filename = "de438.bsp"
+source_sha256 = "4f0b4e01585de0d8e1f4e5e3f12025c3caefc7b488b4e2a648e1f582f5142b18"
 upstream_checksum_algorithm = "md5"
 upstream_checksum = "e2c486bd90358158b69d6be9e00339a3"
 format = "SPICE SPK"
@@ -119,6 +123,7 @@ available = false
 files = [{ path = "data/de440s.bsp", role = "spk", primary = true }]
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de440s.bsp"
 source_filename = "de440s.bsp"
+source_sha256 = "c1c7feeab882263fc493a9d5a5b2ddd71b54826cdf65d8d17a76126b260a49f2"
 upstream_checksum_algorithm = "md5"
 upstream_checksum = "3917ee56769db332790c751e2168843d"
 format = "SPICE SPK"
@@ -145,6 +150,7 @@ available = false
 files = [{ path = "data/de440.bsp", role = "spk", primary = true }]
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de440.bsp"
 source_filename = "de440.bsp"
+source_sha256 = "a4ce9bf9b3282becc9f4b2ac3cebe03a2ae7599981aabd7265fd8482fff7c4b5"
 upstream_checksum_algorithm = "md5"
 upstream_checksum = "c9d581bfd84209dbeee8b1583939b148"
 format = "SPICE SPK"

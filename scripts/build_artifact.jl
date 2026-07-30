@@ -1,26 +1,13 @@
 #!/usr/bin/env julia
 
 using AstrodynamicsResources
-using Downloads
-using MD5
-using SHA
 using TOML
 import Pkg
 
 include(joinpath(@__DIR__, "lib", "artifact_archive.jl"))
+include(joinpath(@__DIR__, "lib", "source_cache.jl"))
 using .ArtifactArchiveSupport
-
-function file_sha256(path::String)
-    open(path, "r") do io
-        return bytes2hex(SHA.sha256(io))
-    end
-end
-
-function file_md5(path::String)
-    open(path, "r") do io
-        return bytes2hex(MD5.md5(io))
-    end
-end
+using .SourceCache
 
 function reject_bad_source(spec::ResourceSpec, path::String)
     filesize(path) > 0 || error("upstream returned an empty file")
@@ -67,8 +54,11 @@ function build(id::Symbol; output_root::String=joinpath(@__DIR__, "..", "build")
 
     mktempdir() do temp
         source_name = String(spec.metadata["source_filename"])
+        cache_root = abspath(get(ENV, "ASTRODYNAMICS_RESOURCES_SOURCE_CACHE",
+                                 joinpath(output_root, "source-cache")))
+        cached = fetch_verified_source(spec.metadata; cache_root)
         downloaded = joinpath(temp, source_name)
-        Downloads.download(String(spec.metadata["source_url"]), downloaded)
+        cp(cached, downloaded)
         reject_bad_source(spec, downloaded)
         actual_sha = file_sha256(downloaded)
         lowercase(String(expected_sha)) == actual_sha ||
@@ -91,10 +81,18 @@ function build(id::Symbol; output_root::String=joinpath(@__DIR__, "..", "build")
             cp(downloaded, joinpath(data_dir, source_name); force=false)
             associated = get(spec.metadata, "associated_source_url", nothing)
             if associated !== nothing
+                associated_sha = get(spec.metadata, "associated_source_sha256", nothing)
+                associated_sha === nothing &&
+                    error("$id has no reviewed associated_source_sha256")
                 mkpath(metadata_dir)
                 associated_name = basename(String(associated))
-                associated_path = joinpath(temp, associated_name)
-                Downloads.download(String(associated), associated_path)
+                associated_metadata = Dict{String,Any}(
+                    "source_url" => String(associated),
+                    "source_filename" => associated_name,
+                    "source_sha256" => String(associated_sha),
+                )
+                associated_path =
+                    fetch_verified_source(associated_metadata; cache_root)
                 cp(associated_path, joinpath(metadata_dir, associated_name); force=false)
             end
             open(joinpath(directory, "provenance.toml"), "w") do io

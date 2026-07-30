@@ -13,8 +13,8 @@ jobs:
   discover:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
-      - uses: julia-actions/setup-julia@v2
+      - uses: actions/checkout@v7.0.1
+      - uses: julia-actions/setup-julia@v3.0.2
         with:
           version: "1"
       - name: Run network-light discovery
@@ -29,7 +29,7 @@ jobs:
           mkdir -p catalog/generated/reports
           cp build/reports/*.toml catalog/generated/reports/ 2>/dev/null || true
       - name: Open review pull request
-        uses: peter-evans/create-pull-request@v8
+        uses: peter-evans/create-pull-request@v8.1.1
         with:
           branch: automation/resource-discovery
           delete-branch: true

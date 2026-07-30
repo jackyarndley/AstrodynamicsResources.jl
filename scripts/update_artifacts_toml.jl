@@ -14,11 +14,17 @@ function mark_available!(id::String)
         for (position, first_line) in enumerate(starts)
             last_line = position == length(starts) ? length(lines) : starts[position + 1] - 1
             section = first_line:last_line
-            any(index -> strip(lines[index]) == "id = \"$(id)\"", section) || continue
-            availability = findfirst(index -> startswith(strip(lines[index]), "available ="),
-                                     section)
+            section_lines = collect(section)
+            any(index -> strip(lines[index]) == "id = \"$(id)\"", section_lines) || continue
+            availability_offset =
+                findfirst(index -> startswith(strip(lines[index]), "available ="),
+                          section_lines)
+            availability = availability_offset === nothing ? nothing :
+                           first_line + availability_offset - 1
             if availability === nothing
-                id_line = findfirst(index -> strip(lines[index]) == "id = \"$(id)\"", section)
+                id_offset =
+                    findfirst(index -> strip(lines[index]) == "id = \"$(id)\"", section_lines)
+                id_line = first_line + id_offset - 1
                 insert!(lines, id_line + 1, "available = true\n")
             else
                 newline = endswith(lines[availability], "\r\n") ? "\r\n" : "\n"

@@ -25,6 +25,13 @@ associated comments under `metadata/`, and `provenance.toml`. The packager does
 not normalize line endings or rewrite kernels. Mirrors are additional immutable
 download entries; mutable branch URLs and overwritten assets are forbidden.
 
+Packaging downloads use a persistent content-addressed source cache controlled
+by `ASTRODYNAMICS_RESOURCES_SOURCE_CACHE` (default `build/source-cache`).
+Interrupted transfers resume from `.part` files, provider checksums are checked
+where available, and a verified source is reused between package releases.
+GitHub Actions also caches each reviewed source build. Published archives are
+added to the durable `resources-v1` release and an existing asset name is reused
+only when its remote and local SHA-256 digests match.
+
 Dataset citations are available in `resource(id).metadata["citation"]`. Cite
 each scientific dataset separately from this package.
-

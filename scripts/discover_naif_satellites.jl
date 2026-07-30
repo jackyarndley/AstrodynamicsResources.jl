@@ -19,6 +19,10 @@ function main()
     frames = filter(name -> endswith(lowercase(name), "_nameid.tf"), hrefs(fk_html))
 
     entries = catalogue_entries(joinpath(@__DIR__, "..", "catalog", "satellites.toml"))
+    append!(entries, catalogue_entries(
+        joinpath(@__DIR__, "..", "catalog", "candidates", "oversized.toml");
+        table="candidate",
+    ))
     known_spks = sort([String(entry["source_filename"]) for entry in entries
                        if endswith(lowercase(String(entry["source_filename"])), ".bsp")])
     changed = String[]

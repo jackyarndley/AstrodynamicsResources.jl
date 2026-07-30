@@ -16,10 +16,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
-      - uses: julia-actions/setup-julia@v2
+      - uses: actions/checkout@v7.0.1
+      - uses: julia-actions/setup-julia@v3.0.2
         with:
           version: "1"
+      - uses: julia-actions/cache@v3.2.0
       - name: Require a private repository
         env:
           GH_TOKEN: ${{ github.token }}
@@ -27,7 +28,13 @@ jobs:
           test "$(gh repo view "$GITHUB_REPOSITORY" --json visibility --jq .visibility)" = "PRIVATE"
       - name: Instantiate packaging environment
         run: |
+          julia --project=. -e 'using Pkg; Pkg.instantiate()'
           julia --project=scripts -e 'using Pkg; Pkg.develop(path="."); Pkg.instantiate()'
+      - name: Restore verified upstream source cache
+        uses: actions/cache@v6.1.0
+        with:
+          path: build/source-cache
+          key: source-${{ inputs.resource_id }}-${{ hashFiles('catalog/*.toml') }}
       - name: Build and verify deterministic artifact
         run: julia --project=scripts scripts/build_artifact.jl "${{ inputs.resource_id }}"
       - name: Read build identity
@@ -48,32 +55,47 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
-          TAG="resource-${{ inputs.resource_id }}-${{ steps.identity.outputs.source_sha }}"
-          TAG="${TAG:0:80}"
+          TAG="resources-v1"
           ASSET="${{ steps.identity.outputs.archive }}"
           NAME=$(basename "$ASSET")
+          REPORT="${{ steps.identity.outputs.report }}"
+          METADATA="${ASSET%.tar.gz}.build.toml"
+          julia --project=. -e '
+            using TOML
+            report = TOML.parsefile(ARGS[1])
+            delete!(report, "archive_path")
+            report["archive_name"] = basename(ARGS[2])
+            open(ARGS[3], "w") do io
+                TOML.print(io, report; sorted=true)
+            end
+          ' "$REPORT" "$ASSET" "$METADATA"
           if gh release view "$TAG" >/dev/null 2>&1; then
-            if gh release view "$TAG" --json assets --jq ".assets[].name" | grep -Fx "$NAME"; then
-              echo "Refusing to overwrite existing immutable asset $TAG/$NAME" >&2
-              exit 1
-            fi
+            true
           else
-            gh release create "$TAG" --title "$TAG" --notes "Immutable astrodynamics resource asset."
+            gh release create "$TAG" --title "Astrodynamics immutable resources v1" \
+              --notes "Content-addressed, immutable resource archives. Assets are only added; existing names are never overwritten." \
+              --latest=false
           fi
-          gh release upload "$TAG" "$ASSET"
+          for FILE in "$ASSET" "$METADATA"; do
+            FILE_NAME=$(basename "$FILE")
+            REMOTE_DIGEST=$(gh release view "$TAG" --json assets \
+              --jq ".assets[] | select(.name == \"$FILE_NAME\") | .digest")
+            if [ -n "$REMOTE_DIGEST" ]; then
+              LOCAL_DIGEST="sha256:$(sha256sum "$FILE" | cut -d' ' -f1)"
+              test "$REMOTE_DIGEST" = "$LOCAL_DIGEST" || {
+                echo "Immutable asset collision for $TAG/$FILE_NAME" >&2
+                exit 1
+              }
+              echo "Reusing verified immutable asset $TAG/$FILE_NAME"
+            else
+              gh release upload "$TAG" "$FILE"
+            fi
+          done
           URL="https://github.com/${GITHUB_REPOSITORY}/releases/download/${TAG}/${NAME}"
           echo "url=$URL" >> "$GITHUB_OUTPUT"
-      - name: Bind verified lazy artifact
+      - name: Record pending private-repository binding
         run: |
-          julia --project=. scripts/update_artifacts_toml.jl \
-            "${{ steps.identity.outputs.report }}" \
-            "${{ steps.publish.outputs.url }}"
+          echo "Published ${{ steps.publish.outputs.url }}"
+          echo "Artifact binding remains pending because private GitHub release URLs cannot be fetched by Julia's standard unauthenticated artifact downloader."
           julia --project=. scripts/generate_pending_builds.jl
           julia --project=. scripts/validate_catalog.jl
-      - name: Open binding pull request
-        uses: peter-evans/create-pull-request@v8
-        with:
-          branch: automation/artifact-${{ inputs.resource_id }}
-          title: "Bind immutable artifact ${{ inputs.resource_id }}"
-          commit-message: "Bind immutable artifact ${{ inputs.resource_id }}"
-          body: "Adds reviewed archive and tree hashes after immutable release publication."

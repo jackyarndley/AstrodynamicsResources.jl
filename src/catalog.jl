@@ -160,6 +160,15 @@ function validate_catalog()
                 occursin(r"^[0-9a-f]{64}$", String(spec.metadata["source_sha256"])) ||
                     throw(ArgumentError("artifact resource $(spec.id) has an invalid source SHA-256"))
             end
+            if haskey(spec.metadata, "associated_source_url")
+                startswith(String(spec.metadata["associated_source_url"]), "https://") ||
+                    throw(ArgumentError("artifact resource $(spec.id) has a non-HTTPS associated source"))
+                digest = String(get(spec.metadata, "associated_source_sha256", ""))
+                occursin(r"^[0-9a-f]{64}$", digest) ||
+                    throw(ArgumentError(
+                        "artifact resource $(spec.id) lacks a valid associated source SHA-256"
+                    ))
+            end
             if spec.available
                 haskey(artifact_table, name) ||
                     throw(ArgumentError("available artifact $(spec.id) is absent from Artifacts.toml"))

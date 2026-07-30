@@ -19,9 +19,11 @@ files = [
 ]
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/moon_pa_de440_200625.bpc"
 source_filename = "moon_pa_de440_200625.bpc"
+source_sha256 = "60cd55aa401ea2ea97360636f567554bfe4e37bb829f901b4460a455dfaf783f"
 associated_source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/moon_pa_de440_200625.cmt"
+associated_source_sha256 = "97d3bb1e75e7807a5e0b76f836a2d1d192e0d5bde0c0a87979b4c13255aef8c1"
 format = "SPICE binary PCK"
-size_bytes = 12613632
+size_bytes = 12863488
 published_at = "2021-06-25"
 retrieved_at = "2026-07-30"
 body = "Moon"

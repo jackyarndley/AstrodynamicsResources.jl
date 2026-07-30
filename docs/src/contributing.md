@@ -5,7 +5,8 @@
 1. Establish the exact authoritative byte stream and filename.
 2. Review citation, licence, redistribution status, and provider checksum.
 3. Add exact catalogue metadata without changing a semantic alias or bundle.
-4. Record an independently computed source SHA-256.
+4. Run `scripts/update_source_hashes.jl RESOURCE_ID` to resumably cache the
+   source, verify the provider checksum, and record an independent SHA-256.
 5. Run `scripts/build_artifact.jl` in the scripts environment.
 6. Review its provenance, tree hash, archive SHA-256, and deterministic rebuild.
 7. Publish to immutable release or object storage without overwriting content.
@@ -13,6 +14,11 @@
 
 Raw upstream files remain byte-for-byte unchanged. The deterministic artifact
 layout is `data/`, optional `metadata/`, and `provenance.toml`.
+
+The active catalogue accepts source files up to 256 MiB. Record larger products
+in `catalog/candidates/oversized.toml`; promoting one requires an explicit
+storage and use-case review. `scripts/prune_oversized_resources.jl` applies the
+current limit deterministically.
 
 ## NAIF redistribution
 

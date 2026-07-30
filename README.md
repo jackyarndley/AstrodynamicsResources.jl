@@ -26,15 +26,19 @@ not download scientific data.
 The package framework and live-resource backend are operational. NAIF permits
 redistribution of its kernels while they remain unmodified; the package
 preserves those source bytes exactly and records the applicable terms.
-Production immutable resources are nevertheless marked unavailable until their
+Production immutable resources remain marked unavailable until their
 independent SHA-256 review, deterministic archives, release assets, and Julia
-tree hashes are published. Calling `resource_path(:de440s)` therefore gives an
-actionable pending-publication error instead of silently downloading an
-unverified raw file. See
+tree hashes are all published to a location supported by Julia's artifact
+downloader. Calling `resource_path(:de440s)` therefore gives an actionable
+pending-publication error instead of silently downloading an unverified raw
+file. See
 [`catalog/pending_builds.toml`](catalog/pending_builds.toml).
 
-No production scientific artifact has been published from this repository.
-There are no placeholder hashes or invented mirrors in `Artifacts.toml`.
+Verified archives are attached, without overwriting, to the repository's
+`resources-v1` release. Because this repository is private, those authenticated
+release URLs are not yet bound in `Artifacts.toml`: standard Julia artifact
+downloads cannot authenticate to private GitHub release assets. There are no
+placeholder hashes or invented mirrors.
 
 ## Storage model
 
@@ -50,6 +54,11 @@ separate resource. Reviewed older releases DE430, DE432s, DE435, and DE438 are
 also catalogued for reproducibility with legacy workflows. The split DE431 and
 DE441 releases are intentionally excluded because of their multi-gigabyte
 sizes. No DE431 or DE441 ID or bundle exists.
+
+The active immutable catalogue also has a 256 MiB per-source limit. Larger
+satellite SPKs are retained only in `catalog/candidates/oversized.toml`, outside
+`list_resources()`, until a user explicitly requests one and its storage and
+scientific use case are reviewed.
 
 ## Configuration
 

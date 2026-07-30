@@ -23,9 +23,16 @@ DE435, and DE438 releases are exact, separately addressable resources for
 reproducing legacy analyses. The split, multi-gigabyte DE431 and DE441
 releases remain excluded by project policy.
 
-Production immutable publication is still pending. The package does not claim
-that these resources are materializable until release assets and hashes exist.
+Production immutable binding is still pending. Verified archives are collected
+under the private repository's `resources-v1` release, but private GitHub asset
+URLs are not usable by Julia's standard unauthenticated artifact downloader.
+The package therefore does not claim that these resources are materializable
+until compatible stable hosting and all hashes exist.
 All currently catalogued immutable resources are unmodified kernels obtained
 from NAIF's generic-kernel tree. NAIF explicitly permits redistribution of
 NAIF-distributed kernels while they remain unmodified; catalogue metadata links
 the governing policy and preserves the required provenance.
+
+Active immutable source files are limited to 256 MiB. Larger satellite SPKs are
+preserved in `catalog/candidates/oversized.toml` for explicit future review and
+do not appear in normal resource discovery.

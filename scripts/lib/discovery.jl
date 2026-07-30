@@ -42,11 +42,11 @@ function checksum_index(text::String)
     return checksums
 end
 
-function catalogue_entries(path::String)
+function catalogue_entries(path::String; table::String="resource")
     parsed = TOML.parsefile(path)
     defaults = Dict{String,Any}(get(parsed, "defaults", Dict{String,Any}()))
     return [merge(defaults, Dict{String,Any}(entry))
-            for entry in get(parsed, "resource", Any[])]
+            for entry in get(parsed, table, Any[])]
 end
 
 function write_change_report(prefix::String; discovered::Vector{String},

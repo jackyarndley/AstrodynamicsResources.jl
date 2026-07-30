@@ -5,6 +5,13 @@
 - Audited all immutable catalogue entries against the NAIF kernel
   redistribution policy and recorded the unmodified-kernel condition and
   policy URL.
+- Added resumable, digest-indexed upstream source caching and strict
+  associated-file digest verification for immutable builds.
+- Consolidated immutable archives under the non-latest `resources-v1` release;
+  private release URLs deliberately remain unbound pending compatible hosting.
+- Applied a 256 MiB active-resource limit and moved 26 oversized satellite SPKs
+  to a machine-readable candidate catalogue.
+- Updated every GitHub Action to its current official release tag.
 
 ## 0.1.0 - 2026-07-30
 
