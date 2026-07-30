@@ -18,7 +18,8 @@ function main()
     discovered = filter(name -> endswith(lowercase(name), ".bsp"), hrefs(spk_html))
     frames = filter(name -> endswith(lowercase(name), "_nameid.tf"), hrefs(fk_html))
 
-    entries = catalogue_entries(joinpath(@__DIR__, "..", "catalog", "satellites.toml"))
+    catalogue = joinpath(@__DIR__, "..", "catalog", "satellites.toml")
+    entries = isfile(catalogue) ? catalogue_entries(catalogue) : Dict{String,Any}[]
     known_spks = sort([String(entry["source_filename"]) for entry in entries
                        if endswith(lowercase(String(entry["source_filename"])), ".bsp")])
     changed = String[]

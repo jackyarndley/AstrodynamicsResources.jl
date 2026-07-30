@@ -48,6 +48,13 @@ retrieved_at = "2026-01-01"
                 "https://fixtures.invalid/one.txt" => "https://fixtures.invalid/two.txt")
     invalid_catalog(duplicate_aliases)
 
+    duplicate_filename = VALIDATION_RESOURCE *
+        replace(VALIDATION_RESOURCE,
+                "id = \"one\"" => "id = \"two\"",
+                "artifact_name = \"one\"" => "artifact_name = \"two\"",
+                "https://fixtures.invalid/one.txt" => "https://fixtures.invalid/two.txt")
+    invalid_catalog(duplicate_filename)
+
     invalid_catalog(VALIDATION_RESOURCE, """
     [[bundle]]
     id = "missing"
