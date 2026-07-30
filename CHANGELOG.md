@@ -12,6 +12,8 @@
 - Simplified immutable releases to one archive asset per resource; the Julia
   tree hash is stored in the archive asset label and the archive SHA-256 remains
   available through GitHub's asset digest.
+- Named each release archive after its authoritative upstream data file (for
+  example, `de440s.bsp.tar.gz`) and reject duplicate or unsafe source filenames.
 - Added the original ICGEM spherical-harmonic coefficient files for GOCO06s and
   GGM05C as reviewed CC BY 4.0 Earth gravity resources.
 - Added exact DE442 and DE442s resources and ordered compact/full bundles.

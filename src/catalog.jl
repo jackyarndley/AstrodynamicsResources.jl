@@ -135,6 +135,7 @@ on the first invalid definition.
 function validate_catalog()
     artifact_table = _artifact_table()
     seen_sources = Dict{String,Symbol}()
+    seen_source_filenames = Dict{String,Symbol}()
     for spec in values(_RESOURCES)
         spec.category in _SUPPORTED_CATEGORIES ||
             throw(ArgumentError("resource $(spec.id) has unsupported category $(spec.category)"))
@@ -156,6 +157,18 @@ function validate_catalog()
             isempty(missing) || throw(ArgumentError(
                 "artifact resource $(spec.id) lacks metadata: $(join(missing, ", "))"
             ))
+            source_filename = String(spec.metadata["source_filename"])
+            (isempty(source_filename) || basename(source_filename) != source_filename) &&
+                throw(ArgumentError(
+                    "artifact resource $(spec.id) has an unsafe source filename"
+                ))
+            if haskey(seen_source_filenames, source_filename)
+                throw(ArgumentError(
+                    "artifact resources $(seen_source_filenames[source_filename]) and " *
+                    "$(spec.id) share source filename $source_filename"
+                ))
+            end
+            seen_source_filenames[source_filename] = spec.id
             if haskey(spec.metadata, "source_sha256")
                 occursin(r"^[0-9a-f]{64}$", String(spec.metadata["source_sha256"])) ||
                     throw(ArgumentError("artifact resource $(spec.id) has an invalid source SHA-256"))

@@ -54,6 +54,8 @@ function build(id::Symbol; output_root::String=joinpath(@__DIR__, "..", "build")
 
     mktempdir() do temp
         source_name = String(spec.metadata["source_filename"])
+        basename(source_name) == source_name ||
+            error("$id has an unsafe source filename: $source_name")
         cache_root = abspath(get(ENV, "ASTRODYNAMICS_RESOURCES_SOURCE_CACHE",
                                  joinpath(output_root, "source-cache")))
         cached = fetch_verified_source(spec.metadata; cache_root)
@@ -104,7 +106,10 @@ function build(id::Symbol; output_root::String=joinpath(@__DIR__, "..", "build")
         report_dir = joinpath(output_root, "reports", "artifacts")
         mkpath(artifact_dir)
         mkpath(report_dir)
-        archive = joinpath(artifact_dir, "$(id)-$(actual_sha).tar.gz")
+        # Keep release assets recognizable to scientists while retaining an
+        # honest archive extension. Immutability is enforced by refusing both
+        # local overwrites and remote assets with different SHA-256 digests.
+        archive = joinpath(artifact_dir, "$(source_name).tar.gz")
         if isfile(archive)
             error("immutable archive already exists at $archive; refusing to overwrite")
         end

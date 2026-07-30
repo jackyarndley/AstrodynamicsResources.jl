@@ -35,10 +35,12 @@ file. See
 [`catalog/pending_builds.toml`](catalog/pending_builds.toml).
 
 Verified archives are attached, without overwriting, to the repository's
-`resources-v1` release. Because this repository is private, those authenticated
-release URLs are not yet bound in `Artifacts.toml`: standard Julia artifact
-downloads cannot authenticate to private GitHub release assets. There are no
-placeholder hashes or invented mirrors.
+`resources-v1` release. Each archive uses the recognizable authoritative source
+name, such as `de440s.bsp.tar.gz`; the archive remains a deterministic package
+containing the original `data/de440s.bsp`. Because this repository is private,
+those authenticated release URLs are not yet bound in `Artifacts.toml`:
+standard Julia artifact downloads cannot authenticate to private GitHub release
+assets. There are no placeholder hashes or invented mirrors.
 
 ## Storage model
 
