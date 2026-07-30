@@ -1,0 +1,119 @@
+[defaults]
+aliases = []
+description = "Exact generic NAIF DSK source file, pending redistribution review and deterministic publication."
+category = "geometry"
+provider = "naif"
+backend = "artifact"
+available = false
+format = "SPICE DSK"
+retrieved_at = "2026-07-30"
+citation = "NASA/JPL NAIF generic DSK collection; product comments contain model-specific citations."
+license = "Redistribution review pending"
+redistribution = "unresolved"
+kernel_type = "DSK"
+
+[[resource]]
+id = "eros_near_msi_512q"
+title = "Eros NEAR MSI 512-plate-level DSK"
+version = "v1.0-512q"
+artifact_name = "eros_near_msi_512q"
+files = [{ path = "data/near-a-msi-5-erosshape-v1_0_512q.bds", role = "dsk", primary = true }]
+source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/dsk/asteroids/eros/near-a-msi-5-erosshape-v1_0_512q.bds"
+source_filename = "near-a-msi-5-erosshape-v1_0_512q.bds"
+size_bytes = 111149056
+body = "Eros"
+shape_source = "NEAR MSI"
+
+[[resource]]
+id = "eros_near_msi_64q"
+title = "Eros NEAR MSI 64-plate-level DSK"
+version = "v1.0-64q"
+artifact_name = "eros_near_msi_64q"
+files = [{ path = "data/near-a-msi-5-erosshape-v1_0_64q.bds", role = "dsk", primary = true }]
+source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/dsk/asteroids/eros/near-a-msi-5-erosshape-v1_0_64q.bds"
+source_filename = "near-a-msi-5-erosshape-v1_0_64q.bds"
+size_bytes = 3879731
+body = "Eros"
+shape_source = "NEAR MSI"
+
+[[resource]]
+id = "itokawa_hayabusa_amica_512q"
+title = "Itokawa Hayabusa AMICA 512-plate-level DSK"
+version = "v1.0-512q"
+artifact_name = "itokawa_hayabusa_amica_512q"
+files = [{ path = "data/hay_a_amica_5_itokawashape_v1_0_512q.bds", role = "dsk", primary = true }]
+source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/dsk/asteroids/itokawa/hay_a_amica_5_itokawashape_v1_0_512q.bds"
+source_filename = "hay_a_amica_5_itokawashape_v1_0_512q.bds"
+size_bytes = 156237824
+body = "Itokawa"
+shape_source = "Hayabusa AMICA"
+
+[[resource]]
+id = "itokawa_hayabusa_amica_64q"
+title = "Itokawa Hayabusa AMICA 64-plate-level DSK"
+version = "v1.0-64q"
+artifact_name = "itokawa_hayabusa_amica_64q"
+files = [{ path = "data/hay_a_amica_5_itokawashape_v1_0_64q.bds", role = "dsk", primary = true }]
+source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/dsk/asteroids/itokawa/hay_a_amica_5_itokawashape_v1_0_64q.bds"
+source_filename = "hay_a_amica_5_itokawashape_v1_0_64q.bds"
+size_bytes = 4718592
+body = "Itokawa"
+shape_source = "Hayabusa AMICA"
+
+[[resource]]
+id = "vesta_gaskell_256"
+title = "Vesta Gaskell 256 DSK"
+version = "gaskell-256"
+artifact_name = "vesta_gaskell_256"
+files = [{ path = "data/vesta_gaskell_256.bds", role = "dsk", primary = true }]
+source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/dsk/asteroids/vesta/vesta_gaskell_256.bds"
+source_filename = "vesta_gaskell_256.bds"
+size_bytes = 40894464
+body = "Vesta"
+shape_source = "Gaskell"
+
+[[resource]]
+id = "vesta_thomas_1997"
+title = "Vesta Thomas 1997 DSK"
+version = "thomas-1997"
+artifact_name = "vesta_thomas_1997"
+files = [{ path = "data/vesta_thomas_1997.bds", role = "dsk", primary = true }]
+source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/dsk/asteroids/vesta/vesta_thomas_1997.bds"
+source_filename = "vesta_thomas_1997.bds"
+size_bytes = 491520
+body = "Vesta"
+shape_source = "Thomas et al. 1997"
+
+[[resource]]
+id = "phobos512"
+title = "Phobos 512 DSK"
+version = "phobos512"
+artifact_name = "phobos512"
+files = [{ path = "data/phobos512.bds", role = "dsk", primary = true }]
+source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/dsk/satellites/phobos512.bds"
+source_filename = "phobos512.bds"
+size_bytes = 156237824
+body = "Phobos"
+
+[[resource]]
+id = "phobos_2014_09_22"
+title = "Phobos 2014-09-22 DSK"
+version = "2014-09-22"
+artifact_name = "phobos_2014_09_22"
+files = [{ path = "data/phobos_2014_09_22.bds", role = "dsk", primary = true }]
+source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/dsk/satellites/phobos_2014_09_22.bds"
+source_filename = "phobos_2014_09_22.bds"
+size_bytes = 10485760
+body = "Phobos"
+
+[[resource]]
+id = "phobos_3_3"
+title = "Phobos 3 by 3 degree DSK"
+version = "3-3"
+artifact_name = "phobos_3_3"
+files = [{ path = "data/phobos_3_3.bds", role = "dsk", primary = true }]
+source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/dsk/satellites/phobos_3_3.bds"
+source_filename = "phobos_3_3.bds"
+size_bytes = 16777216
+body = "Phobos"
+

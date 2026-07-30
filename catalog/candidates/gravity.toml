@@ -1,0 +1,80 @@
+[[candidate]]
+id = "egm96"
+model = "EGM96"
+body = "Earth"
+provider = "NASA GSFC / NGA"
+authoritative_page = "https://cddis.nasa.gov/926/egm96/egm96.html"
+reason = "Exact coefficient-file identity, source digest, and redistribution terms require review before mirroring."
+
+[[candidate]]
+id = "egm2008"
+model = "EGM2008"
+body = "Earth"
+provider = "NGA"
+authoritative_page = "https://earth-info.nga.mil/"
+reason = "Exact authoritative download endpoint and redistribution terms require review."
+
+[[candidate]]
+id = "jgm3"
+model = "JGM-3"
+body = "Earth"
+provider = "NASA GSFC"
+authoritative_page = "https://cddis.nasa.gov/"
+reason = "Original coefficient file and redistribution terms require review."
+
+[[candidate]]
+id = "ggm05c"
+model = "GGM05C"
+body = "Earth"
+provider = "UT/CSR and ICGEM"
+authoritative_page = "https://icgem.gfz-potsdam.de/tom_longtime"
+reason = "ICGEM download identity, checksum, and redistribution terms require review."
+
+[[candidate]]
+id = "goco06s"
+model = "GOCO06s"
+body = "Earth"
+provider = "GOCO consortium and ICGEM"
+authoritative_page = "https://icgem.gfz-potsdam.de/tom_longtime"
+reason = "ICGEM download identity, checksum, and redistribution terms require review."
+
+[[candidate]]
+id = "grgm1200b"
+model = "GRGM1200B"
+body = "Moon"
+provider = "NASA PDS / GRAIL"
+authoritative_page = "https://pds-geosciences.wustl.edu/missions/grail/"
+reason = "Exact PDS product, checksum, citation, and redistribution review are pending."
+
+[[candidate]]
+id = "gl1500e"
+model = "GL1500E"
+body = "Moon"
+provider = "NASA PDS / GRAIL"
+authoritative_page = "https://pds-geosciences.wustl.edu/missions/grail/"
+reason = "Exact PDS product, checksum, citation, and redistribution review are pending."
+
+[[candidate]]
+id = "mars_gravity"
+model = "Curated Mars gravity model"
+body = "Mars"
+provider = "NASA PDS"
+authoritative_page = "https://pds-geosciences.wustl.edu/"
+reason = "A model must be selected based on complete authoritative metadata, not guessed."
+
+[[candidate]]
+id = "venus_gravity"
+model = "Curated Venus gravity model"
+body = "Venus"
+provider = "NASA PDS"
+authoritative_page = "https://pds-geosciences.wustl.edu/"
+reason = "A model must be selected based on complete authoritative metadata, not guessed."
+
+[[candidate]]
+id = "mercury_gravity"
+model = "Curated Mercury gravity model"
+body = "Mercury"
+provider = "NASA PDS"
+authoritative_page = "https://pds-geosciences.wustl.edu/"
+reason = "A model must be selected based on complete authoritative metadata, not guessed."
+

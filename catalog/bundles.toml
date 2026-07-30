@@ -1,0 +1,161 @@
+[[bundle]]
+id = "naif_core"
+title = "NAIF core support kernels"
+description = "Pinned support kernels in documented consumer load order."
+members = ["pinned_leapseconds", "pck00011", "gm_de440", "geophysical"]
+ordered = true
+purpose = "General NAIF support"
+
+[[bundle]]
+id = "de430_standard"
+title = "DE430 standard bundle"
+description = "DE430 planetary ephemeris and pinned support kernels."
+members = ["de430", "pinned_leapseconds", "pck00011"]
+ordered = true
+purpose = "Legacy planetary ephemeris"
+
+[[bundle]]
+id = "de432s_standard"
+title = "Compact DE432s standard bundle"
+description = "Compact DE432s planetary ephemeris and pinned support kernels."
+members = ["de432s", "pinned_leapseconds", "pck00011"]
+ordered = true
+purpose = "Compact legacy planetary ephemeris"
+
+[[bundle]]
+id = "de435_standard"
+title = "DE435 standard bundle"
+description = "DE435 planetary ephemeris and pinned support kernels."
+members = ["de435", "pinned_leapseconds", "pck00011"]
+ordered = true
+purpose = "Legacy planetary ephemeris"
+
+[[bundle]]
+id = "de438_standard"
+title = "DE438 standard bundle"
+description = "DE438 planetary ephemeris and pinned support kernels."
+members = ["de438", "pinned_leapseconds", "pck00011"]
+ordered = true
+purpose = "Legacy planetary ephemeris"
+
+[[bundle]]
+id = "de440_standard"
+title = "Compact DE440 standard bundle"
+description = "Recommended compact DE440s selection and pinned support kernels."
+members = ["de440s", "pinned_leapseconds", "pck00011", "gm_de440"]
+ordered = true
+purpose = "Compact planetary ephemeris"
+
+[[bundle]]
+id = "de440_full"
+title = "Full DE440 bundle"
+description = "Full DE440 kernel and pinned support kernels."
+members = ["de440", "pinned_leapseconds", "pck00011", "gm_de440"]
+ordered = true
+purpose = "Full-span planetary ephemeris"
+
+[[bundle]]
+id = "moon_de440_orientation"
+title = "DE440 lunar orientation"
+description = "Base lunar orientation resources without a global PA/ME association choice."
+members = ["pck00011", "moon_pa_de440", "moon_de440_frames"]
+ordered = true
+purpose = "Lunar orientation"
+
+[[bundle]]
+id = "moon_de440_pa"
+title = "DE440 lunar principal-axis association"
+description = "Lunar orientation plus the optional principal-axis association kernel."
+members = ["pck00011", "moon_pa_de440", "moon_de440_frames", "moon_assoc_pa"]
+ordered = true
+purpose = "Lunar principal-axis orientation"
+
+[[bundle]]
+id = "moon_de440_me"
+title = "DE440 lunar mean-Earth association"
+description = "Lunar orientation plus the optional mean-Earth association kernel."
+members = ["pck00011", "moon_pa_de440", "moon_de440_frames", "moon_assoc_me"]
+ordered = true
+purpose = "Lunar mean-Earth orientation"
+
+[[bundle]]
+id = "de440_moon_pa"
+title = "Compact DE440 with lunar PA orientation"
+description = "Ordered planetary and lunar resources with the PA association selected."
+members = ["pinned_leapseconds", "de440s", "pck00011", "gm_de440", "moon_pa_de440", "moon_de440_frames", "moon_assoc_pa"]
+ordered = true
+purpose = "Planetary ephemeris and lunar orientation"
+
+[[bundle]]
+id = "mars_satellites"
+title = "Mars satellite kernels"
+description = "Reviewed compact exact Mars satellite kernel; not a lexical latest alias."
+members = ["mar099s"]
+ordered = true
+purpose = "Mars satellites"
+
+[[bundle]]
+id = "jupiter_satellites"
+title = "Jupiter satellite kernels"
+description = "Exact selected Jupiter kernel and associated name-ID frame kernel."
+members = ["jup349", "jup349_nameid"]
+ordered = true
+purpose = "Jupiter satellites"
+
+[[bundle]]
+id = "saturn_satellites"
+title = "Saturn satellite kernels"
+description = "Complementary current exact Saturn products and name-ID support."
+members = ["sat459", "sat459_nameid", "sat480", "sat480_nameid"]
+ordered = true
+purpose = "Saturn satellites"
+
+[[bundle]]
+id = "uranus_satellites"
+title = "Uranus satellite kernels"
+description = "Multipart ura184 product retained as independently addressable artifacts."
+members = ["ura184_part1", "ura184_part2", "ura184_part3"]
+ordered = true
+purpose = "Uranus satellites"
+
+[[bundle]]
+id = "neptune_satellites"
+title = "Neptune satellite kernels"
+description = "Multipart nep098 product and its exact name-ID support."
+members = ["nep098_part1", "nep098_part2", "nep098_part3", "nep098_nameid"]
+ordered = true
+purpose = "Neptune satellites"
+
+[[bundle]]
+id = "pluto_satellites"
+title = "Pluto satellite kernels"
+description = "Exact selected Pluto-system satellite ephemeris."
+members = ["plu060"]
+ordered = true
+purpose = "Pluto satellites"
+
+[[bundle]]
+id = "earth_gravity_standard"
+title = "Earth gravity standard candidates"
+description = "Intentionally empty until redistribution and exact-source reviews promote models from candidates/gravity.toml."
+members = []
+ordered = true
+purpose = "Gravity model selection policy"
+notes = "No universal best model is implied."
+
+[[bundle]]
+id = "lunar_gravity_standard"
+title = "Lunar gravity standard candidates"
+description = "Intentionally empty until GRAIL product identity and redistribution review are complete."
+members = []
+ordered = true
+purpose = "Lunar gravity model selection policy"
+notes = "Lunar gravity is separate from lunar orientation."
+
+[[bundle]]
+id = "earth_environment_operational"
+title = "Operational Earth environment"
+description = "Ordered live EOP and consolidated space-weather resources."
+members = ["iers_finals2000a", "iers_c04", "gfz_kp_ap", "noaa_swpc_f107"]
+ordered = true
+purpose = "Operational environment inputs"

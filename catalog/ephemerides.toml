@@ -1,0 +1,153 @@
+# Reviewed authoritative metadata. These raw kernels require deterministic
+# packaging and immutable publication before `available` can become true.
+
+[[resource]]
+id = "de430"
+aliases = []
+title = "JPL DE430 planetary ephemeris"
+description = "Authoritative NAIF SPK for JPL DE430."
+category = "ephemeris"
+provider = "naif"
+version = "DE430"
+backend = "artifact"
+artifact_name = "de430"
+available = false
+files = [{ path = "data/de430.bsp", role = "spk", primary = true }]
+source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de430.bsp"
+source_filename = "de430.bsp"
+upstream_checksum_algorithm = "md5"
+upstream_checksum = "91e21181f6a96edbfeb1ff5a419ce095"
+format = "SPICE SPK"
+size_bytes = 119741440
+published_at = "2013-09-03"
+retrieved_at = "2026-07-30"
+citation = "Folkner et al. (2014), The Planetary and Lunar Ephemerides DE430 and DE431."
+license = "NAIF data-use and acknowledgement terms; redistribution review pending"
+redistribution = "unresolved"
+system = "solar system"
+
+[[resource]]
+id = "de432s"
+aliases = []
+title = "JPL DE432s planetary ephemeris"
+description = "Compact authoritative NAIF SPK for JPL DE432."
+category = "ephemeris"
+provider = "naif"
+version = "DE432s"
+backend = "artifact"
+artifact_name = "de432s"
+available = false
+files = [{ path = "data/de432s.bsp", role = "spk", primary = true }]
+source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de432s.bsp"
+source_filename = "de432s.bsp"
+upstream_checksum_algorithm = "md5"
+upstream_checksum = "d66c2153188958472fec67016b4b4e7a"
+format = "SPICE SPK"
+size_bytes = 10895360
+published_at = "2014-05-01"
+retrieved_at = "2026-07-30"
+citation = "NASA/JPL NAIF generic planetary kernels; consult the upstream DE432 technical comments."
+license = "NAIF data-use and acknowledgement terms; redistribution review pending"
+redistribution = "unresolved"
+system = "solar system"
+
+[[resource]]
+id = "de435"
+aliases = []
+title = "JPL DE435 planetary ephemeris"
+description = "Authoritative NAIF SPK for JPL DE435."
+category = "ephemeris"
+provider = "naif"
+version = "DE435"
+backend = "artifact"
+artifact_name = "de435"
+available = false
+files = [{ path = "data/de435.bsp", role = "spk", primary = true }]
+source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de435.bsp"
+source_filename = "de435.bsp"
+upstream_checksum_algorithm = "md5"
+upstream_checksum = "f04d7ae5bbe84ab289c2d08dc54ca1e2"
+format = "SPICE SPK"
+size_bytes = 119769088
+published_at = "2019-01-07"
+retrieved_at = "2026-07-30"
+citation = "NASA/JPL NAIF generic planetary kernels; consult the upstream DE435 technical comments."
+license = "NAIF data-use and acknowledgement terms; redistribution review pending"
+redistribution = "unresolved"
+system = "solar system"
+
+[[resource]]
+id = "de438"
+aliases = []
+title = "JPL DE438 planetary ephemeris"
+description = "Authoritative NAIF SPK for JPL DE438."
+category = "ephemeris"
+provider = "naif"
+version = "DE438"
+backend = "artifact"
+artifact_name = "de438"
+available = false
+files = [{ path = "data/de438.bsp", role = "spk", primary = true }]
+source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de438.bsp"
+source_filename = "de438.bsp"
+upstream_checksum_algorithm = "md5"
+upstream_checksum = "e2c486bd90358158b69d6be9e00339a3"
+format = "SPICE SPK"
+size_bytes = 119769088
+published_at = "2019-08-28"
+retrieved_at = "2026-07-30"
+citation = "NASA/JPL NAIF generic planetary kernels; consult the upstream kernel comments."
+license = "NAIF data-use and acknowledgement terms; redistribution review pending"
+redistribution = "unresolved"
+system = "solar system"
+
+[[resource]]
+id = "de440s"
+aliases = []
+title = "JPL DE440s planetary ephemeris"
+description = "Compact NAIF SPK for JPL DE440; recommended default for most applications."
+category = "ephemeris"
+provider = "naif"
+version = "DE440s"
+backend = "artifact"
+artifact_name = "de440s"
+available = false
+files = [{ path = "data/de440s.bsp", role = "spk", primary = true }]
+source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de440s.bsp"
+source_filename = "de440s.bsp"
+upstream_checksum_algorithm = "md5"
+upstream_checksum = "3917ee56769db332790c751e2168843d"
+format = "SPICE SPK"
+size_bytes = 32726016
+published_at = "2020-12-21"
+retrieved_at = "2026-07-30"
+citation = "Park et al. (2021), The JPL Planetary and Lunar Ephemerides DE440 and DE441."
+license = "NAIF data-use and acknowledgement terms; redistribution review pending"
+redistribution = "unresolved"
+system = "solar system"
+notes = "DE441 is intentionally excluded."
+
+[[resource]]
+id = "de440"
+aliases = []
+title = "JPL DE440 planetary ephemeris"
+description = "Full-span authoritative NAIF SPK for JPL DE440."
+category = "ephemeris"
+provider = "naif"
+version = "DE440"
+backend = "artifact"
+artifact_name = "de440"
+available = false
+files = [{ path = "data/de440.bsp", role = "spk", primary = true }]
+source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de440.bsp"
+source_filename = "de440.bsp"
+upstream_checksum_algorithm = "md5"
+upstream_checksum = "c9d581bfd84209dbeee8b1583939b148"
+format = "SPICE SPK"
+size_bytes = 119799808
+published_at = "2020-12-21"
+retrieved_at = "2026-07-30"
+citation = "Park et al. (2021), The JPL Planetary and Lunar Ephemerides DE440 and DE441."
+license = "NAIF data-use and acknowledgement terms; redistribution review pending"
+redistribution = "unresolved"
+system = "solar system"

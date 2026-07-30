@@ -1,0 +1,4 @@
+resource_id = "fixture_artifact"
+provider = "AstrodynamicsResources.jl tests"
+license = "CC0-1.0"
+source_sha256 = "fixture-computed-at-test-time"

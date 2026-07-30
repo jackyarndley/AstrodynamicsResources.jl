@@ -1,0 +1,165 @@
+[[resource]]
+id = "gfz_kp_ap"
+aliases = []
+title = "GFZ Kp and ap nowcast"
+description = "Authoritative rolling geomagnetic Kp/ap product with associated daily indices."
+category = "space_weather"
+provider = "gfz"
+version = "rolling"
+backend = "scratch"
+key = "gfz_kp_ap"
+urls = ["https://kp.gfz.de/fileadmin/files_for_gfz_cms/Kp_ap_Ap_SN_F107_nowcast.txt"]
+ttl_seconds = 900
+files = [{ path = "Kp_ap_Ap_SN_F107_nowcast.txt", role = "space_weather", primary = true }]
+source_filename = "Kp_ap_Ap_SN_F107_nowcast.txt"
+format = "fixed-width ASCII"
+minimum_size_bytes = 1000
+update_strategy = "conditional_http"
+allow_stale = true
+conditional_requests = true
+citation = "Matzka et al. (2021), doi:10.1029/2020SW002641."
+license = "CC BY 4.0; embedded SILSO sunspot values CC BY-NC 4.0"
+redistribution = "cache only"
+
+[[resource]]
+id = "gfz_f107"
+aliases = []
+title = "GFZ consolidated F10.7 solar flux"
+description = "F10.7 values within the authoritative GFZ geomagnetic and solar index product."
+category = "space_weather"
+provider = "gfz"
+version = "rolling"
+backend = "scratch"
+key = "gfz_f107"
+urls = ["https://kp.gfz.de/fileadmin/files_for_gfz_cms/Kp_ap_Ap_SN_F107_since_1932.txt"]
+ttl_seconds = 3600
+files = [{ path = "Kp_ap_Ap_SN_F107_since_1932.txt", role = "solar_flux", primary = true }]
+source_filename = "Kp_ap_Ap_SN_F107_since_1932.txt"
+format = "fixed-width ASCII"
+minimum_size_bytes = 100000
+update_strategy = "conditional_http"
+allow_stale = true
+conditional_requests = true
+citation = "GFZ Helmholtz Centre for Geosciences; see product header."
+license = "CC BY 4.0; embedded SILSO sunspot values CC BY-NC 4.0"
+redistribution = "cache only"
+
+[[resource]]
+id = "silso_daily_sunspots"
+aliases = []
+title = "SILSO daily total sunspot number"
+description = "Daily total sunspot number version 2.0 from WDC-SILSO."
+category = "space_weather"
+provider = "silso"
+version = "2.0 rolling"
+backend = "scratch"
+key = "silso_daily_sunspots"
+urls = ["https://www.sidc.be/SILSO/DATA/SN_d_tot_V2.0.txt"]
+ttl_seconds = 43200
+files = [{ path = "SN_d_tot_V2.0.txt", role = "sunspots", primary = true }]
+source_filename = "SN_d_tot_V2.0.txt"
+format = "ASCII"
+minimum_size_bytes = 100000
+update_strategy = "conditional_http"
+allow_stale = true
+conditional_requests = true
+citation = "WDC-SILSO, Royal Observatory of Belgium, Brussels."
+license = "CC BY-NC 4.0"
+redistribution = "cache only"
+
+[[resource]]
+id = "noaa_swpc_f107"
+aliases = []
+title = "NOAA SWPC F10.7 cm flux"
+description = "Current F10.7 cm solar radio flux from NOAA SWPC."
+category = "space_weather"
+provider = "noaa_swpc"
+version = "rolling"
+backend = "scratch"
+key = "noaa_swpc_f107"
+urls = ["https://services.swpc.noaa.gov/json/f107_cm_flux.json"]
+ttl_seconds = 3600
+files = [{ path = "f107_cm_flux.json", role = "solar_flux", primary = true }]
+source_filename = "f107_cm_flux.json"
+format = "JSON"
+expected_content_type = "application/json"
+minimum_size_bytes = 1000
+update_strategy = "conditional_http"
+allow_stale = true
+conditional_requests = true
+citation = "NOAA Space Weather Prediction Center."
+license = "U.S. government work; provider terms apply"
+redistribution = "cache only"
+
+[[resource]]
+id = "noaa_swpc_planetary_k"
+aliases = []
+title = "NOAA SWPC planetary K index"
+description = "One-minute planetary K-index product from NOAA SWPC."
+category = "space_weather"
+provider = "noaa_swpc"
+version = "rolling"
+backend = "scratch"
+key = "noaa_swpc_planetary_k"
+urls = ["https://services.swpc.noaa.gov/json/planetary_k_index_1m.json"]
+ttl_seconds = 900
+files = [{ path = "planetary_k_index_1m.json", role = "geomagnetic_index", primary = true }]
+source_filename = "planetary_k_index_1m.json"
+format = "JSON"
+expected_content_type = "application/json"
+minimum_size_bytes = 1000
+update_strategy = "conditional_http"
+allow_stale = true
+conditional_requests = true
+citation = "NOAA Space Weather Prediction Center."
+license = "U.S. government work; provider terms apply"
+redistribution = "cache only"
+
+[[resource]]
+id = "noaa_swpc_45_day_forecast"
+aliases = []
+title = "NOAA SWPC 45-day forecast"
+description = "Rolling 45-day solar and geomagnetic forecast."
+category = "space_weather"
+provider = "noaa_swpc"
+version = "rolling"
+backend = "scratch"
+key = "noaa_swpc_45_day_forecast"
+urls = ["https://services.swpc.noaa.gov/json/45-day-forecast.json"]
+ttl_seconds = 21600
+files = [{ path = "45-day-forecast.json", role = "forecast", primary = true }]
+source_filename = "45-day-forecast.json"
+format = "JSON"
+expected_content_type = "application/json"
+minimum_size_bytes = 1000
+update_strategy = "conditional_http"
+allow_stale = true
+conditional_requests = true
+citation = "NOAA Space Weather Prediction Center."
+license = "U.S. government work; provider terms apply"
+redistribution = "cache only"
+
+[[resource]]
+id = "celestrak_space_weather_all"
+aliases = []
+title = "CelesTrak consolidated space weather"
+description = "Convenient aggregation of observed and predicted space weather."
+category = "space_weather"
+provider = "celestrak"
+version = "rolling"
+backend = "scratch"
+key = "celestrak_space_weather_all"
+urls = ["https://celestrak.org/SpaceData/SW-All.csv"]
+ttl_seconds = 21600
+files = [{ path = "SW-All.csv", role = "space_weather", primary = true }]
+source_filename = "SW-All.csv"
+format = "CSV"
+minimum_size_bytes = 100000
+update_strategy = "conditional_http"
+allow_stale = true
+conditional_requests = true
+citation = "Kelso, Using EOP and Space Weather Data for Satellite Operations."
+license = "Provider terms apply"
+redistribution = "cache only"
+aggregator = true
+

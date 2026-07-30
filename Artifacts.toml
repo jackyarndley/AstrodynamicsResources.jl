@@ -1,0 +1,2 @@
+# Production artifact bindings are added only after deterministic packaging and
+# publication. Tests bind a tiny fixture artifact in an isolated temporary file.

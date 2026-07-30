@@ -1,0 +1,74 @@
+name: Build immutable resource
+
+on:
+  workflow_dispatch:
+    inputs:
+      resource_id:
+        description: Exact reviewed resource ID
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: julia-actions/setup-julia@v2
+        with:
+          version: "1"
+      - name: Instantiate packaging environment
+        run: |
+          julia --project=scripts -e 'using Pkg; Pkg.develop(path="."); Pkg.instantiate()'
+      - name: Build and verify deterministic artifact
+        run: julia --project=scripts scripts/build_artifact.jl "${{ inputs.resource_id }}"
+      - name: Read build identity
+        id: identity
+        shell: bash
+        run: |
+          REPORT=$(find build/reports/artifacts -name '*.toml' -type f | head -1)
+          echo "report=$REPORT" >> "$GITHUB_OUTPUT"
+          julia --project=. -e '
+            using TOML
+            r = TOML.parsefile(ARGS[1])
+            println("source_sha=", r["source_sha256"])
+            println("archive=", r["archive_path"])
+          ' "$REPORT" >> "$GITHUB_OUTPUT"
+      - name: Publish immutable release asset
+        id: publish
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          TAG="resource-${{ inputs.resource_id }}-${{ steps.identity.outputs.source_sha }}"
+          TAG="${TAG:0:80}"
+          ASSET="${{ steps.identity.outputs.archive }}"
+          NAME=$(basename "$ASSET")
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            if gh release view "$TAG" --json assets --jq ".assets[].name" | grep -Fx "$NAME"; then
+              echo "Refusing to overwrite existing immutable asset $TAG/$NAME" >&2
+              exit 1
+            fi
+          else
+            gh release create "$TAG" --title "$TAG" --notes "Immutable astrodynamics resource asset."
+          fi
+          gh release upload "$TAG" "$ASSET"
+          URL="https://github.com/${GITHUB_REPOSITORY}/releases/download/${TAG}/${NAME}"
+          echo "url=$URL" >> "$GITHUB_OUTPUT"
+      - name: Bind verified lazy artifact
+        run: |
+          julia --project=. scripts/update_artifacts_toml.jl \
+            "${{ steps.identity.outputs.report }}" \
+            "${{ steps.publish.outputs.url }}"
+          julia --project=. scripts/generate_pending_builds.jl
+          julia --project=. scripts/validate_catalog.jl
+      - name: Open binding pull request
+        uses: peter-evans/create-pull-request@v8
+        with:
+          branch: automation/artifact-${{ inputs.resource_id }}
+          title: "Bind immutable artifact ${{ inputs.resource_id }}"
+          commit-message: "Bind immutable artifact ${{ inputs.resource_id }}"
+          body: "Adds reviewed archive and tree hashes after immutable release publication."

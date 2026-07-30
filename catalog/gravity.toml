@@ -1,0 +1,4 @@
+# No gravity coefficient file is exposed as a ResourceSpec yet. The requested
+# models are tracked in candidates/gravity.toml until an authoritative byte
+# stream, checksum, citation, and redistribution decision are all reviewed.
+
