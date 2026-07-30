@@ -42,7 +42,9 @@ jobs:
         uses: actions/cache@v6.1.0
         with:
           path: build/source-cache
-          key: source-${{ inputs.resource_id }}-${{ hashFiles('catalog/*.toml') }}
+          key: source-${{ inputs.resource_id }}
+          restore-keys: |
+            source-${{ inputs.resource_id }}-
       - name: Build and verify deterministic artifact
         if: inputs.mode == 'build'
         run: julia --project=scripts scripts/build_artifact.jl "${{ inputs.resource_id }}"
