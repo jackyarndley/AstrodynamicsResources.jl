@@ -25,3 +25,7 @@ releases remain excluded by project policy.
 
 Production immutable publication is still pending. The package does not claim
 that these resources are materializable until release assets and hashes exist.
+All currently catalogued immutable resources are unmodified kernels obtained
+from NAIF's generic-kernel tree. NAIF explicitly permits redistribution of
+NAIF-distributed kernels while they remain unmodified; catalogue metadata links
+the governing policy and preserves the required provenance.

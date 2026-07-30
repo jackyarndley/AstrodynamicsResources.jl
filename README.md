@@ -23,12 +23,14 @@ not download scientific data.
 
 ## Current publication state
 
-The package framework and live-resource backend are operational. Production
-immutable resources are catalogued but deliberately marked unavailable until
-their licensing review, deterministic archives, release assets, SHA-256
-digests, and Julia tree hashes are published. Calling `resource_path(:de440s)`
-therefore gives an actionable pending-publication error instead of silently
-downloading an unverified raw file. See
+The package framework and live-resource backend are operational. NAIF permits
+redistribution of its kernels while they remain unmodified; the package
+preserves those source bytes exactly and records the applicable terms.
+Production immutable resources are nevertheless marked unavailable until their
+independent SHA-256 review, deterministic archives, release assets, and Julia
+tree hashes are published. Calling `resource_path(:de440s)` therefore gives an
+actionable pending-publication error instead of silently downloading an
+unverified raw file. See
 [`catalog/pending_builds.toml`](catalog/pending_builds.toml).
 
 No production scientific artifact has been published from this repository.
@@ -70,9 +72,13 @@ cached = resource_path(:iers_c04; stale_ok=true)
 ## Data providers and non-endorsement
 
 Dataset metadata preserves provider attribution and citations. Package code is
-MIT licensed, but scientific datasets retain their own terms. This independent
-project is not affiliated with or endorsed by NASA, JPL, NAIF, IERS, GFZ,
-NOAA, SILSO, CelesTrak, or any other data provider.
+MIT licensed, but scientific datasets retain their own terms. NAIF kernel
+redistribution follows the [NAIF Rules Regarding Use of
+SPICE](https://naif.jpl.nasa.gov/naif/rules.html): redistributed kernels must
+remain unmodified, and acknowledgement of SPICE/NAIF/PDS and the producing
+teams is encouraged. This independent project is not affiliated with or
+endorsed by NASA, JPL, NAIF, IERS, GFZ, NOAA, SILSO, CelesTrak, or any other
+data provider.
 
 See the [documentation](docs/src/index.md), [contribution
 guide](docs/src/contributing.md), and [changelog](CHANGELOG.md).

@@ -1,6 +1,12 @@
 # Changelog
 
-## 0.1.0 - Unreleased
+## 0.1.1 - Unreleased
+
+- Audited all immutable catalogue entries against the NAIF kernel
+  redistribution policy and recorded the unmodified-kernel condition and
+  policy URL.
+
+## 0.1.0 - 2026-07-30
 
 - Added catalogue-only resource discovery and ordered logical bundles.
 - Added dynamic lazy-artifact resolution through Julia's public artifact APIs.

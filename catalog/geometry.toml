@@ -1,6 +1,6 @@
 [defaults]
 aliases = []
-description = "Exact generic NAIF DSK source file, pending redistribution review and deterministic publication."
+description = "Exact generic NAIF DSK source file, pending checksum review and deterministic publication."
 category = "geometry"
 provider = "naif"
 backend = "artifact"
@@ -8,8 +8,10 @@ available = false
 format = "SPICE DSK"
 retrieved_at = "2026-07-30"
 citation = "NASA/JPL NAIF generic DSK collection; product comments contain model-specific citations."
-license = "Redistribution review pending"
-redistribution = "unresolved"
+license = "NAIF Rules Regarding Use of SPICE"
+redistribution = "permitted"
+redistribution_url = "https://naif.jpl.nasa.gov/naif/rules.html"
+redistribution_conditions = "Redistribution is permitted only while the NAIF-distributed kernel remains unmodified; acknowledgement of SPICE/NAIF/PDS and the kernel-producing teams is encouraged."
 kernel_type = "DSK"
 
 [[resource]]
@@ -116,4 +118,3 @@ source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/dsk/satellites/
 source_filename = "phobos_3_3.bds"
 size_bytes = 16777216
 body = "Phobos"
-

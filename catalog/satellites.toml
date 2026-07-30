@@ -11,8 +11,10 @@ available = false
 format = "SPICE SPK"
 retrieved_at = "2026-07-30"
 citation = "NASA/JPL NAIF generic satellite kernels; consult the kernel comment file for technical attribution."
-license = "NAIF data-use and acknowledgement terms; redistribution review pending"
-redistribution = "unresolved"
+license = "NAIF Rules Regarding Use of SPICE"
+redistribution = "permitted"
+redistribution_url = "https://naif.jpl.nasa.gov/naif/rules.html"
+redistribution_conditions = "Redistribution is permitted only while the NAIF-distributed kernel remains unmodified; acknowledgement of SPICE/NAIF/PDS and the kernel-producing teams is encouraged."
 upstream_checksum_algorithm = "md5"
 
 [[resource]]
@@ -478,8 +480,10 @@ size_bytes = 1331
 retrieved_at = "2026-07-30"
 system = "Jupiter"
 citation = "NASA/JPL NAIF generic kernels."
-license = "NAIF data-use and acknowledgement terms; redistribution review pending"
-redistribution = "unresolved"
+license = "NAIF Rules Regarding Use of SPICE"
+redistribution = "permitted"
+redistribution_url = "https://naif.jpl.nasa.gov/naif/rules.html"
+redistribution_conditions = "Redistribution is permitted only while the NAIF-distributed kernel remains unmodified; acknowledgement of SPICE/NAIF/PDS and the kernel-producing teams is encouraged."
 
 [[resource]]
 id = "sat459_nameid"
@@ -499,8 +503,10 @@ size_bytes = 1638
 retrieved_at = "2026-07-30"
 system = "Saturn"
 citation = "NASA/JPL NAIF generic kernels."
-license = "NAIF data-use and acknowledgement terms; redistribution review pending"
-redistribution = "unresolved"
+license = "NAIF Rules Regarding Use of SPICE"
+redistribution = "permitted"
+redistribution_url = "https://naif.jpl.nasa.gov/naif/rules.html"
+redistribution_conditions = "Redistribution is permitted only while the NAIF-distributed kernel remains unmodified; acknowledgement of SPICE/NAIF/PDS and the kernel-producing teams is encouraged."
 
 [[resource]]
 id = "sat480_nameid"
@@ -520,8 +526,10 @@ size_bytes = 320
 retrieved_at = "2026-07-30"
 system = "Saturn"
 citation = "NASA/JPL NAIF generic kernels."
-license = "NAIF data-use and acknowledgement terms; redistribution review pending"
-redistribution = "unresolved"
+license = "NAIF Rules Regarding Use of SPICE"
+redistribution = "permitted"
+redistribution_url = "https://naif.jpl.nasa.gov/naif/rules.html"
+redistribution_conditions = "Redistribution is permitted only while the NAIF-distributed kernel remains unmodified; acknowledgement of SPICE/NAIF/PDS and the kernel-producing teams is encouraged."
 
 [[resource]]
 id = "nep098_nameid"
@@ -541,6 +549,7 @@ size_bytes = 330
 retrieved_at = "2026-07-30"
 system = "Neptune"
 citation = "NASA/JPL NAIF generic kernels."
-license = "NAIF data-use and acknowledgement terms; redistribution review pending"
-redistribution = "unresolved"
-
+license = "NAIF Rules Regarding Use of SPICE"
+redistribution = "permitted"
+redistribution_url = "https://naif.jpl.nasa.gov/naif/rules.html"
+redistribution_conditions = "Redistribution is permitted only while the NAIF-distributed kernel remains unmodified; acknowledgement of SPICE/NAIF/PDS and the kernel-producing teams is encouraged."

@@ -3,7 +3,7 @@ artifact_name = "de430"
 has_source_sha256 = false
 id = "de430"
 ready = false
-redistribution = "unresolved"
+redistribution = "permitted"
 source_filename = "de430.bsp"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de430.bsp"
 [[pending]]
@@ -11,7 +11,7 @@ artifact_name = "de432s"
 has_source_sha256 = false
 id = "de432s"
 ready = false
-redistribution = "unresolved"
+redistribution = "permitted"
 source_filename = "de432s.bsp"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de432s.bsp"
 [[pending]]
@@ -19,7 +19,7 @@ artifact_name = "de435"
 has_source_sha256 = false
 id = "de435"
 ready = false
-redistribution = "unresolved"
+redistribution = "permitted"
 source_filename = "de435.bsp"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de435.bsp"
 [[pending]]
@@ -27,7 +27,7 @@ artifact_name = "de438"
 has_source_sha256 = false
 id = "de438"
 ready = false
-redistribution = "unresolved"
+redistribution = "permitted"
 source_filename = "de438.bsp"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de438.bsp"
 [[pending]]
@@ -35,7 +35,7 @@ artifact_name = "de440"
 has_source_sha256 = false
 id = "de440"
 ready = false
-redistribution = "unresolved"
+redistribution = "permitted"
 source_filename = "de440.bsp"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de440.bsp"
 [[pending]]
@@ -43,15 +43,15 @@ artifact_name = "de440s"
 has_source_sha256 = false
 id = "de440s"
 ready = false
-redistribution = "unresolved"
+redistribution = "permitted"
 source_filename = "de440s.bsp"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de440s.bsp"
 [[pending]]
 artifact_name = "earth_fixed"
 has_source_sha256 = true
 id = "earth_fixed"
-ready = false
-redistribution = "unresolved"
+ready = true
+redistribution = "permitted"
 source_filename = "earth_fixed.tf"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/earth_fixed.tf"
 [[pending]]
@@ -59,7 +59,7 @@ artifact_name = "eros_near_msi_512q"
 has_source_sha256 = false
 id = "eros_near_msi_512q"
 ready = false
-redistribution = "unresolved"
+redistribution = "permitted"
 source_filename = "near-a-msi-5-erosshape-v1_0_512q.bds"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/dsk/asteroids/eros/near-a-msi-5-erosshape-v1_0_512q.bds"
 [[pending]]
@@ -67,23 +67,23 @@ artifact_name = "eros_near_msi_64q"
 has_source_sha256 = false
 id = "eros_near_msi_64q"
 ready = false
-redistribution = "unresolved"
+redistribution = "permitted"
 source_filename = "near-a-msi-5-erosshape-v1_0_64q.bds"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/dsk/asteroids/eros/near-a-msi-5-erosshape-v1_0_64q.bds"
 [[pending]]
 artifact_name = "geophysical"
 has_source_sha256 = true
 id = "geophysical"
-ready = false
-redistribution = "unresolved"
+ready = true
+redistribution = "permitted"
 source_filename = "geophysical.ker"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/geophysical.ker"
 [[pending]]
 artifact_name = "gm_de440"
 has_source_sha256 = true
 id = "gm_de440"
-ready = false
-redistribution = "unresolved"
+ready = true
+redistribution = "permitted"
 source_filename = "gm_de440.tpc"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/gm_de440.tpc"
 [[pending]]
@@ -91,7 +91,7 @@ artifact_name = "itokawa_hayabusa_amica_512q"
 has_source_sha256 = false
 id = "itokawa_hayabusa_amica_512q"
 ready = false
-redistribution = "unresolved"
+redistribution = "permitted"
 source_filename = "hay_a_amica_5_itokawashape_v1_0_512q.bds"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/dsk/asteroids/itokawa/hay_a_amica_5_itokawashape_v1_0_512q.bds"
 [[pending]]
@@ -99,7 +99,7 @@ artifact_name = "itokawa_hayabusa_amica_64q"
 has_source_sha256 = false
 id = "itokawa_hayabusa_amica_64q"
 ready = false
-redistribution = "unresolved"
+redistribution = "permitted"
 source_filename = "hay_a_amica_5_itokawashape_v1_0_64q.bds"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/dsk/asteroids/itokawa/hay_a_amica_5_itokawashape_v1_0_64q.bds"
 [[pending]]
@@ -107,7 +107,7 @@ artifact_name = "jup347"
 has_source_sha256 = false
 id = "jup347"
 ready = false
-redistribution = "unresolved"
+redistribution = "permitted"
 source_filename = "jup347.bsp"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/jup347.bsp"
 [[pending]]
@@ -115,7 +115,7 @@ artifact_name = "jup348"
 has_source_sha256 = false
 id = "jup348"
 ready = false
-redistribution = "unresolved"
+redistribution = "permitted"
 source_filename = "jup348.bsp"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/jup348.bsp"
 [[pending]]
@@ -123,7 +123,7 @@ artifact_name = "jup349"
 has_source_sha256 = false
 id = "jup349"
 ready = false
-redistribution = "unresolved"
+redistribution = "permitted"
 source_filename = "jup349.bsp"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/jup349.bsp"
 [[pending]]
@@ -131,7 +131,7 @@ artifact_name = "jup349_nameid"
 has_source_sha256 = false
 id = "jup349_nameid"
 ready = false
-redistribution = "unresolved"
+redistribution = "permitted"
 source_filename = "jup349_nameid.tf"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/fk/satellites/jup349_nameid.tf"
 [[pending]]
@@ -139,7 +139,7 @@ artifact_name = "jup365"
 has_source_sha256 = false
 id = "jup365"
 ready = false
-redistribution = "unresolved"
+redistribution = "permitted"
 source_filename = "jup365.bsp"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/jup365.bsp"
 [[pending]]
@@ -147,7 +147,7 @@ artifact_name = "mar099"
 has_source_sha256 = false
 id = "mar099"
 ready = false
-redistribution = "unresolved"
+redistribution = "permitted"
 source_filename = "mar099.bsp"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/mar099.bsp"
 [[pending]]
@@ -155,31 +155,31 @@ artifact_name = "mar099s"
 has_source_sha256 = false
 id = "mar099s"
 ready = false
-redistribution = "unresolved"
+redistribution = "permitted"
 source_filename = "mar099s.bsp"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/mar099s.bsp"
 [[pending]]
 artifact_name = "moon_assoc_me"
 has_source_sha256 = true
 id = "moon_assoc_me"
-ready = false
-redistribution = "unresolved"
+ready = true
+redistribution = "permitted"
 source_filename = "moon_assoc_me.tf"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/fk/satellites/moon_assoc_me.tf"
 [[pending]]
 artifact_name = "moon_assoc_pa"
 has_source_sha256 = true
 id = "moon_assoc_pa"
-ready = false
-redistribution = "unresolved"
+ready = true
+redistribution = "permitted"
 source_filename = "moon_assoc_pa.tf"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/fk/satellites/moon_assoc_pa.tf"
 [[pending]]
 artifact_name = "moon_de440_250416_frames"
 has_source_sha256 = true
 id = "moon_de440_250416_frames"
-ready = false
-redistribution = "unresolved"
+ready = true
+redistribution = "permitted"
 source_filename = "moon_de440_250416.tf"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/fk/satellites/moon_de440_250416.tf"
 [[pending]]
@@ -187,15 +187,15 @@ artifact_name = "moon_pa_de440_200625"
 has_source_sha256 = false
 id = "moon_pa_de440_200625"
 ready = false
-redistribution = "unresolved"
+redistribution = "permitted"
 source_filename = "moon_pa_de440_200625.bpc"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/moon_pa_de440_200625.bpc"
 [[pending]]
 artifact_name = "naif0012"
 has_source_sha256 = true
 id = "naif0012"
-ready = false
-redistribution = "unresolved"
+ready = true
+redistribution = "permitted"
 source_filename = "naif0012.tls"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/lsk/naif0012.tls"
 [[pending]]
@@ -203,7 +203,7 @@ artifact_name = "nep097"
 has_source_sha256 = false
 id = "nep097"
 ready = false
-redistribution = "unresolved"
+redistribution = "permitted"
 source_filename = "nep097.bsp"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/nep097.bsp"
 [[pending]]
@@ -211,7 +211,7 @@ artifact_name = "nep097xl_801"
 has_source_sha256 = false
 id = "nep097xl_801"
 ready = false
-redistribution = "unresolved"
+redistribution = "permitted"
 source_filename = "nep097xl-801.bsp"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/nep097xl-801.bsp"
 [[pending]]
@@ -219,7 +219,7 @@ artifact_name = "nep097xl_899"
 has_source_sha256 = false
 id = "nep097xl_899"
 ready = false
-redistribution = "unresolved"
+redistribution = "permitted"
 source_filename = "nep097xl-899.bsp"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/nep097xl-899.bsp"
 [[pending]]
@@ -227,7 +227,7 @@ artifact_name = "nep098_nameid"
 has_source_sha256 = false
 id = "nep098_nameid"
 ready = false
-redistribution = "unresolved"
+redistribution = "permitted"
 source_filename = "nep098_nameid.tf"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/fk/satellites/nep098_nameid.tf"
 [[pending]]
@@ -235,7 +235,7 @@ artifact_name = "nep098_part1"
 has_source_sha256 = false
 id = "nep098_part1"
 ready = false
-redistribution = "unresolved"
+redistribution = "permitted"
 source_filename = "nep098_part-1.bsp"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/nep098_part-1.bsp"
 [[pending]]
@@ -243,7 +243,7 @@ artifact_name = "nep098_part2"
 has_source_sha256 = false
 id = "nep098_part2"
 ready = false
-redistribution = "unresolved"
+redistribution = "permitted"
 source_filename = "nep098_part-2.bsp"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/nep098_part-2.bsp"
 [[pending]]
@@ -251,7 +251,7 @@ artifact_name = "nep098_part3"
 has_source_sha256 = false
 id = "nep098_part3"
 ready = false
-redistribution = "unresolved"
+redistribution = "permitted"
 source_filename = "nep098_part-3.bsp"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/nep098_part-3.bsp"
 [[pending]]
@@ -259,7 +259,7 @@ artifact_name = "nep101xl"
 has_source_sha256 = false
 id = "nep101xl"
 ready = false
-redistribution = "unresolved"
+redistribution = "permitted"
 source_filename = "nep101xl.bsp"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/nep101xl.bsp"
 [[pending]]
@@ -267,7 +267,7 @@ artifact_name = "nep101xl_802"
 has_source_sha256 = false
 id = "nep101xl_802"
 ready = false
-redistribution = "unresolved"
+redistribution = "permitted"
 source_filename = "nep101xl-802.bsp"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/nep101xl-802.bsp"
 [[pending]]
@@ -275,7 +275,7 @@ artifact_name = "nep104"
 has_source_sha256 = false
 id = "nep104"
 ready = false
-redistribution = "unresolved"
+redistribution = "permitted"
 source_filename = "nep104.bsp"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/nep104.bsp"
 [[pending]]
@@ -283,15 +283,15 @@ artifact_name = "nep105"
 has_source_sha256 = false
 id = "nep105"
 ready = false
-redistribution = "unresolved"
+redistribution = "permitted"
 source_filename = "nep105.bsp"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/nep105.bsp"
 [[pending]]
 artifact_name = "pck00011"
 has_source_sha256 = true
 id = "pck00011"
-ready = false
-redistribution = "unresolved"
+ready = true
+redistribution = "permitted"
 source_filename = "pck00011.tpc"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/pck00011.tpc"
 [[pending]]
@@ -299,7 +299,7 @@ artifact_name = "phobos512"
 has_source_sha256 = false
 id = "phobos512"
 ready = false
-redistribution = "unresolved"
+redistribution = "permitted"
 source_filename = "phobos512.bds"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/dsk/satellites/phobos512.bds"
 [[pending]]
@@ -307,7 +307,7 @@ artifact_name = "phobos_2014_09_22"
 has_source_sha256 = false
 id = "phobos_2014_09_22"
 ready = false
-redistribution = "unresolved"
+redistribution = "permitted"
 source_filename = "phobos_2014_09_22.bds"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/dsk/satellites/phobos_2014_09_22.bds"
 [[pending]]
@@ -315,7 +315,7 @@ artifact_name = "phobos_3_3"
 has_source_sha256 = false
 id = "phobos_3_3"
 ready = false
-redistribution = "unresolved"
+redistribution = "permitted"
 source_filename = "phobos_3_3.bds"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/dsk/satellites/phobos_3_3.bds"
 [[pending]]
@@ -323,7 +323,7 @@ artifact_name = "plu060"
 has_source_sha256 = false
 id = "plu060"
 ready = false
-redistribution = "unresolved"
+redistribution = "permitted"
 source_filename = "plu060.bsp"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/plu060.bsp"
 [[pending]]
@@ -331,7 +331,7 @@ artifact_name = "sat393_daphnis"
 has_source_sha256 = false
 id = "sat393_daphnis"
 ready = false
-redistribution = "unresolved"
+redistribution = "permitted"
 source_filename = "sat393_daphnis.bsp"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/sat393_daphnis.bsp"
 [[pending]]
@@ -339,7 +339,7 @@ artifact_name = "sat415"
 has_source_sha256 = false
 id = "sat415"
 ready = false
-redistribution = "unresolved"
+redistribution = "permitted"
 source_filename = "sat415.bsp"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/sat415.bsp"
 [[pending]]
@@ -347,7 +347,7 @@ artifact_name = "sat441"
 has_source_sha256 = false
 id = "sat441"
 ready = false
-redistribution = "unresolved"
+redistribution = "permitted"
 source_filename = "sat441.bsp"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/sat441.bsp"
 [[pending]]
@@ -355,7 +355,7 @@ artifact_name = "sat441xl_part1"
 has_source_sha256 = false
 id = "sat441xl_part1"
 ready = false
-redistribution = "unresolved"
+redistribution = "permitted"
 source_filename = "sat441xl_part-1.bsp"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/sat441xl_part-1.bsp"
 [[pending]]
@@ -363,7 +363,7 @@ artifact_name = "sat441xl_part2"
 has_source_sha256 = false
 id = "sat441xl_part2"
 ready = false
-redistribution = "unresolved"
+redistribution = "permitted"
 source_filename = "sat441xl_part-2.bsp"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/sat441xl_part-2.bsp"
 [[pending]]
@@ -371,7 +371,7 @@ artifact_name = "sat455"
 has_source_sha256 = false
 id = "sat455"
 ready = false
-redistribution = "unresolved"
+redistribution = "permitted"
 source_filename = "sat455.bsp"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/sat455.bsp"
 [[pending]]
@@ -379,7 +379,7 @@ artifact_name = "sat456"
 has_source_sha256 = false
 id = "sat456"
 ready = false
-redistribution = "unresolved"
+redistribution = "permitted"
 source_filename = "sat456.bsp"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/sat456.bsp"
 [[pending]]
@@ -387,7 +387,7 @@ artifact_name = "sat457"
 has_source_sha256 = false
 id = "sat457"
 ready = false
-redistribution = "unresolved"
+redistribution = "permitted"
 source_filename = "sat457.bsp"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/sat457.bsp"
 [[pending]]
@@ -395,7 +395,7 @@ artifact_name = "sat459"
 has_source_sha256 = false
 id = "sat459"
 ready = false
-redistribution = "unresolved"
+redistribution = "permitted"
 source_filename = "sat459.bsp"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/sat459.bsp"
 [[pending]]
@@ -403,7 +403,7 @@ artifact_name = "sat459_nameid"
 has_source_sha256 = false
 id = "sat459_nameid"
 ready = false
-redistribution = "unresolved"
+redistribution = "permitted"
 source_filename = "sat459_nameid.tf"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/fk/satellites/sat459_nameid.tf"
 [[pending]]
@@ -411,7 +411,7 @@ artifact_name = "sat480"
 has_source_sha256 = false
 id = "sat480"
 ready = false
-redistribution = "unresolved"
+redistribution = "permitted"
 source_filename = "sat480.bsp"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/sat480.bsp"
 [[pending]]
@@ -419,7 +419,7 @@ artifact_name = "sat480_nameid"
 has_source_sha256 = false
 id = "sat480_nameid"
 ready = false
-redistribution = "unresolved"
+redistribution = "permitted"
 source_filename = "sat480_nameid.tf"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/fk/satellites/sat480_nameid.tf"
 [[pending]]
@@ -427,7 +427,7 @@ artifact_name = "ura111xl_701"
 has_source_sha256 = false
 id = "ura111xl_701"
 ready = false
-redistribution = "unresolved"
+redistribution = "permitted"
 source_filename = "ura111xl-701.bsp"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/ura111xl-701.bsp"
 [[pending]]
@@ -435,7 +435,7 @@ artifact_name = "ura111xl_702"
 has_source_sha256 = false
 id = "ura111xl_702"
 ready = false
-redistribution = "unresolved"
+redistribution = "permitted"
 source_filename = "ura111xl-702.bsp"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/ura111xl-702.bsp"
 [[pending]]
@@ -443,7 +443,7 @@ artifact_name = "ura111xl_703"
 has_source_sha256 = false
 id = "ura111xl_703"
 ready = false
-redistribution = "unresolved"
+redistribution = "permitted"
 source_filename = "ura111xl-703.bsp"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/ura111xl-703.bsp"
 [[pending]]
@@ -451,7 +451,7 @@ artifact_name = "ura111xl_704"
 has_source_sha256 = false
 id = "ura111xl_704"
 ready = false
-redistribution = "unresolved"
+redistribution = "permitted"
 source_filename = "ura111xl-704.bsp"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/ura111xl-704.bsp"
 [[pending]]
@@ -459,7 +459,7 @@ artifact_name = "ura111xl_705"
 has_source_sha256 = false
 id = "ura111xl_705"
 ready = false
-redistribution = "unresolved"
+redistribution = "permitted"
 source_filename = "ura111xl-705.bsp"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/ura111xl-705.bsp"
 [[pending]]
@@ -467,7 +467,7 @@ artifact_name = "ura111xl_799"
 has_source_sha256 = false
 id = "ura111xl_799"
 ready = false
-redistribution = "unresolved"
+redistribution = "permitted"
 source_filename = "ura111xl-799.bsp"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/ura111xl-799.bsp"
 [[pending]]
@@ -475,7 +475,7 @@ artifact_name = "ura116xl"
 has_source_sha256 = false
 id = "ura116xl"
 ready = false
-redistribution = "unresolved"
+redistribution = "permitted"
 source_filename = "ura116xl.bsp"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/ura116xl.bsp"
 [[pending]]
@@ -483,7 +483,7 @@ artifact_name = "ura184_part1"
 has_source_sha256 = false
 id = "ura184_part1"
 ready = false
-redistribution = "unresolved"
+redistribution = "permitted"
 source_filename = "ura184_part-1.bsp"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/ura184_part-1.bsp"
 [[pending]]
@@ -491,7 +491,7 @@ artifact_name = "ura184_part2"
 has_source_sha256 = false
 id = "ura184_part2"
 ready = false
-redistribution = "unresolved"
+redistribution = "permitted"
 source_filename = "ura184_part-2.bsp"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/ura184_part-2.bsp"
 [[pending]]
@@ -499,7 +499,7 @@ artifact_name = "ura184_part3"
 has_source_sha256 = false
 id = "ura184_part3"
 ready = false
-redistribution = "unresolved"
+redistribution = "permitted"
 source_filename = "ura184_part-3.bsp"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/ura184_part-3.bsp"
 [[pending]]
@@ -507,7 +507,7 @@ artifact_name = "vesta_gaskell_256"
 has_source_sha256 = false
 id = "vesta_gaskell_256"
 ready = false
-redistribution = "unresolved"
+redistribution = "permitted"
 source_filename = "vesta_gaskell_256.bds"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/dsk/asteroids/vesta/vesta_gaskell_256.bds"
 [[pending]]
@@ -515,6 +515,6 @@ artifact_name = "vesta_thomas_1997"
 has_source_sha256 = false
 id = "vesta_thomas_1997"
 ready = false
-redistribution = "unresolved"
+redistribution = "permitted"
 source_filename = "vesta_thomas_1997.bds"
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/dsk/asteroids/vesta/vesta_thomas_1997.bds"
