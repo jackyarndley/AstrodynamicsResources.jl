@@ -3,7 +3,7 @@ message: "If you use this software, cite the package and each dataset you materi
 title: "AstrodynamicsResources.jl"
 type: software
 version: 0.1.0
-date-released: 2026-07-30
+date-released: 2026-08-03
 license: MIT
 authors:
   - name: "AstrodynamicsResources.jl contributors"

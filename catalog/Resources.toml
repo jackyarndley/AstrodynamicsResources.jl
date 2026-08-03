@@ -1,0 +1,267 @@
+# Add an immutable resource with only these two fields:
+#
+# [[resource]]
+# name = "example"
+# url = "https://provider.example/path/example.dat"
+#
+# Set `live = true` for a rolling resource. Everything else is optional and is
+# derived from the name, URL, and file extension.
+
+[aliases]
+pinned_leapseconds = "naif0012"
+moon_pa_de440 = "moon_pa_de440_200625"
+moon_de440_frames = "moon_de440_250416_frames"
+
+[[resource]]
+name = "de430"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de430.bsp"
+
+[[resource]]
+name = "de432s"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de432s.bsp"
+
+[[resource]]
+name = "de435"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de435.bsp"
+
+[[resource]]
+name = "de438"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de438.bsp"
+
+[[resource]]
+name = "de440"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de440.bsp"
+
+[[resource]]
+name = "de440s"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de440s.bsp"
+
+[[resource]]
+name = "de442"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de442.bsp"
+
+[[resource]]
+name = "de442s"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de442s.bsp"
+
+[[resource]]
+name = "gm_de440"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/gm_de440.tpc"
+
+[[resource]]
+name = "pck00011"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/pck00011.tpc"
+
+[[resource]]
+name = "geophysical"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/geophysical.ker"
+
+[[resource]]
+name = "earth_fixed"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/earth_fixed.tf"
+
+[[resource]]
+name = "naif0012"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/lsk/naif0012.tls"
+
+[[resource]]
+name = "moon_pa_de440_200625"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/moon_pa_de440_200625.bpc"
+metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/moon_pa_de440_200625.cmt"
+
+[[resource]]
+name = "moon_de440_250416_frames"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/fk/satellites/moon_de440_250416.tf"
+
+[[resource]]
+name = "moon_assoc_pa"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/fk/satellites/moon_assoc_pa.tf"
+
+[[resource]]
+name = "moon_assoc_me"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/fk/satellites/moon_assoc_me.tf"
+
+[[resource]]
+name = "mar099s"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/mar099s.bsp"
+
+[[resource]]
+name = "jup348"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/jup348.bsp"
+
+[[resource]]
+name = "jup349"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/jup349.bsp"
+
+[[resource]]
+name = "jup349_nameid"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/fk/satellites/jup349_nameid.tf"
+
+[[resource]]
+name = "sat393_daphnis"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/sat393_daphnis.bsp"
+
+[[resource]]
+name = "sat456"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/sat456.bsp"
+
+[[resource]]
+name = "sat457"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/sat457.bsp"
+
+[[resource]]
+name = "sat459"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/sat459.bsp"
+
+[[resource]]
+name = "sat459_nameid"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/fk/satellites/sat459_nameid.tf"
+
+[[resource]]
+name = "sat480"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/sat480.bsp"
+
+[[resource]]
+name = "sat480_nameid"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/fk/satellites/sat480_nameid.tf"
+
+[[resource]]
+name = "ura184_part1"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/ura184_part-1.bsp"
+
+[[resource]]
+name = "ura184_part2"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/ura184_part-2.bsp"
+
+[[resource]]
+name = "ura184_part3"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/ura184_part-3.bsp"
+
+[[resource]]
+name = "nep097"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/nep097.bsp"
+
+[[resource]]
+name = "nep098_nameid"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/fk/satellites/nep098_nameid.tf"
+
+[[resource]]
+name = "nep105"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/nep105.bsp"
+
+[[resource]]
+name = "plu060"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/plu060.bsp"
+
+[[resource]]
+name = "eros_near_msi_512q"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/dsk/asteroids/eros/near-a-msi-5-erosshape-v1_0_512q.bds"
+
+[[resource]]
+name = "eros_near_msi_64q"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/dsk/asteroids/eros/near-a-msi-5-erosshape-v1_0_64q.bds"
+
+[[resource]]
+name = "itokawa_hayabusa_amica_512q"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/dsk/asteroids/itokawa/hay_a_amica_5_itokawashape_v1_0_512q.bds"
+
+[[resource]]
+name = "itokawa_hayabusa_amica_64q"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/dsk/asteroids/itokawa/hay_a_amica_5_itokawashape_v1_0_64q.bds"
+
+[[resource]]
+name = "phobos512"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/dsk/satellites/phobos512.bds"
+
+[[resource]]
+name = "phobos_2014_09_22"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/dsk/satellites/phobos_2014_09_22.bds"
+
+[[resource]]
+name = "phobos_3_3"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/dsk/satellites/phobos_3_3.bds"
+
+[[resource]]
+name = "vesta_gaskell_256"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/dsk/asteroids/vesta/vesta_gaskell_256.bds"
+
+[[resource]]
+name = "vesta_thomas_1997"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/dsk/asteroids/vesta/vesta_thomas_1997.bds"
+
+[[resource]]
+name = "ggm05c"
+url = "https://icgem.gfz.de/getmodel/gfc/778a683780a5b0ad3163f4772b97b9075a0a13c389d2bd8ea3f891b64cfa383d/GGM05C.gfc"
+
+[[resource]]
+name = "goco06s"
+url = "https://datapub.gfz-potsdam.de/download/10.5880.ICGEM.2019.002/GOCO06s.gfc"
+
+[[resource]]
+name = "iers_finals2000a"
+url = "https://datacenter.iers.org/data/latestVersion/9_FINALS.ALL_IAU2000_V2013_019.txt"
+mirrors = ["https://datacenter.iers.org/products/eop/rapid/standard/finals2000A.all"]
+filename = "finals2000A.all"
+live = true
+
+[[resource]]
+name = "iers_c04"
+url = "https://datacenter.iers.org/products/eop/long-term/c04_operational/eopc04.1962-now"
+live = true
+ttl = 86400
+
+[[resource]]
+name = "celestrak_eop_all"
+url = "https://celestrak.org/SpaceData/EOP-All.csv"
+live = true
+
+[[resource]]
+name = "current_earth_high_precision"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/earth_latest_high_prec.bpc"
+live = true
+
+[[resource]]
+name = "current_leapseconds"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/lsk/latest_leapseconds.tls"
+live = true
+ttl = 604800
+
+[[resource]]
+name = "gfz_kp_ap"
+url = "https://kp.gfz.de/fileadmin/files_for_gfz_cms/Kp_ap_Ap_SN_F107_nowcast.txt"
+live = true
+ttl = 900
+
+[[resource]]
+name = "gfz_f107"
+url = "https://kp.gfz.de/fileadmin/files_for_gfz_cms/Kp_ap_Ap_SN_F107_since_1932.txt"
+live = true
+ttl = 3600
+
+[[resource]]
+name = "silso_daily_sunspots"
+url = "https://www.sidc.be/SILSO/DATA/SN_d_tot_V2.0.txt"
+live = true
+ttl = 43200
+
+[[resource]]
+name = "noaa_swpc_f107"
+url = "https://services.swpc.noaa.gov/json/f107_cm_flux.json"
+live = true
+ttl = 3600
+
+[[resource]]
+name = "noaa_swpc_planetary_k"
+url = "https://services.swpc.noaa.gov/json/planetary_k_index_1m.json"
+live = true
+ttl = 900
+
+[[resource]]
+name = "noaa_swpc_45_day_forecast"
+url = "https://services.swpc.noaa.gov/json/45-day-forecast.json"
+live = true
+
+[[resource]]
+name = "celestrak_space_weather_all"
+url = "https://celestrak.org/SpaceData/SW-All.csv"
+live = true

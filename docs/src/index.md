@@ -1,42 +1,22 @@
 # AstrodynamicsResources.jl
 
-AstrodynamicsResources.jl provides a unified local-path interface to
-astrodynamics data. It manages files; it does not interpret their scientific
-contents. Downstream packages may consume returned paths without becoming core
-dependencies here.
+AstrodynamicsResources.jl is a lazy path provider for astrodynamics data. It
+does not interpret the files or alter global SPICE state.
 
-Every resource is lazy. Immutable resources are Julia artifacts and mutable
-operational products are explicit scratch-cache downloads. Importing, listing,
-searching, displaying, and inspecting bundles are network-free.
+Immutable resources are public, verified Julia artifacts. Rolling resources
+use `Scratch.jl`, conditional requests, configurable TTLs, atomic replacement,
+and stale-cache fallback. Catalogue inspection is always offline.
 
-## Why two backends?
+The hand-maintained catalogue is deliberately small: every immutable resource
+requires only a name and authoritative URL. Hashes, archive identity, size, and
+Julia artifact bindings live in generated files. Release archives use names
+such as `de440s.tar.gz` and contain the unchanged upstream file at
+`data/de440s.bsp`.
 
-An immutable kernel or coefficient model must keep a permanent identity.
-Artifacts bind an archive SHA-256 to a Julia `git-tree-sha1` and can respect
-normal depot configuration and artifact overrides. A rolling EOP or
-space-weather file deliberately changes at the same URL, so it is cached with
-retrieval metadata, a checksum, and a freshness deadline instead.
+DE440s is the recommended compact planetary default. Full DE440 and the newer
+DE442/DE442s pair remain separate resources. DE431 and DE441 are excluded.
+Planetary-satellite entries describe natural moons, not artificial satellites
+or spacecraft.
 
-DE440s is the compact recommended ephemeris for most users. Full DE440 is
-separate for applications needing its longer coverage. DE430, DE432s, DE435,
-DE438, DE442, and DE442s are exact, separately addressable resources. The
-split, multi-gigabyte DE431 and DE441 releases remain excluded by project
-policy. Planetary-satellite ephemerides here describe natural moons, including
-the explicit multipart Uranus `ura184` product. Artificial Earth-satellite and
-spacecraft kernels are not catalogued.
-
-Production immutable binding is still pending. Verified archives are collected
-under the private repository's `resources-v1` release, but private GitHub asset
-URLs are not usable by Julia's standard unauthenticated artifact downloader.
-The package therefore does not claim that these resources are materializable
-until compatible stable hosting and all hashes exist.
-Catalogued NAIF resources are unmodified kernels from the generic-kernel tree.
-NAIF explicitly permits redistribution of NAIF-distributed kernels while they
-remain unmodified; catalogue metadata links the governing policy and preserves
-the required provenance.
-
-GOCO06s and GGM05C are active catalogue entries for Earth spherical-harmonic
-gravity coefficients. Their original ICGEM `.gfc` files are CC BY 4.0 and carry
-DOI citations. The package distributes the coefficient paths without parsing
-or evaluating the gravity field; immutable publication is still required
-before `resource_path` can materialize them.
+GOCO06s and GGM05C provide original ICGEM `.gfc` spherical-harmonic
+coefficients. This package returns their paths but does not evaluate them.

@@ -1,9 +1,14 @@
-function invalid_catalog(resource_text::String, bundle_text::String="")
+function invalid_catalog(resource_text::String, bundle_text::String="";
+                         lock_text::String="version = 1\n[resources]\n")
     mktempdir() do directory
-        write(joinpath(directory, "resources.toml"), resource_text)
+        write(joinpath(directory, "Resources.toml"), resource_text)
         write(joinpath(directory, "bundles.toml"), bundle_text)
+        write(joinpath(directory, "ResourceLock.toml"), lock_text)
+        artifacts = joinpath(directory, "Artifacts.toml")
+        write(artifacts, "")
         try
-            withenv("ASTRODYNAMICS_RESOURCES_CATALOG" => directory) do
+            withenv("ASTRODYNAMICS_RESOURCES_CATALOG" => directory,
+                    "ASTRODYNAMICS_RESOURCES_ARTIFACTS_TOML" => artifacts) do
                 AstrodynamicsResources._CATALOG_LOADED[] = false
                 @test_throws ArgumentError AstrodynamicsResources._load_catalog!()
             end
@@ -16,71 +21,61 @@ end
 
 const VALIDATION_RESOURCE = """
 [[resource]]
-id = "one"
-aliases = []
-title = "One"
-description = "Fixture"
-category = "fixture"
-provider = "tests"
-version = "1"
-backend = "artifact"
-artifact_name = "one"
-available = false
-files = [{path = "data/one.txt", role = "data", primary = true}]
-source_url = "https://fixtures.invalid/one.txt"
-source_filename = "one.txt"
-format = "text"
-citation = "Test fixture"
-license = "CC0"
-redistribution = "unresolved"
-retrieved_at = "2026-01-01"
+name = "one"
+url = "https://fixtures.invalid/one.txt"
 """
 
-@testset "invalid catalogues are rejected" begin
+@testset "minimal and invalid catalogues" begin
+    mktempdir() do directory
+        write(joinpath(directory, "Resources.toml"), VALIDATION_RESOURCE)
+        write(joinpath(directory, "ResourceLock.toml"), "version = 1\n[resources]\n")
+        write(joinpath(directory, "Artifacts.toml"), "")
+        try
+            withenv("ASTRODYNAMICS_RESOURCES_CATALOG" => directory,
+                    "ASTRODYNAMICS_RESOURCES_ARTIFACTS_TOML" =>
+                        joinpath(directory, "Artifacts.toml")) do
+                AstrodynamicsResources._CATALOG_LOADED[] = false
+                AstrodynamicsResources._load_catalog!()
+                @test resource(:one).metadata["source_filename"] == "one.txt"
+                @test resource(:one).category == :data
+                @test !resource(:one).available
+            end
+        finally
+            AstrodynamicsResources._CATALOG_LOADED[] = false
+            AstrodynamicsResources._load_catalog!()
+        end
+    end
+
     invalid_catalog(VALIDATION_RESOURCE * replace(
-        VALIDATION_RESOURCE, "https://fixtures.invalid/one.txt" =>
-        "https://fixtures.invalid/two.txt"))
+        VALIDATION_RESOURCE, "one.txt" => "two.txt"))
 
-    duplicate_aliases = replace(VALIDATION_RESOURCE, "aliases = []" =>
-                                "aliases = [\"shared\"]") *
-        replace(replace(VALIDATION_RESOURCE, "id = \"one\"" => "id = \"two\""),
-                "aliases = []" => "aliases = [\"shared\"]",
-                "https://fixtures.invalid/one.txt" => "https://fixtures.invalid/two.txt")
-    invalid_catalog(duplicate_aliases)
-
-    duplicate_filename = VALIDATION_RESOURCE *
-        replace(VALIDATION_RESOURCE,
-                "id = \"one\"" => "id = \"two\"",
-                "artifact_name = \"one\"" => "artifact_name = \"two\"",
-                "https://fixtures.invalid/one.txt" => "https://fixtures.invalid/two.txt")
-    invalid_catalog(duplicate_filename)
-
-    invalid_catalog(VALIDATION_RESOURCE, """
-    [[bundle]]
-    id = "missing"
-    title = "Missing"
-    description = "Missing member"
-    members = ["not_there"]
+    invalid_catalog(VALIDATION_RESOURCE * """
+    [[resource]]
+    name = "two"
+    url = "https://fixtures.invalid/one.txt"
     """)
 
-    invalid_catalog(VALIDATION_RESOURCE, """
-    [[bundle]]
-    id = "a"
-    title = "A"
-    description = "Cycle"
-    members = ["b"]
-    [[bundle]]
-    id = "b"
-    title = "B"
-    description = "Cycle"
-    members = ["a"]
-    """)
+    invalid_catalog(replace(VALIDATION_RESOURCE, "name = \"one\"" =>
+                            "name = \"Not Safe\""))
+    invalid_catalog(replace(VALIDATION_RESOURCE, "https://" => "http://"))
 
     invalid_catalog(VALIDATION_RESOURCE, """
-    [[bundle]]
-    id = "duplicate"
-    title = "Duplicate"
-    description = "Duplicate members"
-    members = ["one", "one"]
+    [bundle]
+    missing = ["not_there"]
+    """)
+    invalid_catalog(VALIDATION_RESOURCE, """
+    [bundle]
+    a = ["b"]
+    b = ["a"]
+    """)
+    invalid_catalog(VALIDATION_RESOURCE, """
+    [bundle]
+    duplicate = ["one", "one"]
+    """)
+
+    invalid_catalog(VALIDATION_RESOURCE; lock_text="""
+    version = 1
+    [resources.unknown]
+    source_sha256 = "$(repeat("0", 64))"
     """)
 end

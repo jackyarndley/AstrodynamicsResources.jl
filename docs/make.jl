@@ -6,7 +6,7 @@ open(reference, "w") do io
     println(io, "# Resource reference")
     println(io)
     println(io, "This page is generated from the local TOML catalogue. `Available` means")
-    println(io, "a verified production artifact binding or live endpoint is exposed; it")
+    println(io, "a locked artifact binding or live endpoint is exposed; it")
     println(io, "does not mean the resource is currently cached.")
     println(io)
     println(io, "| ID | Category | Provider | Backend | Available | Source file |")

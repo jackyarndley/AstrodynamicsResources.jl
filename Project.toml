@@ -1,7 +1,7 @@
 name = "AstrodynamicsResources"
 uuid = "c2f2a4d3-7c42-4f57-9d4a-7df7c7cf4a6d"
 authors = ["AstrodynamicsResources.jl contributors"]
-version = "0.1.1"
+version = "0.1.0"
 
 [deps]
 Artifacts = "56f22d72-fd6d-98f1-02f0-08ddc0907c33"
@@ -15,7 +15,6 @@ TOML = "fa267f1f-6049-4f14-aa54-33bafae1ed76"
 
 [compat]
 Aqua = "0.8"
-MD5 = "0.2"
 Artifacts = "1"
 Dates = "1"
 Downloads = "1"
@@ -30,9 +29,8 @@ julia = "1.10"
 
 [extras]
 Aqua = "4c88cf16-eb10-579e-8560-4a9242c79595"
-MD5 = "6ac74813-4b46-53a4-afec-0b5dc9d7885c"
 Sockets = "6462fe0b-24de-5631-8697-dd941f90decc"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [targets]
-test = ["Aqua", "MD5", "Sockets", "Test"]
+test = ["Aqua", "Sockets", "Test"]

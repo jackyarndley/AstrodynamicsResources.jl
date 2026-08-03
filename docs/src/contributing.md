@@ -1,46 +1,48 @@
-# Contributing resources
+# Adding resources
 
-## Immutable resource
+## Immutable data
 
-1. Establish the exact authoritative byte stream and filename.
-2. Review citation, licence, redistribution status, and provider checksum.
-3. Add exact catalogue metadata without changing a semantic alias or bundle.
-4. Run `scripts/update_source_hashes.jl RESOURCE_ID` to resumably cache the
-   source, verify the provider checksum, and record an independent SHA-256.
-5. Run `scripts/build_artifact.jl` in the scripts environment.
-6. Review its provenance, tree hash, archive SHA-256, and deterministic rebuild.
-7. Publish to immutable release or object storage without overwriting content.
-8. Run `scripts/update_artifacts_toml.jl`, verify installation, and open a PR.
+Add two lines to `catalog/Resources.toml`:
 
-Raw upstream files remain byte-for-byte unchanged. The deterministic artifact
-layout is `data/`, optional `metadata/`, and `provenance.toml`.
+```toml
+[[resource]]
+name = "example"
+url = "https://authoritative.example/path/example.dat"
+```
 
-## NAIF redistribution
+The name must be a lowercase Julia-style identifier and the URL must use HTTPS.
+The committed declaration asserts that the repository may redistribute the
+unchanged upstream bytes. Check the upstream terms before committing.
 
-The [NAIF Rules Regarding Use of
-SPICE](https://naif.jpl.nasa.gov/naif/rules.html) permit redistribution of
-SPICE kernels distributed by NAIF provided the kernels have not been modified.
-The artifact packager therefore copies each source kernel byte-for-byte and
-places package provenance in separate files. Do not treat these terms as an
-MIT licence for the scientific data, and preserve model- and mission-specific
-citations recorded in the catalogue.
+After merge, `.github/workflows/cache-resources.yml`:
 
-## Live resource
+1. detects that `example` is not locked or published;
+2. downloads it into a persistent content-addressed Actions cache;
+3. rejects empty files and HTML error pages;
+4. computes the source SHA-256;
+5. packages `data/<upstream filename>` and `provenance.toml` deterministically;
+6. uploads `example.tar.gz` without overwriting an existing asset; and
+7. opens a PR with generated `ResourceLock.toml` and `Artifacts.toml` changes.
 
-Add a scratch catalogue entry with authoritative URL(s), TTL, content format,
-minimum plausible size, stale policy, conditional-request support, citation,
-and provider role. Add a local-server test. Core code does not parse the product.
+Use optional `metadata_url` for an inseparable comment/readme file. Use
+`filename`, `mirrors`, `category`, or `provider` only when inference is wrong.
 
-## Gravity models and licensing
+The command-line helper performs the same minimal edit:
 
-Do not promote a model from `catalog/candidates/gravity.toml` until its original
-coefficient file, normalization, degree/order, reference radius, GM, tide
-system, citation, source digest, and redistribution conditions are reviewed.
-One model is never labelled universally best.
+```sh
+julia --project=. scripts/add_resource.jl example https://authoritative.example/example.dat
+```
 
-## Discovery review
+## Live data
 
-Discovery scripts write machine-readable TOML and human-readable Markdown
-reports. Additions, removals, same-name checksum changes, old-version moves,
-frame-definition changes, alias changes, and bundle changes require human
-review. Discovery never publishes, deletes, recommends, or changes an alias.
+Add `live = true`. The default TTL is six hours. Override it only when needed:
+
+```toml
+[[resource]]
+name = "example_live"
+url = "https://authoritative.example/current.txt"
+live = true
+ttl = 3600
+```
+
+Live resources are never mirrored into a release and never update at import.

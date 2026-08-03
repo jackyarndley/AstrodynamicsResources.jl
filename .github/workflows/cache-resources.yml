@@ -1,0 +1,190 @@
+name: Cache resources
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - catalog/Resources.toml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: resource-cache
+  cancel-in-progress: false
+
+env:
+  RESOURCE_RELEASE: v0.1.0
+  LEGACY_RESOURCE_RELEASE: resources-v1
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    outputs:
+      uncached: ${{ steps.scan.outputs.uncached }}
+      uncached_count: ${{ steps.scan.outputs.uncached_count }}
+      missing: ${{ steps.scan.outputs.missing }}
+      missing_count: ${{ steps.scan.outputs.missing_count }}
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: julia-actions/setup-julia@v3.0.2
+        with:
+          version: "1"
+      - name: Instantiate
+        run: julia --project=. -e 'using Pkg; Pkg.instantiate()'
+      - name: Compare catalogue and release
+        id: scan
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          gh release view "$RESOURCE_RELEASE" --json assets \
+            --jq '.assets[].name' > release-assets.txt 2>/dev/null || true
+          julia --project=. scripts/scan_release.jl release-assets.txt
+
+  prepare:
+    needs: scan
+    if: needs.scan.outputs.uncached_count != '0' || needs.scan.outputs.missing_count != '0'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ensure target release exists
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          if ! gh release view "$RESOURCE_RELEASE" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release create "$RESOURCE_RELEASE" --repo "$GITHUB_REPOSITORY" \
+              --draft --target main --title "AstrodynamicsResources.jl $RESOURCE_RELEASE" \
+              --notes "Package source and immutable resource archives."
+          fi
+
+  migrate:
+    needs: [scan, prepare]
+    if: needs.scan.outputs.missing_count != '0'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        name: ${{ fromJSON(needs.scan.outputs.missing) }}
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: julia-actions/setup-julia@v3.0.2
+        with:
+          version: "1"
+      - name: Instantiate
+        run: julia --project=. -e 'using Pkg; Pkg.instantiate()'
+      - name: Read locked identity
+        id: identity
+        shell: bash
+        run: |
+          julia --project=. -e '
+            using AstrodynamicsResources
+            spec = resource(Symbol(ARGS[1]))
+            println("old_asset=", spec.metadata["source_filename"], ".tar.gz")
+            println("asset=", spec.metadata["asset"])
+            println("archive_sha=", spec.metadata["archive_sha256"])
+            println("tree_sha=", spec.metadata["git_tree_sha1"])
+          ' "${{ matrix.name }}" >> "$GITHUB_OUTPUT"
+      - name: Copy verified legacy archive
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          mkdir migration
+          gh release download "$LEGACY_RESOURCE_RELEASE" \
+            --repo "$GITHUB_REPOSITORY" \
+            --pattern "${{ steps.identity.outputs.old_asset }}" --dir migration
+          mv "migration/${{ steps.identity.outputs.old_asset }}" \
+             "migration/${{ steps.identity.outputs.asset }}"
+          ACTUAL=$(sha256sum "migration/${{ steps.identity.outputs.asset }}" | cut -d' ' -f1)
+          test "$ACTUAL" = "${{ steps.identity.outputs.archive_sha }}"
+          gh release upload "$RESOURCE_RELEASE" \
+            "migration/${{ steps.identity.outputs.asset }}" \
+            --repo "$GITHUB_REPOSITORY"
+          API=$(gh release view "$RESOURCE_RELEASE" --repo "$GITHUB_REPOSITORY" \
+            --json assets --jq '.assets[] | select(.name == "${{ steps.identity.outputs.asset }}") | .apiUrl')
+          gh api --method PATCH "$API" \
+            -f label="git-tree-sha1=${{ steps.identity.outputs.tree_sha }}"
+
+  build:
+    needs: [scan, prepare]
+    if: needs.scan.outputs.uncached_count != '0'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        name: ${{ fromJSON(needs.scan.outputs.uncached) }}
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: julia-actions/setup-julia@v3.0.2
+        with:
+          version: "1"
+      - uses: julia-actions/cache@v3.2.0
+      - uses: actions/cache@v6.1.0
+        with:
+          path: build/source-cache
+          key: source-${{ matrix.name }}
+      - name: Instantiate
+        run: |
+          julia --project=. -e 'using Pkg; Pkg.instantiate()'
+          julia --project=scripts -e 'using Pkg; Pkg.develop(path="."); Pkg.instantiate()'
+      - name: Build deterministic archive
+        run: julia --project=scripts scripts/build_artifact.jl "${{ matrix.name }}"
+      - name: Publish without overwriting
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          ASSET="build/artifacts/${{ matrix.name }}.tar.gz"
+          NAME=$(basename "$ASSET")
+          REMOTE=$(gh release view "$RESOURCE_RELEASE" --repo "$GITHUB_REPOSITORY" \
+            --json assets --jq ".assets[] | select(.name == \"$NAME\") | .digest")
+          LOCAL="sha256:$(sha256sum "$ASSET" | cut -d' ' -f1)"
+          if [ -n "$REMOTE" ]; then
+            test "$REMOTE" = "$LOCAL"
+          else
+            gh release upload "$RESOURCE_RELEASE" "$ASSET" --repo "$GITHUB_REPOSITORY"
+          fi
+          TREE=$(julia --project=. -e 'using TOML; print(TOML.parsefile(ARGS[1])["git_tree_sha1"])' \
+            "build/reports/${{ matrix.name }}.toml")
+          API=$(gh release view "$RESOURCE_RELEASE" --repo "$GITHUB_REPOSITORY" \
+            --json assets --jq ".assets[] | select(.name == \"$NAME\") | .apiUrl")
+          gh api --method PATCH "$API" -f label="git-tree-sha1=$TREE"
+      - uses: actions/upload-artifact@v7.0.1
+        with:
+          name: resource-report-${{ matrix.name }}
+          path: build/reports/${{ matrix.name }}.toml
+          retention-days: 1
+
+  update-lock:
+    needs: [scan, build]
+    if: always() && needs.scan.outputs.uncached_count != '0' && needs.build.result == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/download-artifact@v8.0.1
+        with:
+          pattern: resource-report-*
+          path: build/reports
+          merge-multiple: true
+      - uses: julia-actions/setup-julia@v3.0.2
+        with:
+          version: "1"
+      - name: Generate lock and artifact bindings
+        run: |
+          julia --project=. scripts/update_lock.jl build/reports \
+            "https://github.com/${GITHUB_REPOSITORY}/releases/download/${RESOURCE_RELEASE}"
+          julia --project=. scripts/validate_catalog.jl
+      - uses: peter-evans/create-pull-request@v8.1.1
+        with:
+          branch: automation/resource-lock
+          delete-branch: true
+          title: "Lock newly cached resources"
+          commit-message: "Lock newly cached resources"
+          body: |
+            Generated immutable hashes and lazy Julia artifact bindings for the
+            new URL/name declarations in `catalog/Resources.toml`.

@@ -1,9 +1,9 @@
 function _unpublished_error(spec::ResourceSpec)
     source = get(spec.metadata, "source_url", "the authoritative upstream")
     return ErrorException(
-        "resource $(spec.id) is catalogued but its immutable artifact has not " *
-        "been published and verified. Expected source: $source. Build and publish " *
-        "it with scripts/build_artifact.jl, then add its verified hashes to Artifacts.toml."
+        "resource $(spec.id) is declared but has not been cached yet. Source: $source. " *
+        "Merge the declaration to main or run the Cache resources workflow; it will " *
+        "publish the archive and open a generated lock-file pull request."
     )
 end
 
