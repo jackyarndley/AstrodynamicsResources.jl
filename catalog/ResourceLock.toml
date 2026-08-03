@@ -12,6 +12,32 @@ source_sha256 = "6e1b277c5f07135a84950604b83e56b736be696a7f3560bcddb1d4aeb944fca
 source_size_bytes = 119741440
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de430.bsp"
 
+[resources.de431_part1]
+archive_sha256 = "66c51e6d84cfe7d5f0012808c184b6b8b1ca1e2157cf5a4d0ef079c6ed339cdd"
+archive_size_bytes = 1362479064
+asset = "de431_part1.tar.gz"
+download_url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/de431_part1.tar.gz"
+git_tree_sha1 = "8a32f24c16c64f894c0ab735f5aebd892d5ce33a"
+metadata_sha256 = "f1662da6bfb4b5b3c45c1b9be9c144af13906b162176212f847b4beaedb8775c"
+metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de431_tech-comments.txt"
+source_filename = "de431_part-1.bsp"
+source_sha256 = "dcf8041a435c62216321c836acdb7081afae0058a1c32d343475d732a94ecaed"
+source_size_bytes = 1436796928
+source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de431_part-1.bsp"
+
+[resources.de431_part2]
+archive_sha256 = "c340a78c3d13ad9609522fb35b5b85dc0d8c12bbef88a1b3994db333f53cb6a7"
+archive_size_bytes = 1774086320
+asset = "de431_part2.tar.gz"
+download_url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/de431_part2.tar.gz"
+git_tree_sha1 = "206a18258a918680a25c47b744e4ba84d9266042"
+metadata_sha256 = "f1662da6bfb4b5b3c45c1b9be9c144af13906b162176212f847b4beaedb8775c"
+metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de431_tech-comments.txt"
+source_filename = "de431_part-2.bsp"
+source_sha256 = "a354082a26441d25dbeea252a41c00d5eaa2370daf39cb3239de039392b11ee4"
+source_size_bytes = 1871023104
+source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de431_part-2.bsp"
+
 [resources.de432s]
 archive_sha256 = "676e35bc70b43af364296cb9cc33480118d7fa26e8322d9cb1450ecef9b28ce6"
 archive_size_bytes = 10328282
@@ -66,6 +92,32 @@ source_filename = "de440s.bsp"
 source_sha256 = "c1c7feeab882263fc493a9d5a5b2ddd71b54826cdf65d8d17a76126b260a49f2"
 source_size_bytes = 32726016
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de440s.bsp"
+
+[resources.de441_part1]
+archive_sha256 = "ee73053644706706898f8d5a5b5efa44a6112607b441ef05caeb803c593e0665"
+archive_size_bytes = 1565566778
+asset = "de441_part1.tar.gz"
+download_url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/de441_part1.tar.gz"
+git_tree_sha1 = "b3f05a41ac2b2da0f905b2deb74c7f31c98ea0b7"
+metadata_sha256 = "eda144896f7a09fd810c6261036d05d767ce8c77cb2b3795bc824fb623881007"
+metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de441_tech-comments.txt"
+source_filename = "de441_part-1.bsp"
+source_sha256 = "13757827f5db41b835a24bbd637488636ce79a8ca754062fed17844f7d5b618e"
+source_size_bytes = 1651119104
+source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de441_part-1.bsp"
+
+[resources.de441_part2]
+archive_sha256 = "812b9d8e86b11f5d81d5f0b6cebc4bc272db8f01315e53aa454a1133406d8a3c"
+archive_size_bytes = 1571030213
+asset = "de441_part2.tar.gz"
+download_url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/de441_part2.tar.gz"
+git_tree_sha1 = "9e220ecfaa596fa04475d9b3ed0ce425c8571b11"
+metadata_sha256 = "eda144896f7a09fd810c6261036d05d767ce8c77cb2b3795bc824fb623881007"
+metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de441_tech-comments.txt"
+source_filename = "de441_part-2.bsp"
+source_sha256 = "3abb17dae2d78dd34880377544aacb54892104a0d4462b322cb9f4454d4887f6"
+source_size_bytes = 1656830976
+source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de441_part-2.bsp"
 
 [resources.de442]
 archive_sha256 = "2a2df3c6c784b26d4177a64ff1f9c17eefd6d1c15b9fffd7d9fb4d6d14c227f8"

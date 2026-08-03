@@ -2,7 +2,8 @@
     @test resource_info(:de440s) === resource(:de440s)
     @test getfield.(list_resources(category=:ephemeris, format="SPICE SPK",
                                    available=true; provider=:naif), :id) ==
-          [:de430, :de432s, :de435, :de438, :de440, :de440s, :de442, :de442s]
+          [:de430, :de431_part1, :de431_part2, :de432s, :de435, :de438,
+           :de440, :de440s, :de441_part1, :de441_part2, :de442, :de442s]
     @test length(list_resources(category=:ephemeris)) == 12
     @test !isempty(find_resources("moon pa"; body=:moon))
     @test any(spec -> spec.id == :de442,

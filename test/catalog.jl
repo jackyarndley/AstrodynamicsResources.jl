@@ -3,9 +3,7 @@
     @test length(list_resources()) == 62
     @test length(list_resources(backend=:artifact)) == 50
     @test length(list_resources(backend=:scratch)) == 12
-    new_parts = Set((:de431_part1, :de431_part2, :de441_part1, :de441_part2))
-    @test all(spec -> spec.available,
-              filter(spec -> !(spec.id in new_parts), list_resources(backend=:artifact)))
+    @test all(spec -> spec.available, list_resources(backend=:artifact))
 
     @test resource(:pinned_leapseconds).id == :naif0012
     @test resource(:moon_pa_de440).id == :moon_pa_de440_200625
@@ -23,9 +21,9 @@
     @test endswith(resource(:de440s).metadata["download_url"],
                    "/v0.1.0/de440s.tar.gz")
     @test all(spec -> haskey(spec.metadata, "source_sha256"),
-              filter(spec -> spec.available, list_resources(backend=:artifact)))
+              list_resources(backend=:artifact))
     @test all(spec -> haskey(spec.metadata, "archive_sha256"),
-              filter(spec -> spec.available, list_resources(backend=:artifact)))
+              list_resources(backend=:artifact))
 
     @test length(list_resources(category=:satellite_ephemeris)) == 18
     @test resource(:mar099s).metadata["body"] == "Mars"

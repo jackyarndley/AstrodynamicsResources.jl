@@ -117,6 +117,8 @@ jobs:
       - uses: julia-actions/setup-julia@v3.0.2
         with:
           version: "1"
+      - name: Instantiate
+        run: julia --project=. -e 'using Pkg; Pkg.instantiate()'
       - name: Generate lock and artifact bindings
         run: |
           julia --project=. scripts/update_lock.jl build/reports \
