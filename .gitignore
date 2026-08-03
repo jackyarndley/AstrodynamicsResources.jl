@@ -1,5 +1,6 @@
 /build/
 /docs/build/
+/docs/src/resources.md
 *.part
 *.ji
 Manifest.toml

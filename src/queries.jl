@@ -90,3 +90,61 @@ function Base.show(io::IO, spec::ResourceSpec)
     citation = get(spec.metadata, "citation", nothing)
     citation !== nothing && print(io, "  citation: ", citation)
 end
+
+"""Inspect an ordered logical bundle without materializing its members."""
+function bundle(id::Symbol)
+    _ensure_catalog()
+    haskey(_BUNDLES, id) || throw(KeyError("unknown bundle $id"))
+    return _BUNDLES[id]
+end
+
+function _bundle_resource_ids(id::Symbol, result::Vector{Symbol}=Symbol[])
+    for member in bundle(id).members
+        if haskey(_BUNDLES, member)
+            _bundle_resource_ids(member, result)
+        else
+            push!(result, member)
+        end
+    end
+    return result
+end
+
+function Base.show(io::IO, value::ResourceBundle)
+    println(io, "ResourceBundle $(value.id): $(value.title)")
+    println(io, "  ", value.description)
+    print(io, "  ordered members: ", join(value.members, ", "))
+end
+
+"""Materialize a resource or ordered bundle and always return a vector of paths."""
+function resource_paths(id::Symbol; kwargs...)
+    _ensure_catalog()
+    if haskey(_BUNDLES, id)
+        paths = String[]
+        for member in _bundle_resource_ids(id)
+            append!(paths, resource_paths(member; kwargs...))
+        end
+        return paths
+    end
+    spec = resource(id)
+    return spec.backend isa ArtifactBackend ? _artifact_paths(spec) : _scratch_paths(spec; kwargs...)
+end
+
+"""Materialize a resource that has exactly one primary file."""
+function resource_path(id::Symbol; kwargs...)
+    _ensure_catalog()
+    haskey(_BUNDLES, id) && throw(ArgumentError(
+        "$id is a bundle; use resource_paths(:$id) to preserve its documented order"
+    ))
+    spec = resource(id)
+    primary = findall(file -> file.primary, spec.files)
+    length(spec.files) == 1 || length(primary) == 1 || throw(ArgumentError(
+        "resource $id has multiple files and no unique primary; use resource_paths(:$id)"
+    ))
+    paths = resource_paths(id; kwargs...)
+    return length(spec.files) == 1 ? only(paths) : paths[only(primary)]
+end
+
+"""Explicitly materialize one or more resource IDs and return vectors of paths."""
+materialize(id::Symbol; kwargs...) = resource_paths(id; kwargs...)
+materialize(ids::AbstractVector{Symbol}; kwargs...) =
+    [resource_paths(id; kwargs...) for id in ids]

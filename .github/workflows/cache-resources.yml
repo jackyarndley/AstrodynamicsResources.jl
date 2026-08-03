@@ -39,7 +39,7 @@ jobs:
         run: |
           gh release view "$RESOURCE_RELEASE" --json assets \
             --jq '.assets[].name' > release-assets.txt 2>/dev/null || true
-          julia --project=. scripts/scan_release.jl release-assets.txt
+          julia --project=. scripts/catalog.jl scan release-assets.txt
 
   prepare:
     needs: scan
@@ -123,7 +123,7 @@ jobs:
         run: |
           julia --project=. scripts/update_lock.jl build/reports \
             "https://github.com/${GITHUB_REPOSITORY}/releases/download/${RESOURCE_RELEASE}"
-          julia --project=. scripts/validate_catalog.jl
+          julia --project=. scripts/catalog.jl validate
       - uses: peter-evans/create-pull-request@v8.1.1
         with:
           branch: automation/resource-lock

@@ -4,9 +4,16 @@ on:
   push:
     branches: [main]
   pull_request:
+  workflow_dispatch:
 
 permissions:
   contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   docs:
@@ -24,4 +31,22 @@ jobs:
           julia --project=docs -e 'using Pkg; Pkg.develop(path="."); Pkg.instantiate()'
       - name: Build documentation without production downloads
         run: julia --project=docs docs/make.jl
+      - uses: actions/configure-pages@v6.0.0
+        if: github.event_name != 'pull_request'
+      - uses: actions/upload-pages-artifact@v5.0.0
+        if: github.event_name != 'pull_request'
+        with:
+          path: docs/build
+
+  deploy:
+    if: github.event_name != 'pull_request'
+    needs: docs
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy documentation
+        id: deployment
+        uses: actions/deploy-pages@v5.0.0
 

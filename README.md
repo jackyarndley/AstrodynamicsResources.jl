@@ -1,5 +1,9 @@
 # AstrodynamicsResources.jl
 
+[![Documentation](https://github.com/jackyarndley/AstrodynamicsResources.jl/actions/workflows/docs.yml/badge.svg)](https://jackyarndley.github.io/AstrodynamicsResources.jl/)
+
+**[Documentation](https://jackyarndley.github.io/AstrodynamicsResources.jl/)**
+
 `AstrodynamicsResources.jl` provides lazy local paths to standard
 astrodynamics data files. It manages data; it does not load SPICE kernels,
 propagate orbits, evaluate gravity fields, or interpret Earth-orientation and

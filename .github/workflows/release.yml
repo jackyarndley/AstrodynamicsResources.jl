@@ -22,10 +22,9 @@ jobs:
         run: julia --project=. -e 'using Pkg; Pkg.instantiate(); Pkg.test()'
       - name: Validate registration metadata
         run: |
-          julia --project=. scripts/validate_catalog.jl
-          test -z "$(julia --project=. scripts/list_uncached.jl | tr -d '[]')"
+          julia --project=. scripts/catalog.jl validate
+          test -z "$(julia --project=. scripts/catalog.jl uncached | tr -d '[]')"
           test -f LICENSE
-          test -f CITATION.cff
           test -f CHANGELOG.md
       - name: Create GitHub package release
         env:

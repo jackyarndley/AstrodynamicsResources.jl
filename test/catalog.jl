@@ -37,3 +37,48 @@
     @test all(spec -> occursin("spherical-harmonic", spec.metadata["format"]),
               list_resources(category=:gravity))
 end
+
+@testset "queries, display, and laziness" begin
+    @test resource_info(:de440s) === resource(:de440s)
+    @test getfield.(list_resources(category=:ephemeris, format="SPICE SPK",
+                                   available=true; provider=:naif), :id) ==
+          [:de430, :de431_part1, :de431_part2, :de432s, :de435, :de438,
+           :de440, :de440s, :de441_part1, :de441_part2, :de442, :de442s]
+    @test length(list_resources(category=:ephemeris)) == 12
+    @test !isempty(find_resources("moon pa"; body=:moon))
+    @test any(spec -> spec.id == :de442, find_resources("DE442"))
+    @test occursin("Resource de440s", sprint(show, resource(:de440s)))
+    @test resource_status(:de440s).backend == :artifact
+    @test_throws KeyError resource(:not_a_resource)
+
+    before = Dict(spec.id => resource_status(spec.id).available for spec in list_resources())
+    resource(:de440s)
+    list_resources()
+    find_resources("moon")
+    bundle(:moon_de440_pa)
+    @test before == Dict(spec.id => resource_status(spec.id).available for spec in list_resources())
+end
+
+@testset "ordered bundles" begin
+    @test bundle(:de440_standard).members[1] == :de440s
+    @test bundle(:de440_full).members[1] == :de440
+    @test bundle(:de430_standard).members[1] == :de430
+    @test bundle(:de431).members == [:de431_part1, :de431_part2]
+    @test AstrodynamicsResources._bundle_resource_ids(:de431_full)[1:2] ==
+          [:de431_part1, :de431_part2]
+    @test bundle(:de432s_standard).members[1] == :de432s
+    @test bundle(:de435_standard).members[1] == :de435
+    @test bundle(:de438_standard).members[1] == :de438
+    @test bundle(:de441).members == [:de441_part1, :de441_part2]
+    @test AstrodynamicsResources._bundle_resource_ids(:de441_full)[1:2] ==
+          [:de441_part1, :de441_part2]
+    @test bundle(:de442_standard).members[1] == :de442s
+    @test bundle(:de442_full).members[1] == :de442
+    @test bundle(:moon_de440_pa).members[end] == :moon_assoc_pa
+    @test bundle(:moon_de440_me).members[end] == :moon_assoc_me
+    @test bundle(:moon_de440_pa).members != bundle(:moon_de440_me).members
+    @test_throws ArgumentError resource_path(:moon_de440_pa)
+    @test AstrodynamicsResources._bundle_resource_ids(:moon_de440_orientation) ==
+          [:pck00011, :moon_pa_de440, :moon_de440_frames]
+    @test bundle(:earth_gravity_standard).members == [:ggm05c, :goco06s]
+end
