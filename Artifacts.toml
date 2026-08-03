@@ -7,6 +7,22 @@ lazy = true
     sha256 = "8956125d8cead6a605d95b6da983b6fa23d36f827034c531c0c3a2f74479e886"
     url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/de430.tar.gz"
 
+[de431_part1]
+git-tree-sha1 = "8a32f24c16c64f894c0ab735f5aebd892d5ce33a"
+lazy = true
+
+    [[de431_part1.download]]
+    sha256 = "66c51e6d84cfe7d5f0012808c184b6b8b1ca1e2157cf5a4d0ef079c6ed339cdd"
+    url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/de431_part1.tar.gz"
+
+[de431_part2]
+git-tree-sha1 = "206a18258a918680a25c47b744e4ba84d9266042"
+lazy = true
+
+    [[de431_part2.download]]
+    sha256 = "c340a78c3d13ad9609522fb35b5b85dc0d8c12bbef88a1b3994db333f53cb6a7"
+    url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/de431_part2.tar.gz"
+
 [de432s]
 git-tree-sha1 = "007269e236b634b3ea605db399f0b94097e2eede"
 lazy = true
@@ -46,6 +62,22 @@ lazy = true
     [[de440s.download]]
     sha256 = "a334ae22d8c2b210d6e04b0e490509b3455142dcc772f03dc0c54477ef6d6f88"
     url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/de440s.tar.gz"
+
+[de441_part1]
+git-tree-sha1 = "b3f05a41ac2b2da0f905b2deb74c7f31c98ea0b7"
+lazy = true
+
+    [[de441_part1.download]]
+    sha256 = "ee73053644706706898f8d5a5b5efa44a6112607b441ef05caeb803c593e0665"
+    url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/de441_part1.tar.gz"
+
+[de441_part2]
+git-tree-sha1 = "9e220ecfaa596fa04475d9b3ed0ce425c8571b11"
+lazy = true
+
+    [[de441_part2.download]]
+    sha256 = "812b9d8e86b11f5d81d5f0b6cebc4bc272db8f01315e53aa454a1133406d8a3c"
+    url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/de441_part2.tar.gz"
 
 [de442]
 git-tree-sha1 = "587c8e7180bd87213fac3b36ecad620d6911c7cc"
