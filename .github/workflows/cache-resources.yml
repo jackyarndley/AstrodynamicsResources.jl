@@ -97,11 +97,6 @@ jobs:
           else
             gh release upload "$RESOURCE_RELEASE" "$ASSET" --repo "$GITHUB_REPOSITORY"
           fi
-          TREE=$(julia --project=. -e 'using TOML; print(TOML.parsefile(ARGS[1])["git_tree_sha1"])' \
-            "build/reports/${{ matrix.name }}.toml")
-          API=$(gh release view "$RESOURCE_RELEASE" --repo "$GITHUB_REPOSITORY" \
-            --json assets --jq ".assets[] | select(.name == \"$NAME\") | .apiUrl")
-          gh api --method PATCH "$API" -f label="git-tree-sha1=$TREE"
       - uses: actions/upload-artifact@v7.0.1
         with:
           name: resource-report-${{ matrix.name }}

@@ -2,9 +2,10 @@
 
 ## 0.1.0 - 2026-08-03
 
-- Added lazy Julia artifacts for 46 immutable astrodynamics resources and
+- Added lazy Julia artifacts for 50 immutable astrodynamics resources and
   scratch caching for 12 rolling products.
-- Added planetary ephemerides through DE442, natural-moon kernels including the
+- Added planetary ephemerides through DE442, including the two-part DE431 and
+  DE441 products; natural-moon kernels include the
   three-part Uranus `ura184` product, lunar DE440 orientation, NAIF support
   kernels, DSK shapes, and GOCO06s/GGM05C gravity coefficients.
 - Added ordered bundles, offline operation, cache freshness/status,
