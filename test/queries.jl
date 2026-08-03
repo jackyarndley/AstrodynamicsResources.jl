@@ -3,7 +3,7 @@
     @test getfield.(list_resources(category=:ephemeris, format="SPICE SPK",
                                    available=true; provider=:naif), :id) ==
           [:de430, :de432s, :de435, :de438, :de440, :de440s, :de442, :de442s]
-    @test length(list_resources(category=:ephemeris)) == 8
+    @test length(list_resources(category=:ephemeris)) == 12
     @test !isempty(find_resources("moon pa"; body=:moon))
     @test any(spec -> spec.id == :de442,
               find_resources("DE442"))

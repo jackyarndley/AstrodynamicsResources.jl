@@ -1,9 +1,11 @@
 @testset "catalogue" begin
     @test validate_catalog()
-    @test length(list_resources()) == 58
-    @test length(list_resources(backend=:artifact)) == 46
+    @test length(list_resources()) == 62
+    @test length(list_resources(backend=:artifact)) == 50
     @test length(list_resources(backend=:scratch)) == 12
-    @test all(spec -> spec.available, list_resources(backend=:artifact))
+    new_parts = Set((:de431_part1, :de431_part2, :de441_part1, :de441_part2))
+    @test all(spec -> spec.available,
+              filter(spec -> !(spec.id in new_parts), list_resources(backend=:artifact)))
 
     @test resource(:pinned_leapseconds).id == :naif0012
     @test resource(:moon_pa_de440).id == :moon_pa_de440_200625
@@ -11,17 +13,19 @@
     @test resource(:moon_pa_de440).metadata["metadata_url"] ==
           "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/moon_pa_de440_200625.cmt"
 
-    @test isempty(filter(spec -> occursin("de441", String(spec.id)), list_resources()))
-    @test isempty(filter(spec -> occursin("de431", String(spec.id)), list_resources()))
+    @test resource(:de431_part1).metadata["source_filename"] == "de431_part-1.bsp"
+    @test resource(:de431_part2).metadata["source_filename"] == "de431_part-2.bsp"
+    @test resource(:de441_part1).metadata["source_filename"] == "de441_part-1.bsp"
+    @test resource(:de441_part2).metadata["source_filename"] == "de441_part-2.bsp"
     @test resource(:de442).metadata["source_filename"] == "de442.bsp"
     @test resource(:ura184_part1).metadata["source_filename"] == "ura184_part-1.bsp"
     @test resource(:de440s).metadata["asset"] == "de440s.tar.gz"
     @test endswith(resource(:de440s).metadata["download_url"],
                    "/v0.1.0/de440s.tar.gz")
     @test all(spec -> haskey(spec.metadata, "source_sha256"),
-              list_resources(backend=:artifact))
+              filter(spec -> spec.available, list_resources(backend=:artifact)))
     @test all(spec -> haskey(spec.metadata, "archive_sha256"),
-              list_resources(backend=:artifact))
+              filter(spec -> spec.available, list_resources(backend=:artifact)))
 
     @test length(list_resources(category=:satellite_ephemeris)) == 18
     @test resource(:mar099s).metadata["body"] == "Mars"

@@ -9,6 +9,7 @@ space-weather products.
 using AstrodynamicsResources
 
 de440s = resource_path(:de440s)
+de441 = resource_paths(:de441)
 moon_pa = resource_paths(:moon_de440_pa)
 uranus = resource_paths(:uranus_satellites)
 gravity = resource_path(:ggm05c)
@@ -52,15 +53,16 @@ IERS, GFZ, NOAA, ICGEM, SILSO, or CelesTrak.
 
 ## Included families
 
-- DE430, DE432s, DE435, DE438, DE440/DE440s, and DE442/DE442s
+- DE430, DE431, DE432s, DE435, DE438, DE440/DE440s, DE441, and DE442/DE442s
 - natural-moon SPKs for Mars, Jupiter, Saturn, Uranus, Neptune, and Pluto
 - NAIF constants, frames, leap seconds, and lunar DE440 orientation
 - GOCO06s and GGM05C spherical-harmonic gravity coefficient files
 - selected NAIF DSK shape models
 - live IERS, GFZ, NOAA SWPC, SILSO, CelesTrak, and rolling NAIF products
 
-DE431 and DE441 are excluded. No artificial Earth-satellite or spacecraft
-kernels are included.
+DE431 and DE441 are split into their two official NAIF files and exposed as
+ordered bundles. No artificial Earth-satellite or spacecraft kernels are
+included.
 
 ## Offline operation
 

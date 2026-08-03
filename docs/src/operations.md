@@ -17,8 +17,9 @@ replacement; a failed update leaves the previous valid file intact. Override a
 TTL with `ASTRODYNAMICS_RESOURCES_TTL_<NAME>`.
 
 Immutable identity is generated in `catalog/ResourceLock.toml` and bound lazily
-in `Artifacts.toml`. GitHub exposes the archive SHA-256, while the release asset
-label records Julia's `git-tree-sha1`. Archives contain unchanged source bytes,
+in `Artifacts.toml`. Those files record both the archive SHA-256 and Julia's
+`git-tree-sha1`; release assets deliberately have no display label so GitHub
+shows their readable filenames. Archives contain unchanged source bytes,
 optional companion metadata, and separate provenance.
 
 The Actions source cache key is stable per resource name, so unchanged upstream
