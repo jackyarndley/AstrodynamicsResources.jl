@@ -1,7 +1,7 @@
 function _artifact_status(spec::ResourceSpec)
     if !spec.available
         return ResourceStatus(false, :artifact, nothing, nothing, nothing, nothing,
-                              nothing, nothing, nothing, "pending publication")
+                              nothing, nothing, nothing, "not cached yet")
     end
     hash = _artifact_hash(spec)
     hash === nothing && return ResourceStatus(

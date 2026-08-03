@@ -1,98 +1,73 @@
 # AstrodynamicsResources.jl
 
-`AstrodynamicsResources.jl` is a path-oriented catalogue and lazy resource
-manager for standard astrodynamics data files. It does not perform SPICE
-calculations, propagate orbits, evaluate gravity fields, parse Earth-orientation
-data, or modify any process-global kernel state.
+`AstrodynamicsResources.jl` provides lazy local paths to standard
+astrodynamics data files. It manages data; it does not load SPICE kernels,
+propagate orbits, evaluate gravity fields, or interpret Earth-orientation and
+space-weather products.
 
 ```julia
 using AstrodynamicsResources
 
-resource(:de440s)                       # metadata only; no download
-bundle(:moon_de440_pa)                  # ordered metadata only; no download
-list_resources(category=:orientation)  # local search
-
-eop = resource_path(:iers_finals2000a) # explicit live download/cache
+de440s = resource_path(:de440s)
+moon_pa = resource_paths(:moon_de440_pa)
+uranus = resource_paths(:uranus_satellites)
+gravity = resource_path(:ggm05c)
+eop = resource_path(:iers_finals2000a)
 ```
 
-Immutable, versioned datasets use lazy Julia artifacts. Mutable upstream
-products use `Scratch.jl`, conditional HTTP requests, configurable TTLs, atomic
-replacement, stale-cache fallback, and cross-process locking. Installation,
-precompilation, import, catalogue inspection, search, and bundle inspection do
-not download scientific data.
+Immutable files use lazy Julia artifacts. Rolling products use a locked,
+conditional, atomic `Scratch.jl` cache. Importing, listing, searching, and
+inspecting bundles never accesses the network.
 
-## Current publication state
+## Adding a resource
 
-The package framework and live-resource backend are operational. NAIF permits
-redistribution of its kernels while they remain unmodified; the package
-preserves those source bytes exactly and records the applicable terms.
-Production immutable resources remain marked unavailable until their
-independent SHA-256 review, deterministic archives, release assets, and Julia
-tree hashes are all published to a location supported by Julia's artifact
-downloader. Calling `resource_path(:de440s)` therefore gives an actionable
-pending-publication error instead of silently downloading an unverified raw
-file. See
-[`catalog/pending_builds.toml`](catalog/pending_builds.toml).
+Edit [`catalog/Resources.toml`](catalog/Resources.toml) and add:
 
-Verified archives are attached, without overwriting, to the repository's
-`resources-v1` release. Each archive uses the recognizable authoritative source
-name, such as `de440s.bsp.tar.gz`; the archive remains a deterministic package
-containing the original `data/de440s.bsp`. Because this repository is private,
-those authenticated release URLs are not yet bound in `Artifacts.toml`:
-standard Julia artifact downloads cannot authenticate to private GitHub release
-assets. There are no placeholder hashes or invented mirrors.
-
-## Storage model
-
-- Artifacts are immutable, versioned, content-addressed, and always `lazy=true`.
-- Live data are only downloaded or revalidated after an explicit path or
-  materialization request.
-- Failed live updates preserve the previous valid cache.
-- `resource_paths(bundle_id)` returns flattened paths in stable consumer load
-  order; the package never loads them.
-
-DE440s is the compact recommended default for most users. Full DE440 remains a
-separate resource. Reviewed DE430, DE432s, DE435, DE438, and current DE442/DE442s
-releases are separately catalogued. The split DE431 and DE441 releases are
-intentionally excluded because of their multi-gigabyte sizes. Planetary
-natural-satellite ephemerides are included, with an explicit three-part Uranus
-`ura184` bundle. No artificial Earth-satellite or spacecraft kernels are
-catalogued.
-
-GOCO06s and GGM05C are now reviewed Earth spherical-harmonic coefficient
-resources in their original ICGEM `.gfc` format. Both upstream files state CC
-BY 4.0 terms and retain their DOI citations. They remain pending immutable
-publication like the kernels above; this package returns coefficient-file
-paths and does not evaluate a gravity field.
-
-## Configuration
-
-```text
-ASTRODYNAMICS_RESOURCES_OFFLINE
-ASTRODYNAMICS_RESOURCES_ALLOW_STALE
-ASTRODYNAMICS_RESOURCES_MIRROR
-ASTRODYNAMICS_RESOURCES_TIMEOUT
-ASTRODYNAMICS_RESOURCES_CACHE
-ASTRODYNAMICS_RESOURCES_TTL_<RESOURCE_ID>
+```toml
+[[resource]]
+name = "example"
+url = "https://authoritative.example/data/example.dat"
 ```
 
-For example:
+That is the complete required declaration. For a changing upstream file, add
+`live = true`. Optional `ttl`, `filename`, `mirrors`, `metadata_url`,
+`category`, and `provider` fields exist only for exceptions.
+
+After the declaration reaches `main`, the resource-cache workflow finds entries
+that are not published, downloads and validates the source, creates a
+deterministic `example.tar.gz`, uploads it without overwriting existing bytes,
+and opens a PR containing the generated `ResourceLock.toml` and
+`Artifacts.toml` changes. Source downloads are cached between workflow runs and
+package releases.
+
+The outer release asset is named for the resource (`de440s.tar.gz`). Inside it,
+the original upstream filename and bytes are preserved (`data/de440s.bsp`),
+alongside `provenance.toml`. This keeps the release readable without pretending
+that a compressed archive is itself a `.bsp`, `.gfc`, or `.bds` file.
+
+Adding a declaration is also an assertion that its content may be redistributed
+under the upstream terms. Package code is MIT licensed; scientific data retain
+their provider terms. This project is not affiliated with NASA, JPL, NAIF,
+IERS, GFZ, NOAA, ICGEM, SILSO, or CelesTrak.
+
+## Included families
+
+- DE430, DE432s, DE435, DE438, DE440/DE440s, and DE442/DE442s
+- natural-moon SPKs for Mars, Jupiter, Saturn, Uranus, Neptune, and Pluto
+- NAIF constants, frames, leap seconds, and lunar DE440 orientation
+- GOCO06s and GGM05C spherical-harmonic gravity coefficient files
+- selected NAIF DSK shape models
+- live IERS, GFZ, NOAA SWPC, SILSO, CelesTrak, and rolling NAIF products
+
+DE431 and DE441 are excluded. No artificial Earth-satellite or spacecraft
+kernels are included.
+
+## Offline operation
 
 ```julia
 ENV["ASTRODYNAMICS_RESOURCES_OFFLINE"] = "true"
 cached = resource_path(:iers_c04; stale_ok=true)
 ```
 
-## Data providers and non-endorsement
-
-Dataset metadata preserves provider attribution and citations. Package code is
-MIT licensed, but scientific datasets retain their own terms. NAIF kernel
-redistribution follows the [NAIF Rules Regarding Use of
-SPICE](https://naif.jpl.nasa.gov/naif/rules.html): redistributed kernels must
-remain unmodified, and acknowledgement of SPICE/NAIF/PDS and the producing
-teams is encouraged. This independent project is not affiliated with or
-endorsed by NASA, JPL, NAIF, IERS, GFZ, NOAA, SILSO, CelesTrak, or any other
-data provider.
-
-See the [documentation](docs/src/index.md), [contribution
-guide](docs/src/contributing.md), and [changelog](CHANGELOG.md).
+See the documentation for TTL overrides, cache status, verification, bundles,
+and the complete resource reference.

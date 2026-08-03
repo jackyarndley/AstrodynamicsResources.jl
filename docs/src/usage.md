@@ -9,7 +9,7 @@ resource(:de440s)
 resource(:de430)
 list_resources(category=:gravity)
 list_resources(category=:orientation, body=:moon)
-find_resources("lunar principal axis")
+find_resources("moon pa")
 bundle(:moon_de440_pa)
 ```
 

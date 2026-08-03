@@ -18,16 +18,12 @@ jobs:
         with:
           version: "1"
       - uses: julia-actions/cache@v3.2.0
-      - name: Require a private repository
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          test "$(gh repo view "$GITHUB_REPOSITORY" --json visibility --jq .visibility)" = "PRIVATE"
       - name: Test package
         run: julia --project=. -e 'using Pkg; Pkg.instantiate(); Pkg.test()'
       - name: Validate registration metadata
         run: |
           julia --project=. scripts/validate_catalog.jl
+          test -z "$(julia --project=. scripts/list_uncached.jl | tr -d '[]')"
           test -f LICENSE
           test -f CITATION.cff
           test -f CHANGELOG.md

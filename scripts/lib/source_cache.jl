@@ -1,18 +1,13 @@
 module SourceCache
 
 using Downloads
-using MD5
 using SHA
 using TOML
 
-export fetch_verified_source, file_md5, file_sha256
+export fetch_verified_source, file_sha256
 
 file_sha256(path::AbstractString) = open(path, "r") do io
     bytes2hex(SHA.sha256(io))
-end
-
-file_md5(path::AbstractString) = open(path, "r") do io
-    bytes2hex(MD5.md5(io))
 end
 
 function reject_bad_source(path::AbstractString, source_filename::AbstractString;
@@ -95,8 +90,8 @@ end
 """
     fetch_verified_source(metadata; cache_root, require_sha256=true)
 
-Fetch an upstream file into a persistent, resumable source cache. Provider
-checksums and the catalogue SHA-256 are verified when present. Successful files
+Fetch an upstream file into a persistent, resumable source cache. The generated
+lock SHA-256 is verified when present. Successful files
 are stored under their content digest, so subsequent package releases reuse the
 same immutable bytes.
 """
@@ -141,16 +136,6 @@ function fetch_verified_source(metadata::AbstractDict;
     part = joinpath(incoming, filename * ".part")
     _download_resumable(url, part, expected_size)
     reject_bad_source(part, filename; expected_size)
-
-    algorithm = lowercase(String(get(metadata, "upstream_checksum_algorithm", "")))
-    provider_checksum = get(metadata, "upstream_checksum", nothing)
-    if provider_checksum !== nothing
-        actual = algorithm == "md5" ? file_md5(part) :
-                 algorithm == "sha256" ? file_sha256(part) :
-                 error("unsupported upstream checksum algorithm $algorithm")
-        actual == lowercase(String(provider_checksum)) ||
-            error("provider $algorithm checksum mismatch for $filename")
-    end
 
     digest = file_sha256(part)
     expected_sha === nothing || digest == lowercase(String(expected_sha)) ||

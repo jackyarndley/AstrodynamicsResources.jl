@@ -1,177 +1,25 @@
-[[bundle]]
-id = "naif_core"
-title = "NAIF core support kernels"
-description = "Pinned support kernels in documented consumer load order."
-members = ["pinned_leapseconds", "pck00011", "gm_de440", "geophysical"]
-ordered = true
-purpose = "General NAIF support"
+# Ordered bundles are intentionally just name-to-member lists.
 
-[[bundle]]
-id = "de430_standard"
-title = "DE430 standard bundle"
-description = "DE430 planetary ephemeris and pinned support kernels."
-members = ["de430", "pinned_leapseconds", "pck00011"]
-ordered = true
-purpose = "Legacy planetary ephemeris"
-
-[[bundle]]
-id = "de432s_standard"
-title = "Compact DE432s standard bundle"
-description = "Compact DE432s planetary ephemeris and pinned support kernels."
-members = ["de432s", "pinned_leapseconds", "pck00011"]
-ordered = true
-purpose = "Compact legacy planetary ephemeris"
-
-[[bundle]]
-id = "de435_standard"
-title = "DE435 standard bundle"
-description = "DE435 planetary ephemeris and pinned support kernels."
-members = ["de435", "pinned_leapseconds", "pck00011"]
-ordered = true
-purpose = "Legacy planetary ephemeris"
-
-[[bundle]]
-id = "de438_standard"
-title = "DE438 standard bundle"
-description = "DE438 planetary ephemeris and pinned support kernels."
-members = ["de438", "pinned_leapseconds", "pck00011"]
-ordered = true
-purpose = "Legacy planetary ephemeris"
-
-[[bundle]]
-id = "de440_standard"
-title = "Compact DE440 standard bundle"
-description = "Recommended compact DE440s selection and pinned support kernels."
-members = ["de440s", "pinned_leapseconds", "pck00011", "gm_de440"]
-ordered = true
-purpose = "Compact planetary ephemeris"
-
-[[bundle]]
-id = "de440_full"
-title = "Full DE440 bundle"
-description = "Full DE440 kernel and pinned support kernels."
-members = ["de440", "pinned_leapseconds", "pck00011", "gm_de440"]
-ordered = true
-purpose = "Full-span planetary ephemeris"
-
-[[bundle]]
-id = "de442_standard"
-title = "Compact DE442 standard bundle"
-description = "Compact DE442s planetary ephemeris and pinned support kernels."
-members = ["de442s", "pinned_leapseconds", "pck00011"]
-ordered = true
-purpose = "Compact planetary ephemeris"
-
-[[bundle]]
-id = "de442_full"
-title = "Full DE442 bundle"
-description = "Full DE442 kernel and pinned support kernels."
-members = ["de442", "pinned_leapseconds", "pck00011"]
-ordered = true
-purpose = "Full-span planetary ephemeris"
-
-[[bundle]]
-id = "moon_de440_orientation"
-title = "DE440 lunar orientation"
-description = "Base lunar orientation resources without a global PA/ME association choice."
-members = ["pck00011", "moon_pa_de440", "moon_de440_frames"]
-ordered = true
-purpose = "Lunar orientation"
-
-[[bundle]]
-id = "moon_de440_pa"
-title = "DE440 lunar principal-axis association"
-description = "Lunar orientation plus the optional principal-axis association kernel."
-members = ["pck00011", "moon_pa_de440", "moon_de440_frames", "moon_assoc_pa"]
-ordered = true
-purpose = "Lunar principal-axis orientation"
-
-[[bundle]]
-id = "moon_de440_me"
-title = "DE440 lunar mean-Earth association"
-description = "Lunar orientation plus the optional mean-Earth association kernel."
-members = ["pck00011", "moon_pa_de440", "moon_de440_frames", "moon_assoc_me"]
-ordered = true
-purpose = "Lunar mean-Earth orientation"
-
-[[bundle]]
-id = "de440_moon_pa"
-title = "Compact DE440 with lunar PA orientation"
-description = "Ordered planetary and lunar resources with the PA association selected."
-members = ["pinned_leapseconds", "de440s", "pck00011", "gm_de440", "moon_pa_de440", "moon_de440_frames", "moon_assoc_pa"]
-ordered = true
-purpose = "Planetary ephemeris and lunar orientation"
-
-[[bundle]]
-id = "uranus_satellites"
-title = "Uranus satellite kernels"
-description = "Reviewed multipart ura184 Uranus-system product in official part order."
-members = ["ura184_part1", "ura184_part2", "ura184_part3"]
-ordered = true
-purpose = "Uranus satellites"
-
-[[bundle]]
-id = "mars_satellites"
-title = "Mars natural-satellite kernels"
-description = "Reviewed compact exact Mars moon kernel; not a lexical latest alias."
-members = ["mar099s"]
-ordered = true
-purpose = "Mars natural satellites"
-
-[[bundle]]
-id = "jupiter_satellites"
-title = "Jupiter natural-satellite kernels"
-description = "Exact selected Jupiter moon kernel and associated name-ID frame kernel."
-members = ["jup349", "jup349_nameid"]
-ordered = true
-purpose = "Jupiter natural satellites"
-
-[[bundle]]
-id = "saturn_satellites"
-title = "Saturn natural-satellite kernels"
-description = "Complementary compact Saturn moon products and name-ID support."
-members = ["sat459", "sat459_nameid", "sat480", "sat480_nameid"]
-ordered = true
-purpose = "Saturn natural satellites"
-
-[[bundle]]
-id = "neptune_satellites"
-title = "Neptune natural-satellite kernels"
-description = "Explicit compact Neptune-system selection; not a lexical latest alias."
-members = ["nep105"]
-ordered = true
-purpose = "Neptune natural satellites"
-
-[[bundle]]
-id = "pluto_satellites"
-title = "Pluto natural-satellite kernels"
-description = "Exact selected Pluto-system natural-satellite ephemeris."
-members = ["plu060"]
-ordered = true
-purpose = "Pluto natural satellites"
-
-[[bundle]]
-id = "earth_gravity_standard"
-title = "Reviewed Earth gravity models"
-description = "A compact pair of reviewed Earth gravity models representing combined and satellite-only solutions."
-members = ["ggm05c", "goco06s"]
-ordered = true
-purpose = "Gravity model selection policy"
-notes = "GGM05C is a combined model and GOCO06s is satellite-only; bundle order is catalogue order and no universal best model is implied."
-
-[[bundle]]
-id = "lunar_gravity_standard"
-title = "Lunar gravity standard candidates"
-description = "Intentionally empty until GRAIL product identity and redistribution review are complete."
-members = []
-ordered = true
-purpose = "Lunar gravity model selection policy"
-notes = "Lunar gravity is separate from lunar orientation."
-
-[[bundle]]
-id = "earth_environment_operational"
-title = "Operational Earth environment"
-description = "Ordered live EOP and consolidated space-weather resources."
-members = ["iers_finals2000a", "iers_c04", "gfz_kp_ap", "noaa_swpc_f107"]
-ordered = true
-purpose = "Operational environment inputs"
+[bundle]
+naif_core = ["pinned_leapseconds", "pck00011", "gm_de440", "geophysical"]
+de430_standard = ["de430", "pinned_leapseconds", "pck00011"]
+de432s_standard = ["de432s", "pinned_leapseconds", "pck00011"]
+de435_standard = ["de435", "pinned_leapseconds", "pck00011"]
+de438_standard = ["de438", "pinned_leapseconds", "pck00011"]
+de440_standard = ["de440s", "pinned_leapseconds", "pck00011", "gm_de440"]
+de440_full = ["de440", "pinned_leapseconds", "pck00011", "gm_de440"]
+de442_standard = ["de442s", "pinned_leapseconds", "pck00011"]
+de442_full = ["de442", "pinned_leapseconds", "pck00011"]
+moon_de440_orientation = ["pck00011", "moon_pa_de440", "moon_de440_frames"]
+moon_de440_pa = ["pck00011", "moon_pa_de440", "moon_de440_frames", "moon_assoc_pa"]
+moon_de440_me = ["pck00011", "moon_pa_de440", "moon_de440_frames", "moon_assoc_me"]
+de440_moon_pa = ["pinned_leapseconds", "de440s", "pck00011", "gm_de440", "moon_pa_de440", "moon_de440_frames", "moon_assoc_pa"]
+mars_satellites = ["mar099s"]
+jupiter_satellites = ["jup349", "jup349_nameid"]
+saturn_satellites = ["sat459", "sat459_nameid", "sat480", "sat480_nameid"]
+uranus_satellites = ["ura184_part1", "ura184_part2", "ura184_part3"]
+neptune_satellites = ["nep105"]
+pluto_satellites = ["plu060"]
+earth_gravity_standard = ["ggm05c", "goco06s"]
+lunar_gravity_standard = []
+earth_environment_operational = ["iers_finals2000a", "iers_c04", "gfz_kp_ap", "noaa_swpc_f107"]

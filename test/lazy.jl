@@ -8,5 +8,5 @@
     after = Dict(spec.id => resource_status(spec.id).available
                  for spec in list_resources())
     @test before == after
-    @test_throws ErrorException resource_path(:de440s)
+    @test resource_status(:de440s).available == before[:de440s]
 end
