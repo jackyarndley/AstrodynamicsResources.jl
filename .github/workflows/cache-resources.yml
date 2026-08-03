@@ -17,7 +17,6 @@ concurrency:
 
 env:
   RESOURCE_RELEASE: v0.1.0
-  LEGACY_RESOURCE_RELEASE: resources-v1
 
 jobs:
   scan:
@@ -25,8 +24,6 @@ jobs:
     outputs:
       uncached: ${{ steps.scan.outputs.uncached }}
       uncached_count: ${{ steps.scan.outputs.uncached_count }}
-      missing: ${{ steps.scan.outputs.missing }}
-      missing_count: ${{ steps.scan.outputs.missing_count }}
     steps:
       - uses: actions/checkout@v7.0.1
       - uses: julia-actions/setup-julia@v3.0.2
@@ -46,7 +43,7 @@ jobs:
 
   prepare:
     needs: scan
-    if: needs.scan.outputs.uncached_count != '0' || needs.scan.outputs.missing_count != '0'
+    if: needs.scan.outputs.uncached_count != '0'
     runs-on: ubuntu-latest
     steps:
       - name: Ensure target release exists
@@ -59,55 +56,6 @@ jobs:
               --draft --target main --title "AstrodynamicsResources.jl $RESOURCE_RELEASE" \
               --notes "Package source and immutable resource archives."
           fi
-
-  migrate:
-    needs: [scan, prepare]
-    if: needs.scan.outputs.missing_count != '0'
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      max-parallel: 4
-      matrix:
-        name: ${{ fromJSON(needs.scan.outputs.missing) }}
-    steps:
-      - uses: actions/checkout@v7.0.1
-      - uses: julia-actions/setup-julia@v3.0.2
-        with:
-          version: "1"
-      - name: Instantiate
-        run: julia --project=. -e 'using Pkg; Pkg.instantiate()'
-      - name: Read locked identity
-        id: identity
-        shell: bash
-        run: |
-          julia --project=. -e '
-            using AstrodynamicsResources
-            spec = resource(Symbol(ARGS[1]))
-            println("old_asset=", spec.metadata["source_filename"], ".tar.gz")
-            println("asset=", spec.metadata["asset"])
-            println("archive_sha=", spec.metadata["archive_sha256"])
-            println("tree_sha=", spec.metadata["git_tree_sha1"])
-          ' "${{ matrix.name }}" >> "$GITHUB_OUTPUT"
-      - name: Copy verified legacy archive
-        env:
-          GH_TOKEN: ${{ github.token }}
-        shell: bash
-        run: |
-          mkdir migration
-          gh release download "$LEGACY_RESOURCE_RELEASE" \
-            --repo "$GITHUB_REPOSITORY" \
-            --pattern "${{ steps.identity.outputs.old_asset }}" --dir migration
-          mv "migration/${{ steps.identity.outputs.old_asset }}" \
-             "migration/${{ steps.identity.outputs.asset }}"
-          ACTUAL=$(sha256sum "migration/${{ steps.identity.outputs.asset }}" | cut -d' ' -f1)
-          test "$ACTUAL" = "${{ steps.identity.outputs.archive_sha }}"
-          gh release upload "$RESOURCE_RELEASE" \
-            "migration/${{ steps.identity.outputs.asset }}" \
-            --repo "$GITHUB_REPOSITORY"
-          API=$(gh release view "$RESOURCE_RELEASE" --repo "$GITHUB_REPOSITORY" \
-            --json assets --jq '.assets[] | select(.name == "${{ steps.identity.outputs.asset }}") | .apiUrl')
-          gh api --method PATCH "$API" \
-            -f label="git-tree-sha1=${{ steps.identity.outputs.tree_sha }}"
 
   build:
     needs: [scan, prepare]

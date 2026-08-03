@@ -20,9 +20,11 @@ if haskey(ENV, "GITHUB_OUTPUT")
     open(ENV["GITHUB_OUTPUT"], "a") do io
         println(io, "uncached=", json(uncached))
         println(io, "uncached_count=", length(uncached))
-        println(io, "missing=", json(missing))
-        println(io, "missing_count=", length(missing))
     end
 end
 println("uncached: ", join(uncached, ", "))
 println("locked but missing from release: ", join(missing, ", "))
+isempty(missing) || error(
+    "locked resources are missing from the immutable release: " * join(missing, ", ") *
+    ". Restore the exact locked archives; never rebuild or overwrite them.",
+)
