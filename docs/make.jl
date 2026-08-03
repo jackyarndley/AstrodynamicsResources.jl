@@ -21,17 +21,16 @@ end
 
 makedocs(
     sitename="AstrodynamicsResources.jl",
-    format=Documenter.HTML(edit_link=nothing, repolink=nothing),
+    format=Documenter.HTML(
+        edit_link="main",
+        repolink="https://github.com/jackyarndley/AstrodynamicsResources.jl",
+    ),
     modules=[AstrodynamicsResources],
     remotes=nothing,
     pages=[
         "Home" => "index.md",
-        "Using resources" => "usage.md",
-        "Lunar orientation" => "lunar.md",
-        "Operations and provenance" => "operations.md",
         "Contributing resources" => "contributing.md",
         "Resource reference" => "resources.md",
-        "API" => "api.md",
     ],
     checkdocs=:exports,
 )

@@ -28,5 +28,5 @@ jobs:
       - uses: julia-actions/julia-buildpkg@v1.7.0
       - uses: julia-actions/julia-runtest@v1.12.0
       - name: Validate catalogue
-        run: julia --project=. scripts/validate_catalog.jl
+        run: julia --project=. scripts/catalog.jl validate
 
