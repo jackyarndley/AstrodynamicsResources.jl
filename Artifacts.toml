@@ -119,6 +119,14 @@ lazy = true
     sha256 = "d66b808152b6cdad9f8039085c6b50778b4440fab82e789de68a6eaf6398ab30"
     url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/eros_near_msi_64q.tar.gz"
 
+[fk5]
+git-tree-sha1 = "a208856839fdf9e226a57519652f435fb24e3d96"
+lazy = true
+
+    [[fk5.download]]
+    sha256 = "cc74134bd7994711a236ee3e6ab0fbba2c51490213957fe4e45a9fd46170c07c"
+    url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/fk5.tar.gz"
+
 [geophysical]
 git-tree-sha1 = "e8ae15d2be129d790f7bc47bc92f324530f64ae9"
 lazy = true
@@ -150,6 +158,14 @@ lazy = true
     [[goco06s.download]]
     sha256 = "f4e8cecdcbc953397e0fff6153a075b51bb5b676bd9cdd4c23a5c5b32a8033d2"
     url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/goco06s.tar.gz"
+
+[hipparcos]
+git-tree-sha1 = "ef5974e1835e9701ab42b24b711f0705f9e84d84"
+lazy = true
+
+    [[hipparcos.download]]
+    sha256 = "e5ce35292ff9c3bec27df0e0ccdf0db78c162495067dbdfa9a287ff542812708"
+    url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/hipparcos.tar.gz"
 
 [itokawa_hayabusa_amica_512q]
 git-tree-sha1 = "d04ccdc62c6ade9f4e3366f9eab629b262775ebe"
@@ -358,6 +374,14 @@ lazy = true
     [[sat480_nameid.download]]
     sha256 = "a4c9fbe9ba6d3efc843e877da78e9f12900f1064418c0664a520af6a6bc151cf"
     url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/sat480_nameid.tar.gz"
+
+[tycho2]
+git-tree-sha1 = "6d0b2c3b061d97dbbb5fae2f082ae1c68231c259"
+lazy = true
+
+    [[tycho2.download]]
+    sha256 = "effd19046fd33058e240bc5de4f91d64a098fb84bd943926bc6fd3090c299e56"
+    url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/tycho2.tar.gz"
 
 [ura184_part1]
 git-tree-sha1 = "1898c197f8195656b77aa0d2205bd244d44d79ed"

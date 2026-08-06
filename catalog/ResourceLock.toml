@@ -204,6 +204,22 @@ source_sha256 = "011364b06fde5dce2c8f5e750e542ee531e648bff16b74274e25ac4a2af64ab
 source_size_bytes = 3906560
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/dsk/asteroids/eros/near-a-msi-5-erosshape-v1_0_64q.bds"
 
+[resources.fk5]
+archive_sha256 = "cc74134bd7994711a236ee3e6ab0fbba2c51490213957fe4e45a9fd46170c07c"
+archive_size_bytes = 109917
+asset = "fk5.tar.gz"
+citation = "Fricke et al. 1988, FK5 Part I (VizieR On-line Data Catalogue I/149A)."
+download_url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/fk5.tar.gz"
+git_tree_sha1 = "a208856839fdf9e226a57519652f435fb24e3d96"
+license = "VizieR rules of usage; cite catalogue authors and publisher"
+license_url = "https://cds.unistra.fr/vizier-org/licences_vizier.html"
+metadata_sha256 = "9b35679eb2bc623538baecbb1a4f94d1e7522c58928feaf8509a34b6ce59f7d8"
+metadata_url = "https://cdsarc.cds.unistra.fr/ftp/I/149A/ReadMe"
+source_filename = "catalog.gz"
+source_sha256 = "67a228e2adacdb559ea5ec8305ca84d1d81f278af70483aac46beacd8e308a13"
+source_size_bytes = 104467
+source_url = "https://cdsarc.cds.unistra.fr/ftp/I/149A/catalog.gz"
+
 [resources.geophysical]
 archive_sha256 = "ca4ba37dbfe0b3b6c59d318e8973d24c560153ea57f566f40d91549dc3c6b9f7"
 archive_size_bytes = 1752
@@ -255,6 +271,22 @@ source_filename = "GOCO06s.gfc"
 source_sha256 = "351d9d20b84cd2c0f52ce77146b1e3b774f408200b579ffaf98593cf3d271819"
 source_size_bytes = 10451091
 source_url = "https://datapub.gfz-potsdam.de/download/10.5880.ICGEM.2019.002/GOCO06s.gfc"
+
+[resources.hipparcos]
+archive_sha256 = "e5ce35292ff9c3bec27df0e0ccdf0db78c162495067dbdfa9a287ff542812708"
+archive_size_bytes = 13735715
+asset = "hipparcos.tar.gz"
+citation = "ESA, 1997, The Hipparcos and Tycho Catalogues, ESA SP-1200 (VizieR I/239)."
+download_url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/hipparcos.tar.gz"
+git_tree_sha1 = "ef5974e1835e9701ab42b24b711f0705f9e84d84"
+license = "ESA catalogue data; free use with acknowledgement"
+license_url = "https://cdsarc.cds.unistra.fr/ftp/I/239/ReadMe"
+metadata_sha256 = "49a24be0c342a74e2357a048d2434a77cbb165690afe34b3c18989a4c24d0272"
+metadata_url = "https://cdsarc.cds.unistra.fr/ftp/I/239/ReadMe"
+source_filename = "hip_main.dat"
+source_sha256 = "58ceabb104d647160d9437ce6e513a02a036bb4ad9f8879a5a22fd52943616e0"
+source_size_bytes = 53316318
+source_url = "https://cdsarc.cds.unistra.fr/ftp/I/239/hip_main.dat"
 
 [resources.itokawa_hayabusa_amica_512q]
 archive_sha256 = "7f2c30558bba807389b28fd88ef3345d44a8d7efb0994bd3dfce9fd8c7501dc6"
@@ -595,6 +627,121 @@ source_filename = "sat480_nameid.tf"
 source_sha256 = "c1c20ff442f69ad1663511b9e447e87627484acd1b27fa0ccae82c747af28acd"
 source_size_bytes = 320
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/fk/satellites/sat480_nameid.tf"
+
+[resources.tycho2]
+archive_sha256 = "effd19046fd33058e240bc5de4f91d64a098fb84bd943926bc6fd3090c299e56"
+archive_size_bytes = 166155467
+asset = "tycho2.tar.gz"
+citation = "Høg et al. 2000, A&A 355, L27 (VizieR I/259)."
+download_url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/tycho2.tar.gz"
+git_tree_sha1 = "6d0b2c3b061d97dbbb5fae2f082ae1c68231c259"
+license = "ESA catalogue data; free use with acknowledgement"
+license_url = "https://cdsarc.cds.unistra.fr/ftp/I/259/ReadMe"
+metadata_sha256 = "86ad999ea84071c9c424201ca41cb16ac8f715c9e462a008f804c7a0b9a0f5c6"
+metadata_url = "https://cdsarc.cds.unistra.fr/ftp/I/259/ReadMe"
+source_filename = "tyc2.dat.00.gz"
+source_url = "https://cdsarc.cds.unistra.fr/ftp/I/259/tyc2.dat.00.gz"
+
+    [[resources.tycho2.files]]
+    filename = "tyc2.dat.00.gz"
+    sha256 = "1b224570fc6eb151984ce106fdf797728649d1ea77aaf3effd2d3444cfac6df6"
+    size_bytes = 8407799
+    url = "https://cdsarc.cds.unistra.fr/ftp/I/259/tyc2.dat.00.gz"
+    [[resources.tycho2.files]]
+    filename = "tyc2.dat.01.gz"
+    sha256 = "36221f4a5cdd9c5009d64299d2e6409f8d4cdf924321768780165bd3e2a2a99a"
+    size_bytes = 8375063
+    url = "https://cdsarc.cds.unistra.fr/ftp/I/259/tyc2.dat.01.gz"
+    [[resources.tycho2.files]]
+    filename = "tyc2.dat.02.gz"
+    sha256 = "e2ea4eeb7d204dde70ac54d172b1c429540c0d23d62ec0d7500561adc44cc57b"
+    size_bytes = 8351549
+    url = "https://cdsarc.cds.unistra.fr/ftp/I/259/tyc2.dat.02.gz"
+    [[resources.tycho2.files]]
+    filename = "tyc2.dat.03.gz"
+    sha256 = "29e0cb57cba7e1651455efcb528276b0c28e1fe83f47f8ebe963e48d8b180afb"
+    size_bytes = 8426693
+    url = "https://cdsarc.cds.unistra.fr/ftp/I/259/tyc2.dat.03.gz"
+    [[resources.tycho2.files]]
+    filename = "tyc2.dat.04.gz"
+    sha256 = "d04868329b470aa320f0fe5e9c525be619a7a228b364433e5f114f2178946d9b"
+    size_bytes = 8487663
+    url = "https://cdsarc.cds.unistra.fr/ftp/I/259/tyc2.dat.04.gz"
+    [[resources.tycho2.files]]
+    filename = "tyc2.dat.05.gz"
+    sha256 = "51f08772197dcf0cd26ff098c866036340b797f71ee04be22712517c10c73c4e"
+    size_bytes = 8247134
+    url = "https://cdsarc.cds.unistra.fr/ftp/I/259/tyc2.dat.05.gz"
+    [[resources.tycho2.files]]
+    filename = "tyc2.dat.06.gz"
+    sha256 = "f55503a66abce0e11d1a4ccbcde1f4c97a6e3e769de85e005f57ba963086ab03"
+    size_bytes = 8039302
+    url = "https://cdsarc.cds.unistra.fr/ftp/I/259/tyc2.dat.06.gz"
+    [[resources.tycho2.files]]
+    filename = "tyc2.dat.07.gz"
+    sha256 = "bc15b5b1f6308477360fbb93f6a98d9029601cab68973202be0f8764c127f524"
+    size_bytes = 8129883
+    url = "https://cdsarc.cds.unistra.fr/ftp/I/259/tyc2.dat.07.gz"
+    [[resources.tycho2.files]]
+    filename = "tyc2.dat.08.gz"
+    sha256 = "315ac34c678bc2e0f568b43b6b2d7c3d7c9cf9c089b51115d18b872864e50426"
+    size_bytes = 8224049
+    url = "https://cdsarc.cds.unistra.fr/ftp/I/259/tyc2.dat.08.gz"
+    [[resources.tycho2.files]]
+    filename = "tyc2.dat.09.gz"
+    sha256 = "d66c671fa29aad10bc5fd697f68c918bb774c1ffc3c7db9c20234895268390d5"
+    size_bytes = 8424804
+    url = "https://cdsarc.cds.unistra.fr/ftp/I/259/tyc2.dat.09.gz"
+    [[resources.tycho2.files]]
+    filename = "tyc2.dat.10.gz"
+    sha256 = "d86529df819ebdf3f4b8892510973ee10e1db06930814e014dd467193e740d52"
+    size_bytes = 8512497
+    url = "https://cdsarc.cds.unistra.fr/ftp/I/259/tyc2.dat.10.gz"
+    [[resources.tycho2.files]]
+    filename = "tyc2.dat.11.gz"
+    sha256 = "fc0c3203b3d2787da54c43d9963e363c8a3926576c383b101a15350a7ca23e9c"
+    size_bytes = 8497732
+    url = "https://cdsarc.cds.unistra.fr/ftp/I/259/tyc2.dat.11.gz"
+    [[resources.tycho2.files]]
+    filename = "tyc2.dat.12.gz"
+    sha256 = "68fd9d7e7353d52dea0de043cc62b45c04d234104eb05c063dc23ea7b6759576"
+    size_bytes = 8350212
+    url = "https://cdsarc.cds.unistra.fr/ftp/I/259/tyc2.dat.12.gz"
+    [[resources.tycho2.files]]
+    filename = "tyc2.dat.13.gz"
+    sha256 = "a08ecc092e6d134742c0f594c56c5c2e02b8fd5e76cffb1779877f2fcefac3fc"
+    size_bytes = 8360023
+    url = "https://cdsarc.cds.unistra.fr/ftp/I/259/tyc2.dat.13.gz"
+    [[resources.tycho2.files]]
+    filename = "tyc2.dat.14.gz"
+    sha256 = "2846e8cc489795a4d8160d2d5b64ff0e9a00598adba35a52a4f8ccf4c5e38b3e"
+    size_bytes = 8472405
+    url = "https://cdsarc.cds.unistra.fr/ftp/I/259/tyc2.dat.14.gz"
+    [[resources.tycho2.files]]
+    filename = "tyc2.dat.15.gz"
+    sha256 = "74784a3656382090a70d778820335f4a781509dbe3fcb9e92d18cf96b2c46c72"
+    size_bytes = 8455626
+    url = "https://cdsarc.cds.unistra.fr/ftp/I/259/tyc2.dat.15.gz"
+    [[resources.tycho2.files]]
+    filename = "tyc2.dat.16.gz"
+    sha256 = "320560e3d551cc40fa1f54ef7133709bf4bd45efa6688f808be7c09be5544a4d"
+    size_bytes = 8416328
+    url = "https://cdsarc.cds.unistra.fr/ftp/I/259/tyc2.dat.16.gz"
+    [[resources.tycho2.files]]
+    filename = "tyc2.dat.17.gz"
+    sha256 = "a8154e940aa0a0e8f31d91b4bd9fd56e6849da42cddb13c7dda772439b06991a"
+    size_bytes = 8171031
+    url = "https://cdsarc.cds.unistra.fr/ftp/I/259/tyc2.dat.17.gz"
+    [[resources.tycho2.files]]
+    filename = "tyc2.dat.18.gz"
+    sha256 = "5e951a1a51df7956f205b83cbfa5501d357c843640a253c1e6d3917bebe7d928"
+    size_bytes = 8077674
+    url = "https://cdsarc.cds.unistra.fr/ftp/I/259/tyc2.dat.18.gz"
+    [[resources.tycho2.files]]
+    filename = "tyc2.dat.19.gz"
+    sha256 = "f59605a38116f517a31a7dbdee3469c077658f2f40b8afe5da2aeb832eaee3dd"
+    size_bytes = 8195964
+    url = "https://cdsarc.cds.unistra.fr/ftp/I/259/tyc2.dat.19.gz"
 
 [resources.ura184_part1]
 archive_sha256 = "557ad76202c82fff1b7c90032914965546773fc4ae555d4fa8173290cb0c4244"
