@@ -79,7 +79,7 @@ stars = resource_paths(:star_catalogues)  # all data files and ReadMes
 
 These are raw catalogue files returned as paths; this package does not parse
 them. License terms for each catalogue are recorded in the catalogue and shown
-by `resource_info`. Tycho-2 is distributed by CDS as 20 gzipped parts, so
+by `resource`. Tycho-2 is distributed by CDS as 20 gzipped parts, so
 `resource_paths(:tycho2)` returns those 20 ordered parts plus its ReadMe.
 
 ## Offline operation and integrity

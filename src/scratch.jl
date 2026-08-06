@@ -1,9 +1,9 @@
-const _DOWNLOAD_SEMAPHORES = Dict{Int,Channel{Nothing}}()
+const _DOWNLOAD_SEMAPHORES = Dict{Int, Channel{Nothing}}()
 const _DOWNLOAD_SEMAPHORE_LOCK = ReentrantLock()
 
 function _download_semaphore()
     count = _max_downloads()
-    lock(_DOWNLOAD_SEMAPHORE_LOCK) do
+    return lock(_DOWNLOAD_SEMAPHORE_LOCK) do
         return get!(_DOWNLOAD_SEMAPHORES, count) do
             channel = Channel{Nothing}(count)
             foreach(_ -> put!(channel, nothing), 1:count)
@@ -51,19 +51,19 @@ end
 
 function _read_metadata(root::String)
     path = _metadata_path(root)
-    isfile(path) || return Dict{String,Any}()
+    isfile(path) || return Dict{String, Any}()
     try
         return TOML.parsefile(path)
     catch
-        return Dict{String,Any}()
+        return Dict{String, Any}()
     end
 end
 
-function _write_metadata(root::String, metadata::Dict{String,Any})
+function _write_metadata(root::String, metadata::Dict{String, Any})
     mkpath(root)
     temp = joinpath(root, "metadata.toml.part.$(getpid()).$(rand(UInt))")
     open(temp, "w") do io
-        TOML.print(io, metadata; sorted=true)
+        TOML.print(io, metadata; sorted = true)
         flush(io)
     end
     Base.Filesystem.rename(temp, _metadata_path(root))
@@ -90,18 +90,24 @@ end
 
 function _validate_download(spec::ResourceSpec, path::String, response)
     minimum = Int(get(spec.metadata, "minimum_size_bytes", 1))
-    filesize(path) >= minimum || throw(ErrorException(
-        "download for $(spec.id) is smaller than the required $minimum bytes"
-    ))
-    _looks_like_html(path) && throw(ErrorException(
-        "download for $(spec.id) appears to be an HTML error page"
-    ))
+    filesize(path) >= minimum || throw(
+        ErrorException(
+            "download for $(spec.id) is smaller than the required $minimum bytes"
+        )
+    )
+    _looks_like_html(path) && throw(
+        ErrorException(
+            "download for $(spec.id) appears to be an HTML error page"
+        )
+    )
     expected = lowercase(String(get(spec.metadata, "expected_content_type", "")))
     actual = something(_header(response, "content-type"), "")
     if !isempty(expected) && !isempty(actual) && !occursin(expected, lowercase(actual))
-        throw(ErrorException(
-            "download for $(spec.id) has content type $actual; expected $expected"
-        ))
+        throw(
+            ErrorException(
+                "download for $(spec.id) has content type $actual; expected $expected"
+            )
+        )
     end
     return nothing
 end
@@ -119,7 +125,7 @@ function _with_cache_lock(f::Function, root::String)
             isdir(lockdir) || rethrow(error)
             if time() - stat(lockdir).mtime > max(600.0, 2 * _timeout())
                 try
-                    rm(lockdir; recursive=true)
+                    rm(lockdir; recursive = true)
                 catch
                 end
             elseif time() >= deadline
@@ -132,7 +138,7 @@ function _with_cache_lock(f::Function, root::String)
     try
         return f()
     finally
-        isdir(lockdir) && rm(lockdir; recursive=true)
+        isdir(lockdir) && rm(lockdir; recursive = true)
     end
 end
 
@@ -142,17 +148,17 @@ function _cache_file(spec::ResourceSpec, root::String)
     return joinpath(root, file.path)
 end
 
-function _is_fresh(spec::ResourceSpec, metadata::Dict{String,Any}, path::String)
+function _is_fresh(spec::ResourceSpec, metadata::Dict{String, Any}, path::String)
     isfile(path) || return false
     checked = _parse_datetime(get(metadata, "last_checked", nothing))
     checked === nothing && return false
     return now(UTC) <= checked + Second(_ttl_seconds(spec))
 end
 
-function _download_live!(spec::ResourceSpec, root::String, existing::Dict{String,Any})
+function _download_live!(spec::ResourceSpec, root::String, existing::Dict{String, Any})
     destination = _cache_file(spec, root)
     mkpath(dirname(destination))
-    headers = Pair{String,String}[]
+    headers = Pair{String, String}[]
     haskey(existing, "etag") && push!(headers, "If-None-Match" => String(existing["etag"]))
     haskey(existing, "last_modified") &&
         push!(headers, "If-Modified-Since" => String(existing["last_modified"]))
@@ -160,7 +166,7 @@ function _download_live!(spec::ResourceSpec, root::String, existing::Dict{String
     for url in _live_urls(spec)
         part = destination * ".part.$(getpid()).$(rand(UInt))"
         try
-            response = Downloads.request(url; output=part, headers=headers, timeout=_timeout())
+            response = Downloads.request(url; output = part, headers = headers, timeout = _timeout())
             if response.status == 304
                 isfile(part) && rm(part)
                 isfile(destination) || throw(ErrorException("server returned 304 without a cached file"))
@@ -179,7 +185,7 @@ function _download_live!(spec::ResourceSpec, root::String, existing::Dict{String
             # If it fails, the existing destination remains valid.
             Base.Filesystem.rename(part, destination)
             stamp = now(UTC)
-            metadata = Dict{String,Any}(
+            metadata = Dict{String, Any}(
                 "resource_id" => String(spec.id),
                 "source_url" => url,
                 "retrieved_at" => string(stamp),
@@ -188,24 +194,28 @@ function _download_live!(spec::ResourceSpec, root::String, existing::Dict{String
                 "size_bytes" => filesize(destination),
                 "fresh_until" => string(stamp + Second(_ttl_seconds(spec))),
             )
-            for (header, key) in (("etag", "etag"), ("last-modified", "last_modified"),
-                                  ("content-type", "content_type"))
+            for (header, key) in (
+                    ("etag", "etag"), ("last-modified", "last_modified"),
+                    ("content-type", "content_type"),
+                )
                 value = _header(response, header)
                 value !== nothing && (metadata[key] = value)
             end
             _write_metadata(root, metadata)
             return destination
         catch error
-            isfile(part) && rm(part; force=true)
+            isfile(part) && rm(part; force = true)
             push!(errors, "$url: $(sprint(showerror, error))")
         end
     end
     throw(ErrorException("all sources failed for $(spec.id): " * join(errors, "; ")))
 end
 
-function _scratch_paths(spec::ResourceSpec; force::Bool=false,
-                        stale_ok::Bool=_allow_stale(),
-                        offline::Union{Nothing,Bool}=nothing, kwargs...)
+function _scratch_paths(
+        spec::ResourceSpec; force::Bool = false,
+        stale_ok::Bool = _allow_stale(),
+        offline::Union{Nothing, Bool} = nothing, kwargs...
+    )
     root = _scratch_root(spec)
     return _with_cache_lock(root) do
         destination = _cache_file(spec, root)
@@ -217,11 +227,13 @@ function _scratch_paths(spec::ResourceSpec; force::Bool=false,
             if isfile(destination) && stale_ok
                 return _paths_from_root(spec, root)
             end
-            throw(ErrorException(
-                "resource $(spec.id) is unavailable in offline mode (backend=scratch). " *
-                "Expected one of: $(join(_live_urls(spec), ", ")). Cache it once while online " *
-                "or set ASTRODYNAMICS_RESOURCES_ALLOW_STALE=true for an existing stale cache."
-            ))
+            throw(
+                ErrorException(
+                    "resource $(spec.id) is unavailable in offline mode (backend=scratch). " *
+                        "Expected one of: $(join(_live_urls(spec), ", ")). Cache it once while online " *
+                        "or set ASTRODYNAMICS_RESOURCES_ALLOW_STALE=true for an existing stale cache."
+                )
+            )
         end
         try
             _with_download_slot() do
@@ -247,11 +259,11 @@ end
 Revalidate a live resource. Artifact resources are immutable and are only
 materialized if missing.
 """
-function refresh!(id::Symbol; force::Bool=false, kwargs...)
+function refresh!(id::Symbol; force::Bool = false, kwargs...)
     spec = resource(id)
     spec.backend isa ScratchBackend ||
         return resource_paths(id; kwargs...)
-    return resource_paths(id; force=true, kwargs...)
+    return resource_paths(id; force = true, kwargs...)
 end
 
 """
@@ -262,15 +274,17 @@ by Julia's shared artifact store.
 """
 function clear_resource!(id::Symbol)
     spec = resource(id)
-    spec.backend isa ScratchBackend || throw(ArgumentError(
-        "clear_resource! only removes mutable scratch caches; Julia manages immutable artifact $(spec.id)"
-    ))
+    spec.backend isa ScratchBackend || throw(
+        ArgumentError(
+            "clear_resource! only removes mutable scratch caches; Julia manages immutable artifact $(spec.id)"
+        )
+    )
     root = abspath(_scratch_root(spec))
     isdir(root) || return false
     _with_cache_lock(root) do
-        for entry in readdir(root; join=true)
+        for entry in readdir(root; join = true)
             basename(entry) == ".lock" && continue
-            isdir(entry) ? rm(entry; recursive=true) : rm(entry)
+            isdir(entry) ? rm(entry; recursive = true) : rm(entry)
         end
     end
     return true

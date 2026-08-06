@@ -11,25 +11,27 @@ using .SourceCache
 
 const _ROOT = normpath(joinpath(@__DIR__, ".."))
 
-function usage(io::IO=stdout)
-    print(io, """
-    usage: catalog.jl COMMAND [ARGS...]
+function usage(io::IO = stdout)
+    return print(
+        io, """
+        usage: catalog.jl COMMAND [ARGS...]
 
-    Commands:
-      add NAME URL [--live] [--category CATEGORY] [--license TERMS] [--license-url URL]
-          Append a resource declaration to catalog/Resources.toml.
-      validate
-          Validate the catalogue, lock, artifacts, aliases, bundles, and licenses.
-      uncached
-          Print and (in CI) emit the names of immutable resources not yet locked.
-      scan ASSET_FILE
-          Compare locked resources against published release assets; emit uncached names.
-      build NAME [OUTPUT_ROOT]
-          Download the upstream source, verify it, and build a deterministic archive.
-      update-lock [REPORT_OR_DIRECTORY RELEASE_DOWNLOAD_BASE]
-          Generate ResourceLock.toml/Artifacts.toml from build reports and sync
-          license metadata from the catalogue; with no arguments, only sync licenses.
-    """)
+        Commands:
+          add NAME URL [--live] [--category CATEGORY] [--license TERMS] [--license-url URL]
+              Append a resource declaration to catalog/Resources.toml.
+          validate
+              Validate the catalogue, lock, artifacts, aliases, bundles, and licenses.
+          uncached
+              Print and (in CI) emit the names of immutable resources not yet locked.
+          scan ASSET_FILE
+              Compare locked resources against published release assets; emit uncached names.
+          build NAME [OUTPUT_ROOT]
+              Download the upstream source, verify it, and build a deterministic archive.
+          update-lock [REPORT_OR_DIRECTORY RELEASE_DOWNLOAD_BASE]
+              Generate ResourceLock.toml/Artifacts.toml from build reports and sync
+              license metadata from the catalogue; with no arguments, only sync licenses.
+        """
+    )
 end
 
 json(values) = "[" * join(('"' * value * '"' for value in values), ",") * "]"
@@ -47,7 +49,7 @@ function cmd_add(args)
     name, url = args[1], args[2]
     occursin(r"^[a-z][a-z0-9_]*$", name) || error("invalid resource name $name")
     startswith(url, "https://") || error("resource URL must use HTTPS")
-    fields = Pair{String,String}[]
+    fields = Pair{String, String}[]
     i = 3
     while i <= length(args)
         flag = args[i]
@@ -74,38 +76,44 @@ function cmd_add(args)
             key == "live" ? println(io, "live = true") : println(io, key, " = ", repr(value))
         end
     end
-    println("added $name; commit Resources.toml and the cache workflow will do the rest")
+    return println("added $name; commit Resources.toml and the cache workflow will do the rest")
 end
 
 function cmd_validate()
     validate_catalog()
-    immutable = list_resources(backend=:artifact)
-    live = list_resources(backend=:scratch)
-    println("catalogue valid: $(length(immutable) + length(live)) resources ",
-            "($(length(immutable)) immutable, $(length(live)) live, ",
-            "$(count(spec -> spec.available, immutable)) cached)")
+    immutable = list_resources(backend = :artifact)
+    live = list_resources(backend = :scratch)
+    return println(
+        "catalogue valid: $(length(immutable) + length(live)) resources ",
+        "($(length(immutable)) immutable, $(length(live)) live, ",
+        "$(count(spec -> spec.available, immutable)) cached)"
+    )
 end
 
 function cmd_uncached()
-    names = sort!(String[
-        String(spec.id) for spec in list_resources(backend=:artifact) if !spec.available
-    ])
+    names = sort!(
+        String[
+            String(spec.id) for spec in list_resources(backend = :artifact) if !spec.available
+        ]
+    )
     if haskey(ENV, "GITHUB_OUTPUT")
         open(ENV["GITHUB_OUTPUT"], "a") do io
             println(io, "resources=", json(names))
             println(io, "count=", length(names))
         end
     end
-    println(json(names))
+    return println(json(names))
 end
 
 function cmd_scan(path::String)
     published = Set(filter(!isempty, strip.(readlines(path))))
-    specs = list_resources(backend=:artifact)
-    missing = sort!(String[
-        String(spec.id) for spec in specs
-        if spec.available && !(String(spec.metadata["asset"]) in published)
-    ])
+    specs = list_resources(backend = :artifact)
+    missing = sort!(
+        String[
+            String(spec.id) for spec in specs
+                if spec.available && !(String(spec.metadata["asset"]) in published)
+        ]
+    )
     names = sort!(String[String(spec.id) for spec in specs if !spec.available])
     if haskey(ENV, "GITHUB_OUTPUT")
         open(ENV["GITHUB_OUTPUT"], "a") do io
@@ -114,8 +122,9 @@ function cmd_scan(path::String)
         end
     end
     println("uncached: ", join(names, ", "))
-    isempty(missing) || error(
-        "locked resources missing from the release: " * join(missing, ", "))
+    return isempty(missing) || error(
+        "locked resources missing from the release: " * join(missing, ", ")
+    )
 end
 
 function cmd_build(args)
@@ -126,17 +135,22 @@ function cmd_build(args)
     spec.backend isa ArtifactBackend || error("$id is a live resource")
     declared_files = haskey(spec.metadata, "source_files") ?
         spec.metadata["source_files"] :
-        [Dict{String,Any}(
-            "url" => spec.metadata["source_url"],
-            "filename" => spec.metadata["source_filename"],
-        )]
+        [
+            Dict{String, Any}(
+                "url" => spec.metadata["source_url"],
+                "filename" => spec.metadata["source_filename"],
+            ),
+        ]
     locked_files = get(spec.metadata, "files", nothing)
-    cache_root = abspath(get(
-        ENV, "ASTRODYNAMICS_RESOURCES_SOURCE_CACHE",
-        joinpath(root, "source-cache")))
-    source_items = Dict{String,Any}[]
+    cache_root = abspath(
+        get(
+            ENV, "ASTRODYNAMICS_RESOURCES_SOURCE_CACHE",
+            joinpath(root, "source-cache")
+        )
+    )
+    source_items = Dict{String, Any}[]
     for (i, declared) in enumerate(declared_files)
-        file_meta = Dict{String,Any}(
+        file_meta = Dict{String, Any}(
             "source_url" => String(declared["url"]),
             "source_filename" => String(declared["filename"]),
         )
@@ -148,14 +162,17 @@ function cmd_build(args)
                 (file_meta["size_bytes"] = Int(locked["size_bytes"]))
         end
         local_path = fetch_verified_source(
-            file_meta; cache_root, require_sha256=false, verify_size=false)
-        push!(source_items, Dict{String,Any}(
-            "filename" => file_meta["source_filename"],
-            "url" => file_meta["source_url"],
-            "path" => local_path,
-            "sha256" => file_sha256(local_path),
-            "size_bytes" => filesize(local_path),
-        ))
+            file_meta; cache_root, require_sha256 = false, verify_size = false
+        )
+        push!(
+            source_items, Dict{String, Any}(
+                "filename" => file_meta["source_filename"],
+                "url" => file_meta["source_url"],
+                "path" => local_path,
+                "sha256" => file_sha256(local_path),
+                "size_bytes" => filesize(local_path),
+            )
+        )
     end
     source_name = String(source_items[1]["filename"])
     source_sha = String(source_items[1]["sha256"])
@@ -165,14 +182,15 @@ function cmd_build(args)
     metadata_url = get(spec.metadata, "metadata_url", nothing)
     if metadata_url !== nothing
         metadata_name = basename(String(metadata_url))
-        associated = Dict{String,Any}(
+        associated = Dict{String, Any}(
             "source_url" => String(metadata_url),
             "source_filename" => metadata_name,
         )
         haskey(spec.metadata, "metadata_sha256") &&
             (associated["source_sha256"] = spec.metadata["metadata_sha256"])
         metadata_source = fetch_verified_source(
-            associated; cache_root, require_sha256=false, verify_size=false)
+            associated; cache_root, require_sha256 = false, verify_size = false
+        )
         metadata_sha = file_sha256(metadata_source)
     end
 
@@ -180,14 +198,14 @@ function cmd_build(args)
         data_dir = joinpath(directory, "data")
         mkpath(data_dir)
         for item in source_items
-            cp(item["path"], joinpath(data_dir, item["filename"]); force=false)
+            cp(item["path"], joinpath(data_dir, item["filename"]); force = false)
         end
         if metadata_source !== nothing
             metadata_dir = joinpath(directory, "metadata")
             mkpath(metadata_dir)
-            cp(metadata_source, joinpath(metadata_dir, basename(metadata_source)); force=false)
+            cp(metadata_source, joinpath(metadata_dir, basename(metadata_source)); force = false)
         end
-        provenance = Dict{String,Any}(
+        provenance = Dict{String, Any}(
             "name" => String(id),
             "source_url" => source_items[1]["url"],
             "source_filename" => source_name,
@@ -197,19 +215,19 @@ function cmd_build(args)
             provenance["source_sha256"] = source_sha
         else
             provenance["files"] = [
-                Dict{String,Any}(
-                    "filename" => item["filename"],
-                    "url" => item["url"],
-                    "sha256" => item["sha256"],
-                    "size_bytes" => item["size_bytes"],
-                ) for item in source_items
+                Dict{String, Any}(
+                        "filename" => item["filename"],
+                        "url" => item["url"],
+                        "sha256" => item["sha256"],
+                        "size_bytes" => item["size_bytes"],
+                    ) for item in source_items
             ]
         end
         for key in ("metadata_url", "metadata_sha256", "license", "license_url", "citation")
             haskey(spec.metadata, key) && (provenance[key] = spec.metadata[key])
         end
         open(joinpath(directory, "provenance.toml"), "w") do io
-            TOML.print(io, provenance; sorted=true)
+            TOML.print(io, provenance; sorted = true)
         end
     end
 
@@ -220,7 +238,7 @@ function cmd_build(args)
     archive = joinpath(artifact_dir, "$(id).tar.gz")
     isfile(archive) && error("refusing to overwrite $archive")
     deterministic_archive_artifact(tree, archive)
-    report = Dict{String,Any}(
+    report = Dict{String, Any}(
         "name" => String(id),
         "source_url" => source_items[1]["url"],
         "source_filename" => source_name,
@@ -235,12 +253,12 @@ function cmd_build(args)
         report["source_size_bytes"] = source_items[1]["size_bytes"]
     else
         report["files"] = [
-            Dict{String,Any}(
-                "filename" => item["filename"],
-                "url" => item["url"],
-                "sha256" => item["sha256"],
-                "size_bytes" => item["size_bytes"],
-            ) for item in source_items
+            Dict{String, Any}(
+                    "filename" => item["filename"],
+                    "url" => item["url"],
+                    "sha256" => item["sha256"],
+                    "size_bytes" => item["size_bytes"],
+                ) for item in source_items
         ]
     end
     if metadata_url !== nothing
@@ -252,7 +270,7 @@ function cmd_build(args)
     end
     report_path = joinpath(report_dir, "$(id).toml")
     open(report_path, "w") do io
-        TOML.print(io, report; sorted=true)
+        TOML.print(io, report; sorted = true)
     end
     println("built $(id).tar.gz")
     return report_path
@@ -261,7 +279,7 @@ end
 function report_files(path::String)
     isfile(path) && return [path]
     isdir(path) || error("report path does not exist: $path")
-    return sort(filter(file -> endswith(file, ".toml"), readdir(path; join=true)))
+    return sort(filter(file -> endswith(file, ".toml"), readdir(path; join = true)))
 end
 
 function cmd_update_lock(args)
@@ -276,15 +294,15 @@ function cmd_update_lock(args)
     end
 
     lock_path = joinpath(_ROOT, "catalog", "ResourceLock.toml")
-    old = isfile(lock_path) ? TOML.parsefile(lock_path) : Dict{String,Any}()
-    resources = Dict{String,Any}(get(old, "resources", Dict{String,Any}()))
+    old = isfile(lock_path) ? TOML.parsefile(lock_path) : Dict{String, Any}()
+    resources = Dict{String, Any}(get(old, "resources", Dict{String, Any}()))
     if reports !== nothing
         files = report_files(reports)
         isempty(files) && error("no resource reports found")
         for file in files
             report = TOML.parsefile(file)
             name = String(report["name"])
-            entry = Dict{String,Any}(
+            entry = Dict{String, Any}(
                 "source_url" => report["source_url"],
                 "source_filename" => report["source_filename"],
                 "asset" => report["asset"],
@@ -295,12 +313,12 @@ function cmd_update_lock(args)
             )
             if haskey(report, "files")
                 entry["files"] = [
-                    Dict{String,Any}(
-                        "filename" => f["filename"],
-                        "url" => f["url"],
-                        "sha256" => f["sha256"],
-                        "size_bytes" => f["size_bytes"],
-                    ) for f in report["files"]
+                    Dict{String, Any}(
+                            "filename" => f["filename"],
+                            "url" => f["url"],
+                            "sha256" => f["sha256"],
+                            "size_bytes" => f["size_bytes"],
+                        ) for f in report["files"]
                 ]
             else
                 entry["source_sha256"] = report["source_sha256"]
@@ -319,35 +337,37 @@ function cmd_update_lock(args)
     # The hand-maintained catalogue is authoritative for licensing metadata.
     for (name, raw) in collect(resources)
         spec = resource(Symbol(name))
-        entry = Dict{String,Any}(raw)
+        entry = Dict{String, Any}(raw)
         for key in ("license", "license_url", "citation")
             haskey(spec.metadata, key) && (entry[key] = spec.metadata[key])
         end
         resources[name] = entry
     end
 
-    lock = Dict{String,Any}("version" => 1, "resources" => resources)
+    lock = Dict{String, Any}("version" => 1, "resources" => resources)
     open(lock_path, "w") do io
         println(io, "# Generated by the resource cache workflow. Do not edit by hand.")
-        TOML.print(io, lock; sorted=true)
+        TOML.print(io, lock; sorted = true)
     end
 
-    if reports !== nothing
-        artifacts = Dict{String,Any}()
+    return if reports !== nothing
+        artifacts = Dict{String, Any}()
         for (name, raw) in resources
-            entry = Dict{String,Any}(raw)
-            artifacts[name] = Dict{String,Any}(
+            entry = Dict{String, Any}(raw)
+            artifacts[name] = Dict{String, Any}(
                 "git-tree-sha1" => entry["git_tree_sha1"],
                 "lazy" => true,
-                "download" => [Dict{String,Any}(
-                    "sha256" => entry["archive_sha256"],
-                    "url" => entry["download_url"],
-                )],
+                "download" => [
+                    Dict{String, Any}(
+                        "sha256" => entry["archive_sha256"],
+                        "url" => entry["download_url"],
+                    ),
+                ],
             )
         end
         open(joinpath(_ROOT, "Artifacts.toml"), "w") do io
             println(io, "# Generated from catalog/ResourceLock.toml. Do not edit by hand.")
-            TOML.print(io, artifacts; sorted=true)
+            TOML.print(io, artifacts; sorted = true)
         end
         println("locked $(length(files)) resource(s); $(length(resources)) total")
     else
@@ -355,10 +375,10 @@ function cmd_update_lock(args)
     end
 end
 
-function main(args=ARGS)
+function main(args = ARGS)
     isempty(args) && (usage(); exit(1))
     command = popfirst!(args)
-    if command == "add"
+    return if command == "add"
         cmd_add(args)
     elseif command == "validate"
         cmd_validate()

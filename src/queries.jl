@@ -1,8 +1,8 @@
 """
     resource(id::Symbol) -> ResourceSpec
 
-Return catalogue metadata for a resource. This operation never accesses the
-network or materializes data.
+Return catalogue metadata for a resource. This operation never accesses the network or
+materializes data.
 """
 function resource(id::Symbol)
     _ensure_catalog()
@@ -12,17 +12,10 @@ function resource(id::Symbol)
     return _RESOURCES[canonical]
 end
 
-"""
-    resource_info(id::Symbol) -> ResourceSpec
-
-Alias for [`resource`](@ref), provided for explicit metadata-oriented code.
-"""
-resource_info(id::Symbol) = resource(id)
-
 function _matches(value, requested)
     requested === nothing && return true
     value === nothing && return false
-    lowercase(String(value)) == lowercase(String(requested))
+    return lowercase(String(value)) == lowercase(String(requested))
 end
 
 """
@@ -32,26 +25,30 @@ end
 
 List resources using catalogue-only filters. No network access is performed.
 """
-function list_resources(; category=nothing, provider=nothing, system=nothing,
-                        body=nothing, backend=nothing, format=nothing,
-                        available=nothing)
+function list_resources(;
+        category = nothing, provider = nothing, system = nothing,
+        body = nothing, backend = nothing, format = nothing,
+        available = nothing
+    )
     _ensure_catalog()
     specs = filter(collect(values(_RESOURCES))) do spec
         _matches(spec.category, category) &&
-        _matches(spec.provider, provider) &&
-        _matches(get(spec.metadata, "system", nothing), system) &&
-        _matches(get(spec.metadata, "body", nothing), body) &&
-        _matches(backend_symbol(spec.backend), backend) &&
-        _matches(get(spec.metadata, "format", nothing), format) &&
-        (available === nothing || spec.available == Bool(available))
+            _matches(spec.provider, provider) &&
+            _matches(get(spec.metadata, "system", nothing), system) &&
+            _matches(get(spec.metadata, "body", nothing), body) &&
+            _matches(backend_symbol(spec.backend), backend) &&
+            _matches(get(spec.metadata, "format", nothing), format) &&
+            (available === nothing || spec.available == Bool(available))
     end
-    sort!(specs; by=spec -> String(spec.id))
+    sort!(specs; by = spec -> String(spec.id))
     return specs
 end
 
 function _search_text(spec::ResourceSpec)
-    fields = Any[spec.id, spec.aliases, spec.title, spec.description, spec.category,
-                 spec.provider, spec.version]
+    fields = Any[
+        spec.id, spec.aliases, spec.title, spec.description, spec.category,
+        spec.provider, spec.version,
+    ]
     append!(fields, values(spec.metadata))
     return lowercase(join(string.(fields), " "))
 end
@@ -61,8 +58,10 @@ end
 
 Perform normalized local text search over resource metadata.
 """
-function find_resources(query::AbstractString; category=nothing, provider=nothing,
-                        system=nothing, body=nothing, backend=nothing)
+function find_resources(
+        query::AbstractString; category = nothing, provider = nothing,
+        system = nothing, body = nothing, backend = nothing
+    )
     terms = split(lowercase(strip(query)))
     specs = list_resources(; category, provider, system, body, backend)
     return filter(specs) do spec
@@ -77,10 +76,12 @@ function Base.show(io::IO, spec::ResourceSpec)
     println(io, "  category: $(spec.category)    provider: $(spec.provider)")
     println(io, "  version: $(spec.version)    backend: $(backend_symbol(spec.backend))")
     println(io, "  format: $(get(spec.metadata, "format", "unknown"))    size: $(get(spec.metadata, "size_bytes", "unknown"))")
-    coverage = filter(!isempty, String[
-        string(get(spec.metadata, "coverage_start", "")),
-        string(get(spec.metadata, "coverage_end", "")),
-    ])
+    coverage = filter(
+        !isempty, String[
+            string(get(spec.metadata, "coverage_start", "")),
+            string(get(spec.metadata, "coverage_end", "")),
+        ]
+    )
     !isempty(coverage) && println(io, "  coverage: ", join(coverage, " — "))
     body = get(spec.metadata, "body", get(spec.metadata, "system", nothing))
     body !== nothing && println(io, "  body/system: ", body)
@@ -96,17 +97,24 @@ function Base.show(io::IO, spec::ResourceSpec)
     license = get(spec.metadata, "license", nothing)
     license !== nothing && println(io, "  license: ", license)
     license_url = get(spec.metadata, "license_url", nothing)
-    license_url !== nothing && println(io, "  license URL: ", license_url)
+    if license_url !== nothing
+        println(io, "  license URL: ", license_url)
+    end
+    return nothing
 end
 
-"""Inspect an ordered logical bundle without materializing its members."""
+"""
+    bundle(id::Symbol) -> ResourceBundle
+
+Inspect an ordered logical bundle without materializing its members.
+"""
 function bundle(id::Symbol)
     _ensure_catalog()
     haskey(_BUNDLES, id) || throw(KeyError("unknown bundle $id"))
     return _BUNDLES[id]
 end
 
-function _bundle_resource_ids(id::Symbol, result::Vector{Symbol}=Symbol[])
+function _bundle_resource_ids(id::Symbol, result::Vector{Symbol} = Symbol[])
     for member in bundle(id).members
         if haskey(_BUNDLES, member)
             _bundle_resource_ids(member, result)
@@ -120,7 +128,7 @@ end
 function Base.show(io::IO, value::ResourceBundle)
     println(io, "ResourceBundle $(value.id): $(value.title)")
     println(io, "  ", value.description)
-    print(io, "  ordered members: ", join(value.members, ", "))
+    return print(io, "  ordered members: ", join(value.members, ", "))
 end
 
 """

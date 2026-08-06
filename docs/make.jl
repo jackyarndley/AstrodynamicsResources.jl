@@ -14,25 +14,27 @@ open(reference, "w") do io
     for spec in list_resources()
         source = get(spec.metadata, "source_filename", "")
         license = replace(String(get(spec.metadata, "license", "—")), "|" => "\\|")
-        println(io, "| `:", spec.id, "` | ", spec.category, " | ", spec.provider,
-                " | ", AstrodynamicsResources.backend_symbol(spec.backend), " | ",
-                spec.available ? "yes" : "pending", " | `", source, "` | ",
-                license, " |")
+        println(
+            io, "| `:", spec.id, "` | ", spec.category, " | ", spec.provider,
+            " | ", AstrodynamicsResources.backend_symbol(spec.backend), " | ",
+            spec.available ? "yes" : "pending", " | `", source, "` | ",
+            license, " |"
+        )
     end
 end
 
 makedocs(
-    sitename="AstrodynamicsResources.jl",
-    format=Documenter.HTML(
-        edit_link="main",
-        repolink="https://github.com/jackyarndley/AstrodynamicsResources.jl",
+    sitename = "AstrodynamicsResources.jl",
+    format = Documenter.HTML(
+        edit_link = "main",
+        repolink = "https://github.com/jackyarndley/AstrodynamicsResources.jl",
     ),
-    modules=[AstrodynamicsResources],
-    remotes=nothing,
-    pages=[
+    modules = [AstrodynamicsResources],
+    remotes = nothing,
+    pages = [
         "Home" => "index.md",
         "Contributing resources" => "contributing.md",
         "Resource reference" => "resources.md",
     ],
-    checkdocs=:exports,
+    checkdocs = :exports,
 )

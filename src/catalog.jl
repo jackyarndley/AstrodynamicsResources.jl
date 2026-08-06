@@ -1,34 +1,37 @@
 const _PACKAGE_ROOT = normpath(joinpath(@__DIR__, ".."))
 const _CATALOG_DIR = joinpath(_PACKAGE_ROOT, "catalog")
 const _ARTIFACTS_TOML = joinpath(_PACKAGE_ROOT, "Artifacts.toml")
-const _RESOURCES = Dict{Symbol,ResourceSpec}()
-const _ALIASES = Dict{Symbol,Symbol}()
-const _BUNDLES = Dict{Symbol,ResourceBundle}()
+const _RESOURCES = Dict{Symbol, ResourceSpec}()
+const _ALIASES = Dict{Symbol, Symbol}()
+const _BUNDLES = Dict{Symbol, ResourceBundle}()
 const _CATALOG_LOADED = Ref(false)
-const _LICENSES = Dict{Symbol,Dict{String,String}}()
+const _LICENSES = Dict{Symbol, Dict{String, String}}()
 const _DEFAULT_TTL_SECONDS = 21_600
 
 _catalog_dir_path() = get(ENV, "ASTRODYNAMICS_RESOURCES_CATALOG", _CATALOG_DIR)
 _artifacts_toml_path() = get(
-    ENV, "ASTRODYNAMICS_RESOURCES_ARTIFACTS_TOML", _ARTIFACTS_TOML)
+    ENV, "ASTRODYNAMICS_RESOURCES_ARTIFACTS_TOML", _ARTIFACTS_TOML
+)
 _symbols(values) = Symbol.(String.(values))
 
 function _resource_file_path(url::AbstractString)
-    path = first(split(first(split(String(url), '?'; limit=2)), '#'; limit=2))
+    path = first(split(first(split(String(url), '?'; limit = 2)), '#'; limit = 2))
     return basename(path)
 end
 
-function _source_file_specs(entry::Dict{String,Any})
+function _source_file_specs(entry::Dict{String, Any})
     name = String(entry["name"])
     url = get(entry, "url", nothing)
     files = get(entry, "files", nothing)
     if url !== nothing
         files === nothing ||
             throw(ArgumentError("resource $name must not declare both url and files"))
-        return [Dict{String,Any}(
-            "url" => String(url),
-            "filename" => String(get(entry, "filename", _resource_file_path(url))),
-        )]
+        return [
+            Dict{String, Any}(
+                "url" => String(url),
+                "filename" => String(get(entry, "filename", _resource_file_path(url))),
+            ),
+        ]
     end
     files === nothing &&
         throw(ArgumentError("resource $name must declare url or files"))
@@ -36,16 +39,16 @@ function _source_file_specs(entry::Dict{String,Any})
         throw(ArgumentError("resource $name declares an empty files list"))
     haskey(entry, "filename") &&
         throw(ArgumentError("resource $name must use per-file filename fields with files"))
-    specs = Dict{String,Any}[]
+    specs = Dict{String, Any}[]
     for raw in files
-        file = Dict{String,Any}(raw)
+        file = Dict{String, Any}(raw)
         file_url = get(file, "url", nothing)
         file_url === nothing &&
             throw(ArgumentError("resource $name has a file without a url"))
         file_name = String(get(file, "filename", _resource_file_path(file_url)))
         (isempty(file_name) || basename(file_name) != file_name) &&
             throw(ArgumentError("resource $name has unsafe filename $file_name"))
-        push!(specs, Dict{String,Any}("url" => String(file_url), "filename" => file_name))
+        push!(specs, Dict{String, Any}("url" => String(file_url), "filename" => file_name))
     end
     length(unique(fs["filename"] for fs in specs)) == length(specs) ||
         throw(ArgumentError("resource $name declares duplicate filenames"))
@@ -54,7 +57,7 @@ end
 
 function _host(url::AbstractString)
     rest = replace(String(url), r"^https://" => "")
-    return lowercase(first(split(rest, '/'; limit=2)))
+    return lowercase(first(split(rest, '/'; limit = 2)))
 end
 
 function _provider(url::AbstractString)
@@ -72,27 +75,31 @@ end
 
 function _format(filename::AbstractString)
     extension = lowercase(splitext(String(filename))[2])
-    return get(Dict(
-        ".bsp" => "SPICE SPK",
-        ".bpc" => "SPICE binary PCK",
-        ".tpc" => "SPICE text PCK",
-        ".tls" => "SPICE leap-seconds kernel",
-        ".tf" => "SPICE frame kernel",
-        ".ker" => "SPICE text kernel",
-        ".bds" => "SPICE DSK",
-        ".gfc" => "ICGEM spherical-harmonic coefficients",
-        ".json" => "JSON",
-        ".csv" => "CSV",
-        ".txt" => "text",
-    ), extension, isempty(extension) ? "data" : uppercase(extension[2:end]))
+    return get(
+        Dict(
+            ".bsp" => "SPICE SPK",
+            ".bpc" => "SPICE binary PCK",
+            ".tpc" => "SPICE text PCK",
+            ".tls" => "SPICE leap-seconds kernel",
+            ".tf" => "SPICE frame kernel",
+            ".ker" => "SPICE text kernel",
+            ".bds" => "SPICE DSK",
+            ".gfc" => "ICGEM spherical-harmonic coefficients",
+            ".json" => "JSON",
+            ".csv" => "CSV",
+            ".txt" => "text",
+        ), extension, isempty(extension) ? "data" : uppercase(extension[2:end])
+    )
 end
 
 function _category(name::AbstractString, filename::AbstractString, live::Bool)
     id = lowercase(String(name))
     extension = lowercase(splitext(String(filename))[2])
     if live
-        (startswith(id, "iers_") || occursin("eop", id) ||
-         occursin("earth_high_precision", id)) && return :earth_orientation
+        (
+            startswith(id, "iers_") || occursin("eop", id) ||
+                occursin("earth_high_precision", id)
+        ) && return :earth_orientation
         occursin("leapseconds", id) && return :constants
         return :space_weather
     end
@@ -135,16 +142,18 @@ function _body(name::AbstractString)
     startswith(id, "ura") && return "Uranus"
     startswith(id, "nep") && return "Neptune"
     startswith(id, "plu") && return "Pluto"
-    (startswith(id, "de") || occursin("earth", id) || startswith(id, "iers") ||
-     startswith(id, "ggm") || startswith(id, "goco")) && return "Earth"
+    (
+        startswith(id, "de") || occursin("earth", id) || startswith(id, "iers") ||
+            startswith(id, "ggm") || startswith(id, "goco")
+    ) && return "Earth"
     return nothing
 end
 
 _title(name::AbstractString) = replace(String(name), '_' => ' ')
 
-function _license_fields(entry::Dict{String,Any}, provider::Symbol)
+function _license_fields(entry::Dict{String, Any}, provider::Symbol)
     defaults = get(_LICENSES, provider, nothing)
-    fields = Dict{String,Any}()
+    fields = Dict{String, Any}()
     for (key, default_key) in (("license", "terms"), ("license_url", "url"))
         value = get(entry, key, defaults === nothing ? nothing : get(defaults, default_key, nothing))
         value === nothing || (fields[key] = String(value))
@@ -152,9 +161,11 @@ function _license_fields(entry::Dict{String,Any}, provider::Symbol)
     return fields
 end
 
-function _resource_metadata(entry::Dict{String,Any}, name::String, filename::String,
-                            category::Symbol, source_url::String, metadata_url)
-    metadata = Dict{String,Any}(
+function _resource_metadata(
+        entry::Dict{String, Any}, name::String, filename::String,
+        category::Symbol, source_url::String, metadata_url
+    )
+    metadata = Dict{String, Any}(
         "source_url" => source_url,
         "source_filename" => filename,
         "format" => category == :star_catalogue ? "CDS fixed-width catalogue" : _format(filename),
@@ -168,8 +179,8 @@ function _resource_metadata(entry::Dict{String,Any}, name::String, filename::Str
     return metadata
 end
 
-function _live_metadata(entry::Dict{String,Any}, filename::String)
-    metadata = Dict{String,Any}(
+function _live_metadata(entry::Dict{String, Any}, filename::String)
+    metadata = Dict{String, Any}(
         "minimum_size_bytes" => Int(get(entry, "minimum_size", 1)),
         "allow_stale" => true,
         "conditional_requests" => true,
@@ -182,16 +193,18 @@ end
 
 function _lock_table(catalog_dir::String)
     path = joinpath(catalog_dir, "ResourceLock.toml")
-    isfile(path) || return Dict{String,Any}()
+    isfile(path) || return Dict{String, Any}()
     parsed = TOML.parsefile(path)
     Int(get(parsed, "version", 0)) == 1 ||
         throw(ArgumentError("ResourceLock.toml has an unsupported version"))
-    return Dict{String,Any}(get(parsed, "resources", Dict{String,Any}()))
+    return Dict{String, Any}(get(parsed, "resources", Dict{String, Any}()))
 end
 
-function _parse_resource(entry::Dict{String,Any}, aliases::Vector{Symbol},
-                         lock::Union{Nothing,Dict{String,Any}},
-                         artifact_table::Dict{String,Any})
+function _parse_resource(
+        entry::Dict{String, Any}, aliases::Vector{Symbol},
+        lock::Union{Nothing, Dict{String, Any}},
+        artifact_table::Dict{String, Any}
+    )
     name = String(entry["name"])
     source_specs = _source_file_specs(entry)
     url = String(source_specs[1]["url"])
@@ -202,14 +215,20 @@ function _parse_resource(entry::Dict{String,Any}, aliases::Vector{Symbol},
     category = Symbol(get(entry, "category", String(_category(name, filename, live))))
     provider = Symbol(get(entry, "provider", String(_provider(url))))
     files = ResourceFile[
-        ResourceFile(live ? fs["filename"] : joinpath("data", fs["filename"]),
-                     _role(category, fs["filename"]), i == 1)
-        for (i, fs) in enumerate(source_specs)
+        ResourceFile(
+                live ? fs["filename"] : joinpath("data", fs["filename"]),
+                _role(category, fs["filename"]), i == 1
+            )
+            for (i, fs) in enumerate(source_specs)
     ]
     metadata_url = get(entry, "metadata_url", nothing)
     if metadata_url !== nothing
-        push!(files, ResourceFile(joinpath("metadata", _resource_file_path(metadata_url)),
-                                 :metadata, false))
+        push!(
+            files, ResourceFile(
+                joinpath("metadata", _resource_file_path(metadata_url)),
+                :metadata, false
+            )
+        )
     end
 
     backend = if live
@@ -221,8 +240,8 @@ function _parse_resource(entry::Dict{String,Any}, aliases::Vector{Symbol},
     metadata = _resource_metadata(entry, name, filename, category, url, metadata_url)
     if length(source_specs) > 1
         metadata["source_files"] = [
-            Dict{String,Any}("filename" => fs["filename"], "url" => fs["url"])
-            for fs in source_specs
+            Dict{String, Any}("filename" => fs["filename"], "url" => fs["url"])
+                for fs in source_specs
         ]
     end
     if live
@@ -239,9 +258,11 @@ function _parse_resource(entry::Dict{String,Any}, aliases::Vector{Symbol},
     title = String(get(entry, "title", _title(name)))
     description = String(get(entry, "description", "Resource from $(_host(url))."))
     available = live || (lock !== nothing && haskey(artifact_table, name))
-    return ResourceSpec(Symbol(name), aliases, title, description, category,
-                        provider, live ? "rolling" : "pinned", backend,
-                        files, metadata, available)
+    return ResourceSpec(
+        Symbol(name), aliases, title, description, category,
+        provider, live ? "rolling" : "pinned", backend,
+        files, metadata, available
+    )
 end
 
 function _load_catalog!()
@@ -255,36 +276,45 @@ function _load_catalog!()
     isfile(resources_path) ||
         throw(ArgumentError("catalogue is missing $resources_path"))
     parsed = TOML.parsefile(resources_path)
-    for (provider, defaults) in get(parsed, "licenses", Dict{String,Any}())
-        _LICENSES[Symbol(provider)] = Dict{String,String}(
+    for (provider, defaults) in get(parsed, "licenses", Dict{String, Any}())
+        _LICENSES[Symbol(provider)] = Dict{String, String}(
             String(key) => String(value) for (key, value) in defaults
         )
     end
-    alias_table = Dict{String,Any}(get(parsed, "aliases", Dict{String,Any}()))
-    aliases_by_target = Dict{String,Vector{Symbol}}()
+    alias_table = Dict{String, Any}(get(parsed, "aliases", Dict{String, Any}()))
+    aliases_by_target = Dict{String, Vector{Symbol}}()
     for (alias, target) in alias_table
         push!(get!(aliases_by_target, String(target), Symbol[]), Symbol(alias))
     end
     locks = _lock_table(catalog_dir)
     artifact_table = _artifact_table()
     for raw in get(parsed, "resource", Any[])
-        entry = Dict{String,Any}(raw)
+        entry = Dict{String, Any}(raw)
         name = String(entry["name"])
         haskey(_RESOURCES, Symbol(name)) &&
             throw(ArgumentError("duplicate resource name $name"))
-        lock = haskey(locks, name) ? Dict{String,Any}(locks[name]) : nothing
+        lock = haskey(locks, name) ? Dict{String, Any}(locks[name]) : nothing
         _RESOURCES[Symbol(name)] = _parse_resource(
-            entry, get(aliases_by_target, name, Symbol[]), lock, artifact_table)
+            entry, get(aliases_by_target, name, Symbol[]), lock, artifact_table
+        )
     end
     declared = Set(String(id) for id in keys(_RESOURCES))
     unknown_locks = setdiff(Set(keys(locks)), declared)
     isempty(unknown_locks) ||
-        throw(ArgumentError("ResourceLock.toml contains unknown resources: " *
-                            join(sort!(collect(unknown_locks)), ", ")))
+        throw(
+        ArgumentError(
+            "ResourceLock.toml contains unknown resources: " *
+                join(sort!(collect(unknown_locks)), ", ")
+        )
+    )
     unknown_artifacts = setdiff(Set(keys(artifact_table)), declared)
     isempty(unknown_artifacts) ||
-        throw(ArgumentError("Artifacts.toml contains unknown resources: " *
-                            join(sort!(collect(unknown_artifacts)), ", ")))
+        throw(
+        ArgumentError(
+            "Artifacts.toml contains unknown resources: " *
+                join(sort!(collect(unknown_artifacts)), ", ")
+        )
+    )
     for (alias, target) in alias_table
         _ALIASES[Symbol(alias)] = Symbol(target)
     end
@@ -294,7 +324,8 @@ function _load_catalog!()
             id = Symbol(name)
             _BUNDLES[id] = ResourceBundle(
                 id, _symbols(members), _title(name), "Ordered resource bundle.",
-                Dict{String,Any}("ordered" => true))
+                Dict{String, Any}("ordered" => true)
+            )
         end
     end
     validate_catalog()
@@ -311,7 +342,7 @@ _canonical_id(id::Symbol) = get(_ALIASES, id, id)
 
 function _artifact_table()
     path = _artifacts_toml_path()
-    isfile(path) || return Dict{String,Any}()
+    isfile(path) || return Dict{String, Any}()
     return TOML.parsefile(path)
 end
 
@@ -323,16 +354,18 @@ and bundles without accessing the network.
 """
 function validate_catalog()
     artifact_table = _artifact_table()
-    seen_urls = Dict{String,Symbol}()
+    seen_urls = Dict{String, Symbol}()
     for spec in values(_RESOURCES)
         name = String(spec.id)
         occursin(r"^[a-z][a-z0-9_]*$", name) ||
             throw(ArgumentError("resource name $name is not a safe Julia identifier"))
         license = get(spec.metadata, "license", nothing)
-        license === nothing && throw(ArgumentError(
-            "resource $name has no license terms; add an explicit license field or a " *
-            "[licenses] default for provider $(spec.provider)",
-        ))
+        license === nothing && throw(
+            ArgumentError(
+                "resource $name has no license terms; add an explicit license field or a " *
+                    "[licenses] default for provider $(spec.provider)",
+            )
+        )
         license_url = get(spec.metadata, "license_url", nothing)
         license_url !== nothing && !startswith(String(license_url), "https://") &&
             throw(ArgumentError("resource $name must use an HTTPS license_url"))
@@ -348,34 +381,49 @@ function validate_catalog()
         count(file -> file.primary, spec.files) == 1 ||
             throw(ArgumentError("resource $name must have exactly one primary file"))
         if spec.backend isa ArtifactBackend &&
-           haskey(spec.metadata, "git_tree_sha1")
+                haskey(spec.metadata, "git_tree_sha1")
             if haskey(spec.metadata, "source_files")
                 lock_files = get(spec.metadata, "files", nothing)
-                lock_files === nothing && throw(ArgumentError(
-                    "resource $name is missing per-file hashes in ResourceLock.toml"))
+                lock_files === nothing && throw(
+                    ArgumentError(
+                        "resource $name is missing per-file hashes in ResourceLock.toml"
+                    )
+                )
                 declared = spec.metadata["source_files"]
-                length(lock_files) == length(declared) || throw(ArgumentError(
-                    "resource $name lock file count does not match its declaration"))
+                length(lock_files) == length(declared) || throw(
+                    ArgumentError(
+                        "resource $name lock file count does not match its declaration"
+                    )
+                )
                 for (declared_file, lock_file) in zip(declared, lock_files)
                     String(lock_file["filename"]) == String(declared_file["filename"]) ||
-                        throw(ArgumentError(
-                            "resource $name lock filename does not match its declaration"))
+                        throw(
+                        ArgumentError(
+                            "resource $name lock filename does not match its declaration"
+                        )
+                    )
                     String(lock_file["url"]) == String(declared_file["url"]) ||
-                        throw(ArgumentError(
-                            "resource $name lock file URL does not match its declaration"))
+                        throw(
+                        ArgumentError(
+                            "resource $name lock file URL does not match its declaration"
+                        )
+                    )
                     occursin(r"^[0-9a-f]{64}$", String(get(lock_file, "sha256", ""))) ||
                         throw(ArgumentError("resource $name has invalid source file sha256"))
                 end
             else
-                occursin(r"^[0-9a-f]{64}$",
-                         String(get(spec.metadata, "source_sha256", ""))) ||
+                occursin(
+                    r"^[0-9a-f]{64}$",
+                    String(get(spec.metadata, "source_sha256", ""))
+                ) ||
                     throw(ArgumentError("resource $name has invalid source_sha256"))
                 String(get(spec.metadata, "source_filename", "")) == filename ||
                     throw(ArgumentError("resource $name lock filename does not match its URL"))
             end
             for (key, pattern) in (
                     "archive_sha256" => r"^[0-9a-f]{64}$",
-                    "git_tree_sha1" => r"^[0-9a-f]{40}$")
+                    "git_tree_sha1" => r"^[0-9a-f]{40}$",
+                )
                 occursin(pattern, String(get(spec.metadata, key, ""))) ||
                     throw(ArgumentError("resource $name has invalid $key"))
             end
@@ -420,7 +468,7 @@ function validate_catalog()
             haskey(_BUNDLES, member) && visit(member)
         end
         delete!(visiting, id)
-        push!(visited, id)
+        return push!(visited, id)
     end
     foreach(visit, keys(_BUNDLES))
     return true

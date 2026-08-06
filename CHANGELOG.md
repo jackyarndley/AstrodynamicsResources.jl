@@ -5,7 +5,7 @@
 - Added FK5, Hipparcos, and Tycho-2 star catalogues with CDS ReadMe files and
   a `star_catalogues` bundle.
 - Recorded license terms for every resource through provider-level
-  `[licenses]` defaults; terms now appear in `resource_info`, lock entries,
+  `[licenses]` defaults; terms now appear in `resource`, lock entries,
   archive provenance, and the generated resource reference.
 - Consolidated resource tooling into `scripts/catalog.jl` subcommands
   (`add`, `validate`, `scan`, `uncached`, `build`, `update-lock`).
@@ -15,6 +15,11 @@
   products split across several files; Tycho-2 is now its 20 CDS parts plus
   ReadMe.
 - Fixed the FK5 source to CDS catalogue I/149A (`catalog.gz`).
+- Removed the redundant `resource_info` alias; `resource` is the single
+  metadata accessor.
+- Followed the SciML Style Guide: Runic formatting with a format-check
+  workflow, `@safetestset` test groups, `GROUP` selection, Unix line endings,
+  and the SciML code-style badge.
 
 ## 0.1.0 - 2026-08-03
 

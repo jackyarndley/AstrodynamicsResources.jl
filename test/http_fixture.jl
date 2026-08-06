@@ -8,7 +8,7 @@ mutable struct FixtureServer
     fail::Base.RefValue{Bool}
 end
 
-function start_fixture_server(body::Vector{UInt8}; range_416::Bool=false)
+function start_fixture_server(body::Vector{UInt8}; range_416::Bool = false)
     listener = listen(ip"127.0.0.1", 0)
     requests = Ref(0)
     fail = Ref(false)
@@ -23,7 +23,7 @@ function start_fixture_server(body::Vector{UInt8}; range_416::Bool=false)
                 requests[] += 1
                 headers = String[]
                 while true
-                    line = readline(socket; keep=true)
+                    line = readline(socket; keep = true)
                     isempty(strip(line)) && break
                     push!(headers, line)
                 end
@@ -56,13 +56,13 @@ function stop_fixture_server(server::FixtureServer)
     return nothing
 end
 
-function fixture_spec(port::Integer; ttl::Int=3600, id::Symbol=:fixture_live)
+function fixture_spec(port::Integer; ttl::Int = 3600, id::Symbol = :fixture_live)
     return ResourceSpec(
         id, Symbol[], "Live fixture", "Local test data", :fixture, :tests,
         "rolling",
         ScratchBackend(String(id), ["http://127.0.0.1:$port/data.txt"], Second(ttl)),
         [ResourceFile("data.txt", :data, true)],
-        Dict{String,Any}(
+        Dict{String, Any}(
             "format" => "text",
             "minimum_size_bytes" => 4,
             "source_filename" => "data.txt",

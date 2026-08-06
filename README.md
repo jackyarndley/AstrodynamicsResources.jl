@@ -1,6 +1,7 @@
 # AstrodynamicsResources.jl
 
 [![Documentation](https://github.com/jackyarndley/AstrodynamicsResources.jl/actions/workflows/docs.yml/badge.svg)](https://jackyarndley.github.io/AstrodynamicsResources.jl/)
+[![SciML Code Style](https://img.shields.io/static/v1?label=code%20style&message=SciML&color=9558b2&labelColor=389826)](https://github.com/SciML/SciMLStyle)
 
 **[Documentation](https://jackyarndley.github.io/AstrodynamicsResources.jl/)**
 
@@ -76,7 +77,7 @@ included.
 
 Every resource records its terms in `catalog/Resources.toml`: a provider-level
 `[licenses]` default, or an explicit `license`/`license_url` override. Terms
-are visible in `resource_info`, persisted in `ResourceLock.toml`, written into
+are visible in `resource`, persisted in `ResourceLock.toml`, written into
 each archive's `provenance.toml`, and listed in the resource reference.
 
 | Provider | Terms |

@@ -1,14 +1,21 @@
-function invalid_catalog(resource_text::String, bundle_text::String="";
-                         lock_text::String="version = 1\n[resources]\n")
-    mktempdir() do directory
+using Test
+using AstrodynamicsResources
+
+function invalid_catalog(
+        resource_text::String, bundle_text::String = "";
+        lock_text::String = "version = 1\n[resources]\n"
+    )
+    return mktempdir() do directory
         write(joinpath(directory, "Resources.toml"), resource_text)
         write(joinpath(directory, "bundles.toml"), bundle_text)
         write(joinpath(directory, "ResourceLock.toml"), lock_text)
         artifacts = joinpath(directory, "Artifacts.toml")
         write(artifacts, "")
         try
-            withenv("ASTRODYNAMICS_RESOURCES_CATALOG" => directory,
-                    "ASTRODYNAMICS_RESOURCES_ARTIFACTS_TOML" => artifacts) do
+            withenv(
+                "ASTRODYNAMICS_RESOURCES_CATALOG" => directory,
+                "ASTRODYNAMICS_RESOURCES_ARTIFACTS_TOML" => artifacts
+            ) do
                 AstrodynamicsResources._CATALOG_LOADED[] = false
                 @test_throws ArgumentError AstrodynamicsResources._load_catalog!()
             end
@@ -33,9 +40,11 @@ license_url = "https://fixtures.invalid/terms"
         write(joinpath(directory, "ResourceLock.toml"), "version = 1\n[resources]\n")
         write(joinpath(directory, "Artifacts.toml"), "")
         try
-            withenv("ASTRODYNAMICS_RESOURCES_CATALOG" => directory,
-                    "ASTRODYNAMICS_RESOURCES_ARTIFACTS_TOML" =>
-                        joinpath(directory, "Artifacts.toml")) do
+            withenv(
+                "ASTRODYNAMICS_RESOURCES_CATALOG" => directory,
+                "ASTRODYNAMICS_RESOURCES_ARTIFACTS_TOML" =>
+                    joinpath(directory, "Artifacts.toml")
+            ) do
                 AstrodynamicsResources._CATALOG_LOADED[] = false
                 AstrodynamicsResources._load_catalog!()
                 @test resource(:one).metadata["source_filename"] == "one.txt"
@@ -48,88 +57,121 @@ license_url = "https://fixtures.invalid/terms"
         end
     end
 
-    invalid_catalog(VALIDATION_RESOURCE * replace(
-        VALIDATION_RESOURCE, "one.txt" => "two.txt"))
+    invalid_catalog(
+        VALIDATION_RESOURCE * replace(
+            VALIDATION_RESOURCE, "one.txt" => "two.txt"
+        )
+    )
 
-    invalid_catalog(VALIDATION_RESOURCE * """
-    [[resource]]
-    name = "two"
-    url = "https://fixtures.invalid/one.txt"
-    """)
+    invalid_catalog(
+        VALIDATION_RESOURCE * """
+            [[resource]]
+            name = "two"
+            url = "https://fixtures.invalid/one.txt"
+            """
+    )
 
-    invalid_catalog(replace(VALIDATION_RESOURCE, "name = \"one\"" =>
-                            "name = \"Not Safe\""))
+    invalid_catalog(
+        replace(
+            VALIDATION_RESOURCE, "name = \"one\"" =>
+                "name = \"Not Safe\""
+        )
+    )
     invalid_catalog(replace(VALIDATION_RESOURCE, "https://" => "http://"))
 
-    invalid_catalog("""
-    [[resource]]
-    name = "unlicensed"
-    url = "https://fixtures.invalid/unlicensed.txt"
-    """)
+    invalid_catalog(
+        """
+        [[resource]]
+        name = "unlicensed"
+        url = "https://fixtures.invalid/unlicensed.txt"
+        """
+    )
 
-    invalid_catalog(replace(VALIDATION_RESOURCE,
-        "https://fixtures.invalid/terms" => "http://fixtures.invalid/terms"))
+    invalid_catalog(
+        replace(
+            VALIDATION_RESOURCE,
+            "https://fixtures.invalid/terms" => "http://fixtures.invalid/terms"
+        )
+    )
 
-    invalid_catalog("""
-    [[resource]]
-    name = "both"
-    url = "https://fixtures.invalid/both.txt"
+    invalid_catalog(
+        """
+        [[resource]]
+        name = "both"
+        url = "https://fixtures.invalid/both.txt"
 
-      [[resource.files]]
-      url = "https://fixtures.invalid/part.txt"
-    """)
+          [[resource.files]]
+          url = "https://fixtures.invalid/part.txt"
+        """
+    )
 
-    invalid_catalog("""
-    [[resource]]
-    name = "nourl"
-    files = []
-    """)
+    invalid_catalog(
+        """
+        [[resource]]
+        name = "nourl"
+        files = []
+        """
+    )
 
-    invalid_catalog("""
-    [[resource]]
-    name = "duplicates"
+    invalid_catalog(
+        """
+        [[resource]]
+        name = "duplicates"
 
-      [[resource.files]]
-      url = "https://fixtures.invalid/a.txt"
+          [[resource.files]]
+          url = "https://fixtures.invalid/a.txt"
 
-      [[resource.files]]
-      url = "https://fixtures.invalid/a.txt"
-    """)
+          [[resource.files]]
+          url = "https://fixtures.invalid/a.txt"
+        """
+    )
 
-    invalid_catalog("""
-    [[resource]]
-    name = "unsafe_file"
+    invalid_catalog(
+        """
+        [[resource]]
+        name = "unsafe_file"
 
-      [[resource.files]]
-      url = "https://fixtures.invalid/sub/dir.txt"
-    """)
+          [[resource.files]]
+          url = "https://fixtures.invalid/sub/dir.txt"
+        """
+    )
 
-    invalid_catalog("""
-    [[resource]]
-    name = "live_files"
-    live = true
+    invalid_catalog(
+        """
+        [[resource]]
+        name = "live_files"
+        live = true
 
-      [[resource.files]]
-      url = "https://fixtures.invalid/a.txt"
-    """)
+          [[resource.files]]
+          url = "https://fixtures.invalid/a.txt"
+        """
+    )
 
-    invalid_catalog(VALIDATION_RESOURCE, """
-    [bundle]
-    missing = ["not_there"]
-    """)
-    invalid_catalog(VALIDATION_RESOURCE, """
-    [bundle]
-    a = ["b"]
-    b = ["a"]
-    """)
-    invalid_catalog(VALIDATION_RESOURCE, """
-    [bundle]
-    duplicate = ["one", "one"]
-    """)
+    invalid_catalog(
+        VALIDATION_RESOURCE, """
+        [bundle]
+        missing = ["not_there"]
+        """
+    )
+    invalid_catalog(
+        VALIDATION_RESOURCE, """
+        [bundle]
+        a = ["b"]
+        b = ["a"]
+        """
+    )
+    invalid_catalog(
+        VALIDATION_RESOURCE, """
+        [bundle]
+        duplicate = ["one", "one"]
+        """
+    )
 
-    invalid_catalog(VALIDATION_RESOURCE; lock_text="""
-    version = 1
-    [resources.unknown]
-    source_sha256 = "$(repeat("0", 64))"
-    """)
+    invalid_catalog(
+        VALIDATION_RESOURCE; lock_text = """
+        version = 1
+        [resources.unknown]
+        source_sha256 = "$(repeat("0", 64))"
+        """
+    )
 end
