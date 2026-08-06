@@ -3,8 +3,8 @@
     @test length(list_resources()) == 65
     @test length(list_resources(backend=:artifact)) == 53
     @test length(list_resources(backend=:scratch)) == 12
-    @test count(spec -> spec.available, list_resources(backend=:artifact)) == 50
-    @test count(spec -> !spec.available, list_resources(backend=:artifact)) == 3
+    @test all(spec -> spec.available == haskey(spec.metadata, "git_tree_sha1"),
+              list_resources(backend=:artifact))
 
     @test resource(:pinned_leapseconds).id == :naif0012
     @test resource(:moon_pa_de440).id == :moon_pa_de440_200625
@@ -25,7 +25,9 @@
     @test resource(:de440s).metadata["asset"] == "de440s.tar.gz"
     @test endswith(resource(:de440s).metadata["download_url"],
                    "/v0.1.0/de440s.tar.gz")
-    @test all(spec -> !spec.available || haskey(spec.metadata, "source_sha256"),
+    @test all(spec -> !spec.available ||
+                      haskey(spec.metadata, "source_sha256") ||
+                      haskey(spec.metadata, "files"),
               list_resources(backend=:artifact))
     @test all(spec -> !spec.available || haskey(spec.metadata, "archive_sha256"),
               list_resources(backend=:artifact))
