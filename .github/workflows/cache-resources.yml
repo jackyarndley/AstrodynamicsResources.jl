@@ -81,7 +81,7 @@ jobs:
           julia --project=. -e 'using Pkg; Pkg.instantiate()'
           julia --project=scripts -e 'using Pkg; Pkg.develop(path="."); Pkg.instantiate()'
       - name: Build deterministic archive
-        run: julia --project=scripts scripts/build_artifact.jl "${{ matrix.name }}"
+        run: julia --project=scripts scripts/catalog.jl build "${{ matrix.name }}"
       - name: Publish without overwriting
         env:
           GH_TOKEN: ${{ github.token }}
@@ -121,7 +121,7 @@ jobs:
         run: julia --project=. -e 'using Pkg; Pkg.instantiate()'
       - name: Generate lock and artifact bindings
         run: |
-          julia --project=. scripts/update_lock.jl build/reports \
+          julia --project=. scripts/catalog.jl update-lock build/reports \
             "https://github.com/${GITHUB_REPOSITORY}/releases/download/${RESOURCE_RELEASE}"
           julia --project=. scripts/catalog.jl validate
       - uses: peter-evans/create-pull-request@v8.1.1

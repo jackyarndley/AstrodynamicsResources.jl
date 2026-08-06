@@ -5,6 +5,8 @@ const _RESOURCES = Dict{Symbol,ResourceSpec}()
 const _ALIASES = Dict{Symbol,Symbol}()
 const _BUNDLES = Dict{Symbol,ResourceBundle}()
 const _CATALOG_LOADED = Ref(false)
+const _LICENSES = Dict{Symbol,Dict{String,String}}()
+const _DEFAULT_TTL_SECONDS = 21_600
 
 _catalog_dir_path() = get(ENV, "ASTRODYNAMICS_RESOURCES_CATALOG", _CATALOG_DIR)
 _artifacts_toml_path() = get(
@@ -24,6 +26,7 @@ end
 function _provider(url::AbstractString)
     host = _host(url)
     occursin("naif.jpl.nasa.gov", host) && return :naif
+    (occursin("cdsarc", host) || occursin("vizier", host)) && return :cds
     occursin("iers.org", host) && return :iers
     occursin("celestrak.org", host) && return :celestrak
     occursin("swpc.noaa.gov", host) && return :noaa_swpc
@@ -59,6 +62,7 @@ function _category(name::AbstractString, filename::AbstractString, live::Bool)
         occursin("leapseconds", id) && return :constants
         return :space_weather
     end
+    extension == ".dat" && return :star_catalogue
     extension == ".gfc" && return :gravity
     extension == ".bds" && return :geometry
     extension == ".bsp" && return occursin(r"^de\d", id) ? :ephemeris : :satellite_ephemeris
@@ -78,6 +82,7 @@ function _role(category::Symbol, filename::AbstractString)
     extension == ".tf" && return :frame_kernel
     extension == ".bds" && return :dsk
     extension == ".gfc" && return :gravity_coefficients
+    category == :star_catalogue && return :catalogue
     category == :earth_orientation && return :eop
     category == :space_weather && return :space_weather
     return :data
@@ -102,6 +107,44 @@ function _body(name::AbstractString)
 end
 
 _title(name::AbstractString) = replace(String(name), '_' => ' ')
+
+function _license_fields(entry::Dict{String,Any}, provider::Symbol)
+    defaults = get(_LICENSES, provider, nothing)
+    fields = Dict{String,Any}()
+    for (key, default_key) in (("license", "terms"), ("license_url", "url"))
+        value = get(entry, key, defaults === nothing ? nothing : get(defaults, default_key, nothing))
+        value === nothing || (fields[key] = String(value))
+    end
+    return fields
+end
+
+function _resource_metadata(entry::Dict{String,Any}, name::String, filename::String,
+                            category::Symbol, metadata_url)
+    metadata = Dict{String,Any}(
+        "source_url" => String(entry["url"]),
+        "source_filename" => filename,
+        "format" => category == :star_catalogue ? "CDS fixed-width catalogue" : _format(filename),
+    )
+    body = get(entry, "body", _body(name))
+    body === nothing || (metadata["body"] = body)
+    metadata_url === nothing || (metadata["metadata_url"] = String(metadata_url))
+    for key in ("description", "citation")
+        haskey(entry, key) && (metadata[key] = entry[key])
+    end
+    return metadata
+end
+
+function _live_metadata(entry::Dict{String,Any}, filename::String)
+    metadata = Dict{String,Any}(
+        "minimum_size_bytes" => Int(get(entry, "minimum_size", 1)),
+        "allow_stale" => true,
+        "conditional_requests" => true,
+        "update_strategy" => "conditional_http",
+    )
+    endswith(lowercase(filename), ".json") &&
+        (metadata["expected_content_type"] = "application/json")
+    return metadata
+end
 
 function _lock_table(catalog_dir::String)
     path = joinpath(catalog_dir, "ResourceLock.toml")
@@ -133,33 +176,21 @@ function _parse_resource(entry::Dict{String,Any}, aliases::Vector{Symbol},
 
     backend = if live
         urls = [url; String.(get(entry, "mirrors", String[]))]
-        ScratchBackend(name, urls, Second(Int(get(entry, "ttl", 21_600))))
+        ScratchBackend(name, urls, Second(Int(get(entry, "ttl", _DEFAULT_TTL_SECONDS))))
     else
         ArtifactBackend(name)
     end
-    metadata = Dict{String,Any}(
-        "source_url" => url,
-        "source_filename" => filename,
-        "format" => _format(filename),
-    )
-    body = get(entry, "body", _body(name))
-    body === nothing || (metadata["body"] = body)
-    metadata_url === nothing || (metadata["metadata_url"] = String(metadata_url))
-    for key in ("description", "citation", "license")
-        haskey(entry, key) && (metadata[key] = entry[key])
-    end
+    metadata = _resource_metadata(entry, name, filename, category, metadata_url)
     if live
-        metadata["minimum_size_bytes"] = Int(get(entry, "minimum_size", 1))
-        metadata["allow_stale"] = true
-        metadata["conditional_requests"] = true
-        metadata["update_strategy"] = "conditional_http"
-        endswith(lowercase(filename), ".json") &&
-            (metadata["expected_content_type"] = "application/json")
+        merge!(metadata, _live_metadata(entry, filename))
     elseif lock !== nothing
         merge!(metadata, lock)
         haskey(lock, "source_size_bytes") &&
             (metadata["size_bytes"] = lock["source_size_bytes"])
     end
+    # Catalogue-declared terms win over any lock copy so hand-maintained
+    # licensing metadata stays authoritative.
+    merge!(metadata, _license_fields(entry, provider))
 
     title = String(get(entry, "title", _title(name)))
     description = String(get(entry, "description", "Resource from $(_host(url))."))
@@ -174,11 +205,17 @@ function _load_catalog!()
     empty!(_RESOURCES)
     empty!(_ALIASES)
     empty!(_BUNDLES)
+    empty!(_LICENSES)
     catalog_dir = _catalog_dir_path()
     resources_path = joinpath(catalog_dir, "Resources.toml")
     isfile(resources_path) ||
         throw(ArgumentError("catalogue is missing $resources_path"))
     parsed = TOML.parsefile(resources_path)
+    for (provider, defaults) in get(parsed, "licenses", Dict{String,Any}())
+        _LICENSES[Symbol(provider)] = Dict{String,String}(
+            String(key) => String(value) for (key, value) in defaults
+        )
+    end
     alias_table = Dict{String,Any}(get(parsed, "aliases", Dict{String,Any}()))
     aliases_by_target = Dict{String,Vector{Symbol}}()
     for (alias, target) in alias_table
@@ -247,6 +284,14 @@ function validate_catalog()
         name = String(spec.id)
         occursin(r"^[a-z][a-z0-9_]*$", name) ||
             throw(ArgumentError("resource name $name is not a safe Julia identifier"))
+        license = get(spec.metadata, "license", nothing)
+        license === nothing && throw(ArgumentError(
+            "resource $name has no license terms; add an explicit license field or a " *
+            "[licenses] default for provider $(spec.provider)",
+        ))
+        license_url = get(spec.metadata, "license_url", nothing)
+        license_url !== nothing && !startswith(String(license_url), "https://") &&
+            throw(ArgumentError("resource $name must use an HTTPS license_url"))
         url = String(spec.metadata["source_url"])
         startswith(url, "https://") ||
             throw(ArgumentError("resource $name must use an HTTPS URL"))

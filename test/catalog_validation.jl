@@ -23,6 +23,8 @@ const VALIDATION_RESOURCE = """
 [[resource]]
 name = "one"
 url = "https://fixtures.invalid/one.txt"
+license = "test terms"
+license_url = "https://fixtures.invalid/terms"
 """
 
 @testset "minimal and invalid catalogues" begin
@@ -58,6 +60,15 @@ url = "https://fixtures.invalid/one.txt"
     invalid_catalog(replace(VALIDATION_RESOURCE, "name = \"one\"" =>
                             "name = \"Not Safe\""))
     invalid_catalog(replace(VALIDATION_RESOURCE, "https://" => "http://"))
+
+    invalid_catalog("""
+    [[resource]]
+    name = "unlicensed"
+    url = "https://fixtures.invalid/unlicensed.txt"
+    """)
+
+    invalid_catalog(replace(VALIDATION_RESOURCE,
+        "https://fixtures.invalid/terms" => "http://fixtures.invalid/terms"))
 
     invalid_catalog(VALIDATION_RESOURCE, """
     [bundle]

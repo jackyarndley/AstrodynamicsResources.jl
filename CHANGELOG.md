@@ -1,5 +1,15 @@
 # Changelog
 
+## Unreleased
+
+- Added FK5, Hipparcos, and Tycho-2 star catalogues with CDS ReadMe files and
+  a `star_catalogues` bundle.
+- Recorded license terms for every resource through provider-level
+  `[licenses]` defaults; terms now appear in `resource_info`, lock entries,
+  archive provenance, and the generated resource reference.
+- Consolidated resource tooling into `scripts/catalog.jl` subcommands
+  (`add`, `validate`, `scan`, `uncached`, `build`, `update-lock`).
+
 ## 0.1.0 - 2026-08-03
 
 - Added lazy Julia artifacts for 50 immutable astrodynamics resources and

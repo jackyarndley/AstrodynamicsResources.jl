@@ -38,6 +38,9 @@ That is the complete required declaration. For a changing upstream file, add
 `live = true`. Optional `ttl`, `filename`, `mirrors`, `metadata_url`,
 `category`, and `provider` fields exist only for exceptions.
 
+License terms are resolved from the provider-level `[licenses]` table; add
+`license` and `license_url` only to override the provider default.
+
 After the declaration reaches `main`, the resource-cache workflow finds entries
 that are not published, downloads and validates the source, creates a
 deterministic `example.tar.gz`, uploads it without overwriting existing bytes,
@@ -62,11 +65,31 @@ IERS, GFZ, NOAA, ICGEM, SILSO, or CelesTrak.
 - NAIF constants, frames, leap seconds, and lunar DE440 orientation
 - GOCO06s and GGM05C spherical-harmonic gravity coefficient files
 - selected NAIF DSK shape models
+- FK5, Hipparcos, and Tycho-2 star catalogues with their CDS ReadMe files
 - live IERS, GFZ, NOAA SWPC, SILSO, CelesTrak, and rolling NAIF products
 
 DE431 and DE441 are split into their two official NAIF files and exposed as
 ordered bundles. No artificial Earth-satellite or spacecraft kernels are
 included.
+
+## Licensing
+
+Every resource records its terms in `catalog/Resources.toml`: a provider-level
+`[licenses]` default, or an explicit `license`/`license_url` override. Terms
+are visible in `resource_info`, persisted in `ResourceLock.toml`, written into
+each archive's `provenance.toml`, and listed in the resource reference.
+
+| Provider | Terms |
+|:---|:---|
+| NAIF | Redistribution permitted only for unmodified kernels (NAIF Rules Regarding Use of SPICE) |
+| IERS | Free use with acknowledgement |
+| GFZ, ICGEM | CC BY 4.0; attribution mandatory |
+| NOAA SWPC | Public domain (U.S. government work) |
+| SILSO | CC BY-NC 4.0 (non-commercial) |
+| CelesTrak | Freely available; credit CelesTrak and respect its usage policy |
+| CDS, ESA | Cite catalogue authors/publisher; free use with acknowledgement |
+
+Package code is MIT licensed; scientific data retain their provider terms.
 
 ## Offline operation
 

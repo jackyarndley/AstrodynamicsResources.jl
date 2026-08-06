@@ -5,12 +5,54 @@
 # url = "https://provider.example/path/example.dat"
 #
 # Set `live = true` for a rolling resource. Everything else is optional and is
-# derived from the name, URL, and file extension.
+# derived from the name, URL, and file extension. License terms are resolved
+# from the provider-level `[licenses]` table below and can be overridden per
+# resource with `license` and `license_url`.
 
 [aliases]
 pinned_leapseconds = "naif0012"
 moon_pa_de440 = "moon_pa_de440_200625"
 moon_de440_frames = "moon_de440_250416_frames"
+hip_main = "hipparcos"
+tyc2 = "tycho2"
+
+# Provider-level license defaults. Every resource resolves terms either from
+# this table (keyed by provider) or from its own `license`/`license_url` fields.
+[licenses.naif]
+terms = "NAIF Rules Regarding Use of SPICE; redistribution permitted only for unmodified kernels; acknowledgement encouraged"
+url = "https://naif.jpl.nasa.gov/naif/rules.html"
+
+[licenses.iers]
+terms = "IERS products; free use with acknowledgement"
+url = "https://www.iers.org/IERS/EN/DataProducts/DataProducts.html"
+
+[licenses.gfz]
+terms = "CC BY 4.0; attribution mandatory"
+url = "https://www-app3.gfz-potsdam.de/kp_index/"
+
+[licenses.icgem]
+terms = "CC BY 4.0 per ICGEM series pages; cite the model DOI"
+url = "https://icgem.gfz.de/"
+
+[licenses.noaa_swpc]
+terms = "Public domain (U.S. government work)"
+url = "https://www.noaa.gov/"
+
+[licenses.silso]
+terms = "CC BY-NC 4.0 (non-commercial)"
+url = "https://www.sidc.be/SILSO/legal"
+
+[licenses.celestrak]
+terms = "Freely available data; credit CelesTrak and respect its usage policy"
+url = "https://celestrak.org/usage-policy.php"
+
+[licenses.cds]
+terms = "VizieR rules of usage; cite catalogue authors and publisher"
+url = "https://cds.unistra.fr/vizier-org/licences_vizier.html"
+
+[licenses.esa]
+terms = "ESA catalogue data; free use with acknowledgement"
+url = "https://cdsarc.cds.unistra.fr/ftp/I/239/ReadMe"
 
 [[resource]]
 name = "de430"
@@ -216,6 +258,7 @@ url = "https://icgem.gfz.de/getmodel/gfc/778a683780a5b0ad3163f4772b97b9075a0a13c
 [[resource]]
 name = "goco06s"
 url = "https://datapub.gfz-potsdam.de/download/10.5880.ICGEM.2019.002/GOCO06s.gfc"
+provider = "icgem"
 
 [[resource]]
 name = "iers_finals2000a"
@@ -285,3 +328,32 @@ live = true
 name = "celestrak_space_weather_all"
 url = "https://celestrak.org/SpaceData/SW-All.csv"
 live = true
+
+[[resource]]
+name = "fk5"
+url = "https://cdsarc.cds.unistra.fr/ftp/I/149/fk5.dat"
+metadata_url = "https://cdsarc.cds.unistra.fr/ftp/I/149/ReadMe"
+category = "star_catalogue"
+license = "VizieR rules of usage; cite catalogue authors and publisher"
+license_url = "https://cds.unistra.fr/vizier-org/licences_vizier.html"
+citation = "Fricke et al. 1988, FK5 Part I (VizieR On-line Data Catalogue I/149A)."
+
+[[resource]]
+name = "hipparcos"
+url = "https://cdsarc.cds.unistra.fr/ftp/I/239/hip_main.dat"
+metadata_url = "https://cdsarc.cds.unistra.fr/ftp/I/239/ReadMe"
+category = "star_catalogue"
+provider = "esa"
+license = "ESA catalogue data; free use with acknowledgement"
+license_url = "https://cdsarc.cds.unistra.fr/ftp/I/239/ReadMe"
+citation = "ESA, 1997, The Hipparcos and Tycho Catalogues, ESA SP-1200 (VizieR I/239)."
+
+[[resource]]
+name = "tycho2"
+url = "https://cdsarc.cds.unistra.fr/ftp/I/259/tyc2.dat"
+metadata_url = "https://cdsarc.cds.unistra.fr/ftp/I/259/ReadMe"
+category = "star_catalogue"
+provider = "esa"
+license = "ESA catalogue data; free use with acknowledgement"
+license_url = "https://cdsarc.cds.unistra.fr/ftp/I/259/ReadMe"
+citation = "Høg et al. 2000, A&A 355, L27 (VizieR I/259)."

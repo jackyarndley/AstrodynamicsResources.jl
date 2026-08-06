@@ -63,6 +63,23 @@ pa = resource_paths(:moon_de440_pa)
 me = resource_paths(:moon_de440_me)
 ```
 
+## Star catalogues
+
+- `fk5` — FK5 Part I fundamental catalogue (1,535 stars; VizieR I/149A).
+- `hipparcos` — Hipparcos main catalogue (118,218 entries; VizieR I/239).
+- `tycho2` — Tycho-2 catalogue (2,539,913 stars; VizieR I/259).
+
+Each entry contains the original CDS data file and its ReadMe:
+
+```julia
+fk5 = resource_path(:fk5)                 # the fk5.dat data file
+stars = resource_paths(:star_catalogues)  # all data files and ReadMes
+```
+
+These are raw catalogue files returned as paths; this package does not parse
+them. License terms for each catalogue are recorded in the catalogue and shown
+by `resource_info`.
+
 ## Offline operation and integrity
 
 Set `ASTRODYNAMICS_RESOURCES_OFFLINE=true` to prohibit network access.

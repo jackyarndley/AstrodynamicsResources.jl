@@ -9,13 +9,15 @@ open(reference, "w") do io
     println(io, "a locked artifact binding or live endpoint is exposed; it")
     println(io, "does not mean the resource is currently cached.")
     println(io)
-    println(io, "| ID | Category | Provider | Backend | Available | Source file |")
-    println(io, "|:---|:---|:---|:---|:---:|:---|")
+    println(io, "| ID | Category | Provider | Backend | Available | Source file | License |")
+    println(io, "|:---|:---|:---|:---|:---:|:---|:---|")
     for spec in list_resources()
         source = get(spec.metadata, "source_filename", "")
+        license = replace(String(get(spec.metadata, "license", "—")), "|" => "\\|")
         println(io, "| `:", spec.id, "` | ", spec.category, " | ", spec.provider,
                 " | ", AstrodynamicsResources.backend_symbol(spec.backend), " | ",
-                spec.available ? "yes" : "pending", " | `", source, "` |")
+                spec.available ? "yes" : "pending", " | `", source, "` | ",
+                license, " |")
     end
 end
 

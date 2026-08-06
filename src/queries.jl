@@ -88,7 +88,11 @@ function Base.show(io::IO, spec::ResourceSpec)
     source = get(spec.metadata, "source_filename", nothing)
     source !== nothing && println(io, "  source file: ", source)
     citation = get(spec.metadata, "citation", nothing)
-    citation !== nothing && print(io, "  citation: ", citation)
+    citation !== nothing && println(io, "  citation: ", citation)
+    license = get(spec.metadata, "license", nothing)
+    license !== nothing && println(io, "  license: ", license)
+    license_url = get(spec.metadata, "license_url", nothing)
+    license_url !== nothing && println(io, "  license URL: ", license_url)
 end
 
 """Inspect an ordered logical bundle without materializing its members."""
