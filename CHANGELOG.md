@@ -9,6 +9,12 @@
   archive provenance, and the generated resource reference.
 - Consolidated resource tooling into `scripts/catalog.jl` subcommands
   (`add`, `validate`, `scan`, `uncached`, `build`, `update-lock`).
+- Replaced `resource_path` and `materialize` with a single `resource_paths`
+  API that always returns an ordered vector of local paths.
+- Added multi-file resource declarations (`[[resource.files]]`) for upstream
+  products split across several files; Tycho-2 is now its 20 CDS parts plus
+  ReadMe.
+- Fixed the FK5 source to CDS catalogue I/149A (`catalog.gz`).
 
 ## 0.1.0 - 2026-08-03
 

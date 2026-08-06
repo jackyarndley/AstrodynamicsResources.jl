@@ -51,14 +51,17 @@ Star catalogues are ordinary immutable resources. Give them
 ```toml
 [[resource]]
 name = "fk5"
-url = "https://cdsarc.cds.unistra.fr/ftp/I/149/fk5.dat"
-metadata_url = "https://cdsarc.cds.unistra.fr/ftp/I/149/ReadMe"
+url = "https://cdsarc.cds.unistra.fr/ftp/I/149A/catalog.gz"
+metadata_url = "https://cdsarc.cds.unistra.fr/ftp/I/149A/ReadMe"
 category = "star_catalogue"
 citation = "Fricke et al. 1988, FK5 Part I (VizieR On-line Data Catalogue I/149A)."
 ```
 
 Hipparcos and Tycho-2 use `provider = "esa"` because their redistribution
-terms come from ESA rather than from CDS itself.
+terms come from ESA rather than from CDS itself. When an upstream product is
+split across several files (Tycho-2 is 20 gzipped parts), declare each part in
+a `[[resource.files]]` block instead of `url`; the parts are downloaded in
+declaration order and returned by `resource_paths` in that order.
 
 ## Live data
 

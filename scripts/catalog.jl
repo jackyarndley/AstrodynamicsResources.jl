@@ -124,19 +124,41 @@ function cmd_build(args)
     id = Symbol(first(args))
     spec = resource(id)
     spec.backend isa ArtifactBackend || error("$id is a live resource")
-    source_name = String(spec.metadata["source_filename"])
-    source_metadata = Dict{String,Any}(
-        "source_url" => spec.metadata["source_url"],
-        "source_filename" => source_name,
-    )
-    haskey(spec.metadata, "source_sha256") &&
-        (source_metadata["source_sha256"] = spec.metadata["source_sha256"])
+    declared_files = haskey(spec.metadata, "source_files") ?
+        spec.metadata["source_files"] :
+        [Dict{String,Any}(
+            "url" => spec.metadata["source_url"],
+            "filename" => spec.metadata["source_filename"],
+        )]
+    locked_files = get(spec.metadata, "files", nothing)
     cache_root = abspath(get(
         ENV, "ASTRODYNAMICS_RESOURCES_SOURCE_CACHE",
         joinpath(root, "source-cache")))
-    source = fetch_verified_source(
-        source_metadata; cache_root, require_sha256=false, verify_size=false)
-    source_sha = file_sha256(source)
+    source_items = Dict{String,Any}[]
+    for (i, declared) in enumerate(declared_files)
+        file_meta = Dict{String,Any}(
+            "source_url" => String(declared["url"]),
+            "source_filename" => String(declared["filename"]),
+        )
+        if locked_files !== nothing
+            locked = locked_files[i]
+            haskey(locked, "sha256") &&
+                (file_meta["source_sha256"] = String(locked["sha256"]))
+            haskey(locked, "size_bytes") &&
+                (file_meta["size_bytes"] = Int(locked["size_bytes"]))
+        end
+        local_path = fetch_verified_source(
+            file_meta; cache_root, require_sha256=false, verify_size=false)
+        push!(source_items, Dict{String,Any}(
+            "filename" => file_meta["source_filename"],
+            "url" => file_meta["source_url"],
+            "path" => local_path,
+            "sha256" => file_sha256(local_path),
+            "size_bytes" => filesize(local_path),
+        ))
+    end
+    source_name = String(source_items[1]["filename"])
+    source_sha = String(source_items[1]["sha256"])
 
     metadata_source = nothing
     metadata_sha = nothing
@@ -157,7 +179,9 @@ function cmd_build(args)
     tree = Pkg.Artifacts.create_artifact() do directory
         data_dir = joinpath(directory, "data")
         mkpath(data_dir)
-        cp(source, joinpath(data_dir, source_name); force=false)
+        for item in source_items
+            cp(item["path"], joinpath(data_dir, item["filename"]); force=false)
+        end
         if metadata_source !== nothing
             metadata_dir = joinpath(directory, "metadata")
             mkpath(metadata_dir)
@@ -165,11 +189,22 @@ function cmd_build(args)
         end
         provenance = Dict{String,Any}(
             "name" => String(id),
-            "source_url" => spec.metadata["source_url"],
+            "source_url" => source_items[1]["url"],
             "source_filename" => source_name,
-            "source_sha256" => source_sha,
             "packager" => "AstrodynamicsResources.jl/0.1.0",
         )
+        if length(source_items) == 1
+            provenance["source_sha256"] = source_sha
+        else
+            provenance["files"] = [
+                Dict{String,Any}(
+                    "filename" => item["filename"],
+                    "url" => item["url"],
+                    "sha256" => item["sha256"],
+                    "size_bytes" => item["size_bytes"],
+                ) for item in source_items
+            ]
+        end
         for key in ("metadata_url", "metadata_sha256", "license", "license_url", "citation")
             haskey(spec.metadata, key) && (provenance[key] = spec.metadata[key])
         end
@@ -187,16 +222,27 @@ function cmd_build(args)
     deterministic_archive_artifact(tree, archive)
     report = Dict{String,Any}(
         "name" => String(id),
-        "source_url" => spec.metadata["source_url"],
+        "source_url" => source_items[1]["url"],
         "source_filename" => source_name,
-        "source_sha256" => source_sha,
-        "source_size_bytes" => filesize(source),
         "asset" => basename(archive),
         "archive_path" => abspath(archive),
         "archive_sha256" => file_sha256(archive),
         "archive_size_bytes" => filesize(archive),
         "git_tree_sha1" => string(tree),
     )
+    if length(source_items) == 1
+        report["source_sha256"] = source_sha
+        report["source_size_bytes"] = source_items[1]["size_bytes"]
+    else
+        report["files"] = [
+            Dict{String,Any}(
+                "filename" => item["filename"],
+                "url" => item["url"],
+                "sha256" => item["sha256"],
+                "size_bytes" => item["size_bytes"],
+            ) for item in source_items
+        ]
+    end
     if metadata_url !== nothing
         report["metadata_url"] = metadata_url
         report["metadata_sha256"] = metadata_sha
@@ -241,14 +287,25 @@ function cmd_update_lock(args)
             entry = Dict{String,Any}(
                 "source_url" => report["source_url"],
                 "source_filename" => report["source_filename"],
-                "source_sha256" => report["source_sha256"],
-                "source_size_bytes" => report["source_size_bytes"],
                 "asset" => report["asset"],
                 "archive_sha256" => report["archive_sha256"],
                 "archive_size_bytes" => report["archive_size_bytes"],
                 "git_tree_sha1" => report["git_tree_sha1"],
                 "download_url" => "$base/$(report["asset"])",
             )
+            if haskey(report, "files")
+                entry["files"] = [
+                    Dict{String,Any}(
+                        "filename" => f["filename"],
+                        "url" => f["url"],
+                        "sha256" => f["sha256"],
+                        "size_bytes" => f["size_bytes"],
+                    ) for f in report["files"]
+                ]
+            else
+                entry["source_sha256"] = report["source_sha256"]
+                entry["source_size_bytes"] = report["source_size_bytes"]
+            end
             for key in ("metadata_url", "metadata_sha256", "license", "license_url", "citation")
                 haskey(report, key) && (entry[key] = report[key])
             end

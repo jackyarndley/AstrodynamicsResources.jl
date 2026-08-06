@@ -42,8 +42,11 @@
     @test length(list_resources(category=:star_catalogue)) == 3
     @test resource(:fk5).provider == :cds
     @test resource(:hipparcos).provider == :esa
-    @test resource(:fk5).metadata["source_filename"] == "fk5.dat"
-    @test resource(:tycho2).metadata["source_filename"] == "tyc2.dat"
+    @test resource(:fk5).metadata["source_filename"] == "catalog.gz"
+    @test resource(:tycho2).metadata["source_filename"] == "tyc2.dat.00.gz"
+    @test length(resource(:tycho2).metadata["source_files"]) == 20
+    @test length(resource(:tycho2).files) == 21
+    @test count(file -> file.primary, resource(:tycho2).files) == 1
     @test all(spec -> spec.metadata["format"] == "CDS fixed-width catalogue",
               list_resources(category=:star_catalogue))
     @test bundle(:jupiter_satellites).members == [:jup349, :jup349_nameid]
@@ -97,8 +100,10 @@ end
     @test bundle(:moon_de440_pa).members[end] == :moon_assoc_pa
     @test bundle(:moon_de440_me).members[end] == :moon_assoc_me
     @test bundle(:moon_de440_pa).members != bundle(:moon_de440_me).members
-    @test_throws ArgumentError resource_path(:moon_de440_pa)
     @test AstrodynamicsResources._bundle_resource_ids(:moon_de440_orientation) ==
           [:pck00011, :moon_pa_de440, :moon_de440_frames]
     @test bundle(:earth_gravity_standard).members == [:ggm05c, :goco06s]
+    @test isdefined(AstrodynamicsResources, :resource_paths)
+    @test !isdefined(AstrodynamicsResources, :resource_path)
+    @test !isdefined(AstrodynamicsResources, :materialize)
 end

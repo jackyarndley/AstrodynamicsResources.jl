@@ -23,7 +23,7 @@ function _artifact_root(spec::ResourceSpec)
     if !Artifacts.artifact_exists(hash)
         _offline() && throw(ErrorException(
             "resource $(spec.id) is missing in offline mode (backend=artifact). " *
-            "Materialize it once while online with materialize(:$(spec.id))."
+            "Call resource_paths(:$(spec.id)) while online to materialize it."
         ))
         Pkg.Artifacts.ensure_artifact_installed(
             spec.backend.artifact_name, _artifacts_toml_path())

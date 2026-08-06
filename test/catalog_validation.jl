@@ -70,6 +70,49 @@ license_url = "https://fixtures.invalid/terms"
     invalid_catalog(replace(VALIDATION_RESOURCE,
         "https://fixtures.invalid/terms" => "http://fixtures.invalid/terms"))
 
+    invalid_catalog("""
+    [[resource]]
+    name = "both"
+    url = "https://fixtures.invalid/both.txt"
+
+      [[resource.files]]
+      url = "https://fixtures.invalid/part.txt"
+    """)
+
+    invalid_catalog("""
+    [[resource]]
+    name = "nourl"
+    files = []
+    """)
+
+    invalid_catalog("""
+    [[resource]]
+    name = "duplicates"
+
+      [[resource.files]]
+      url = "https://fixtures.invalid/a.txt"
+
+      [[resource.files]]
+      url = "https://fixtures.invalid/a.txt"
+    """)
+
+    invalid_catalog("""
+    [[resource]]
+    name = "unsafe_file"
+
+      [[resource.files]]
+      url = "https://fixtures.invalid/sub/dir.txt"
+    """)
+
+    invalid_catalog("""
+    [[resource]]
+    name = "live_files"
+    live = true
+
+      [[resource.files]]
+      url = "https://fixtures.invalid/a.txt"
+    """)
+
     invalid_catalog(VALIDATION_RESOURCE, """
     [bundle]
     missing = ["not_there"]

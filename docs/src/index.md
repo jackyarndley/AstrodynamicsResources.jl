@@ -37,14 +37,15 @@ bundle(:moon_de440_pa)
 Path operations explicitly permit lazy materialization:
 
 ```julia
-de440s = resource_path(:de440s)
+de440s = only(resource_paths(:de440s))
 de441 = resource_paths(:de441)
 lunar_pa = resource_paths(:moon_de440_pa)
-eop = resource_path(:iers_finals2000a)
+eop = only(resource_paths(:iers_finals2000a))
 ```
 
-`resource_path` is for a single primary file. `resource_paths` always returns
-a vector, preserves bundle order, and downloads only missing members. Large
+`resource_paths` is the single path accessor: it always returns a vector,
+preserves bundle order, and downloads only missing members. Use
+`only(resource_paths(id))` for a resource with exactly one primary file. Large
 SPKs and DSKs can consume gigabytes, so inspect their size before materializing.
 
 ## Lunar DE440 orientation
@@ -72,13 +73,14 @@ me = resource_paths(:moon_de440_me)
 Each entry contains the original CDS data file and its ReadMe:
 
 ```julia
-fk5 = resource_path(:fk5)                 # the fk5.dat data file
+fk5 = only(resource_paths(:fk5))          # the catalog.gz data file
 stars = resource_paths(:star_catalogues)  # all data files and ReadMes
 ```
 
 These are raw catalogue files returned as paths; this package does not parse
 them. License terms for each catalogue are recorded in the catalogue and shown
-by `resource_info`.
+by `resource_info`. Tycho-2 is distributed by CDS as 20 gzipped parts, so
+`resource_paths(:tycho2)` returns those 20 ordered parts plus its ReadMe.
 
 ## Offline operation and integrity
 

@@ -12,12 +12,12 @@ space-weather products.
 ```julia
 using AstrodynamicsResources
 
-de440s = resource_path(:de440s)
+de440s = only(resource_paths(:de440s))
 de441 = resource_paths(:de441)
 moon_pa = resource_paths(:moon_de440_pa)
 uranus = resource_paths(:uranus_satellites)
-gravity = resource_path(:ggm05c)
-eop = resource_path(:iers_finals2000a)
+gravity = only(resource_paths(:ggm05c))
+eop = only(resource_paths(:iers_finals2000a))
 ```
 
 Immutable files use lazy Julia artifacts. Rolling products use a locked,
@@ -95,7 +95,7 @@ Package code is MIT licensed; scientific data retain their provider terms.
 
 ```julia
 ENV["ASTRODYNAMICS_RESOURCES_OFFLINE"] = "true"
-cached = resource_path(:iers_c04; stale_ok=true)
+cached = only(resource_paths(:iers_c04; stale_ok=true))
 ```
 
 See the documentation for TTL overrides, cache status, verification, bundles,

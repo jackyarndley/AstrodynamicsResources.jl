@@ -12,7 +12,7 @@ using TOML
 export AbstractResourceBackend, ArtifactBackend, ScratchBackend
 export ResourceFile, ResourceSpec, ResourceBundle, ResourceStatus
 export resource, resource_info, list_resources, find_resources, bundle
-export resource_path, resource_paths, materialize
+export resource_paths
 export resource_status, refresh!, clear_resource!, verify_resource
 export validate_catalog
 

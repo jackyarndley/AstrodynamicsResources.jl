@@ -87,6 +87,10 @@ function Base.show(io::IO, spec::ResourceSpec)
     println(io, "  local: ", status.available ? "available" : "not materialized")
     source = get(spec.metadata, "source_filename", nothing)
     source !== nothing && println(io, "  source file: ", source)
+    source_files = get(spec.metadata, "source_files", nothing)
+    if source_files !== nothing && length(source_files) > 1
+        println(io, "  source files: $(length(source_files)) parts")
+    end
     citation = get(spec.metadata, "citation", nothing)
     citation !== nothing && println(io, "  citation: ", citation)
     license = get(spec.metadata, "license", nothing)
@@ -119,7 +123,14 @@ function Base.show(io::IO, value::ResourceBundle)
     print(io, "  ordered members: ", join(value.members, ", "))
 end
 
-"""Materialize a resource or ordered bundle and always return a vector of paths."""
+"""
+    resource_paths(id::Symbol; kwargs...) -> Vector{String}
+
+Materialize a resource, alias, or ordered bundle and return the local path of
+every file (data files first, then metadata), in declaration order. This is
+the single path accessor: use `only(resource_paths(id))` when the resource has
+exactly one primary file.
+"""
 function resource_paths(id::Symbol; kwargs...)
     _ensure_catalog()
     if haskey(_BUNDLES, id)
@@ -132,23 +143,3 @@ function resource_paths(id::Symbol; kwargs...)
     spec = resource(id)
     return spec.backend isa ArtifactBackend ? _artifact_paths(spec) : _scratch_paths(spec; kwargs...)
 end
-
-"""Materialize a resource that has exactly one primary file."""
-function resource_path(id::Symbol; kwargs...)
-    _ensure_catalog()
-    haskey(_BUNDLES, id) && throw(ArgumentError(
-        "$id is a bundle; use resource_paths(:$id) to preserve its documented order"
-    ))
-    spec = resource(id)
-    primary = findall(file -> file.primary, spec.files)
-    length(spec.files) == 1 || length(primary) == 1 || throw(ArgumentError(
-        "resource $id has multiple files and no unique primary; use resource_paths(:$id)"
-    ))
-    paths = resource_paths(id; kwargs...)
-    return length(spec.files) == 1 ? only(paths) : paths[only(primary)]
-end
-
-"""Explicitly materialize one or more resource IDs and return vectors of paths."""
-materialize(id::Symbol; kwargs...) = resource_paths(id; kwargs...)
-materialize(ids::AbstractVector{Symbol}; kwargs...) =
-    [resource_paths(id; kwargs...) for id in ids]
