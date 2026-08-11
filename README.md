@@ -61,17 +61,29 @@ IERS, GFZ, NOAA, ICGEM, SILSO, or CelesTrak.
 
 ## Included families
 
-- DE430, DE431, DE432s, DE435, DE438, DE440/DE440s, DE441, and DE442/DE442s
-- natural-moon SPKs for Mars, Jupiter, Saturn, Uranus, Neptune, and Pluto
+- multiple JPL DE generations: DE430, DE431, DE432s, DE435, DE438,
+  DE440/DE440s, DE441, and DE442/DE442s
+- natural satellite SPKs for Mars, Jupiter, Saturn, Uranus, Neptune, and Pluto,
+  including complementary solutions, NEP098's ordered parts, and current
+  name-ID frame kernels
+- current DSN and Earth-station SPKs, with ITRF93 and fixed-frame variants
+- Earth–Moon and Sun–Earth L1, L2, L4, and L5 SPKs based on DE441
+- the generic 300-asteroid CODES ephemeris and generic TNO satellite-system
+  ephemerides
+- a long-range Siding Spring comet ephemeris
+- explicitly named extended-range satellite SPKs for Saturn, Uranus, and
+  Neptune; these remain lazy and are separate from normal-epoch bundles
 - NAIF constants, frames, leap seconds, and lunar DE440 orientation
 - GOCO06s and GGM05C spherical-harmonic gravity coefficient files
 - selected NAIF DSK shape models
 - FK5, Hipparcos, and Tycho-2 star catalogues with their CDS ReadMe files
 - live IERS, GFZ, NOAA SWPC, SILSO, CelesTrak, and rolling NAIF products
 
-DE431 and DE441 are split into their two official NAIF files and exposed as
-ordered bundles. No artificial Earth-satellite or spacecraft kernels are
-included.
+DE431, DE441, NEP098, and URA184 are split into their official NAIF files and
+exposed as ordered bundles. No artificial Earth-satellite or spacecraft
+kernels are included. The active generic comet directory's remaining files are
+dated mission/event products rather than broadly reusable ephemerides, so
+those files are intentionally not catalogued.
 
 ## Licensing
 
