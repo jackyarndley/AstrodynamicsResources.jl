@@ -1,4 +1,20 @@
 # Generated from catalog/ResourceLock.toml. Do not edit by hand.
+[c2013a1_s105_merged]
+git-tree-sha1 = "fae14b75fc8c7d1986e7835e60bdbade4a77085e"
+lazy = true
+
+    [[c2013a1_s105_merged.download]]
+    sha256 = "dae8159dac63a1d75fa9b1f8f5751cda34e5c777a209bcff936a89dd4466a5d5"
+    url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/c2013a1_s105_merged.tar.gz"
+
+[codes_300ast_20100725]
+git-tree-sha1 = "978161a81a3b00493b577b8d7b60ccfebb7b20e1"
+lazy = true
+
+    [[codes_300ast_20100725.download]]
+    sha256 = "f3bb0a19d323aa7735c53f84079323c6c6f9ae52aa98f03d2b123c84aeacdb69"
+    url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/codes_300ast_20100725.tar.gz"
+
 [de430]
 git-tree-sha1 = "7f2c6a8ab9bc13a9389929d38cbec07d0160ac31"
 lazy = true
@@ -95,6 +111,38 @@ lazy = true
     sha256 = "74df2c3ebfc7953d3c789b872c78fa0e5e9a7ceee4923270be74ec84a58e3deb"
     url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/de442s.tar.gz"
 
+[dss_17_prelim_itrf93_190814]
+git-tree-sha1 = "3877cb6945381aef5dd02be997ee9d47e0456299"
+lazy = true
+
+    [[dss_17_prelim_itrf93_190814.download]]
+    sha256 = "e1e9736d123d654763b602c4b57cb65b1b8bf7a3f7034e900768b47bcdb17df7"
+    url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/dss_17_prelim_itrf93_190814.tar.gz"
+
+[dss_30_itrf93_210201]
+git-tree-sha1 = "747b4b11c38989681dce079c8abacc1308fe01ea"
+lazy = true
+
+    [[dss_30_itrf93_210201.download]]
+    sha256 = "bb81afdbe53a24b1b29865993a52206d3f7ce8d9847e1b81302f06b4320e6c6d"
+    url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/dss_30_itrf93_210201.tar.gz"
+
+[dss_59_prelim_itrf93_220921]
+git-tree-sha1 = "98e20123efa5bba3881cd57a023e8b12a88715a3"
+lazy = true
+
+    [[dss_59_prelim_itrf93_220921.download]]
+    sha256 = "24d0412f218d3f0d16bdcac6f9b93b185cb66cef7cbaee81d2d129c5707ab1b1"
+    url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/dss_59_prelim_itrf93_220921.tar.gz"
+
+[dss_69_prelim_itrf93_201215]
+git-tree-sha1 = "826b26c8ed8c30ba655f237750a5499b3f730ad1"
+lazy = true
+
+    [[dss_69_prelim_itrf93_201215.download]]
+    sha256 = "f64deddd15e317b7c2ebb5140ad666a1960c959af1c82ebaed0bd551684b9806"
+    url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/dss_69_prelim_itrf93_201215.tar.gz"
+
 [earth_fixed]
 git-tree-sha1 = "cd860bd8b4e9a725909a21cef5766e5f150cf3c6"
 lazy = true
@@ -102,6 +150,22 @@ lazy = true
     [[earth_fixed.download]]
     sha256 = "3bd13afdf9e24e093029c9b69efb16f42998fc9dd0a5f2d3fc32e76beb30be8f"
     url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/earth_fixed.tar.gz"
+
+[earthstns_fx_260717]
+git-tree-sha1 = "0cfbf11d06134773fe57b8f324941f21097dd447"
+lazy = true
+
+    [[earthstns_fx_260717.download]]
+    sha256 = "3cf30b8db61504f8330e90040fb3410fb6c2e8fbf52978e1bf1adebc345586c0"
+    url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/earthstns_fx_260717.tar.gz"
+
+[earthstns_itrf93_260717]
+git-tree-sha1 = "d0b71fc66a8f109733e44ad85a42cd52e4ca02e4"
+lazy = true
+
+    [[earthstns_itrf93_260717.download]]
+    sha256 = "c2a822e3b16f1f0365b426e195f8d7152f38d96009d13aa1a9bf940b03a421a3"
+    url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/earthstns_itrf93_260717.tar.gz"
 
 [eros_near_msi_512q]
 git-tree-sha1 = "ad417b18f43f946d8f5dde2714bbab28a13507de"
@@ -183,6 +247,14 @@ lazy = true
     sha256 = "796116f17cd74f11efb0f7070824c90363851fd485e002c07350bc643120cf92"
     url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/itokawa_hayabusa_amica_64q.tar.gz"
 
+[jup347]
+git-tree-sha1 = "73c7088d3946e529d61c3430b64039f19b859a90"
+lazy = true
+
+    [[jup347.download]]
+    sha256 = "acf55fe1cbf5e1bb0967f94742f342371bc56120f20123c5cf5b87e3df1f89b3"
+    url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/jup347.tar.gz"
+
 [jup348]
 git-tree-sha1 = "af07c3967f6996c5d21e6fa1521ba9864bfc9c47"
 lazy = true
@@ -206,6 +278,54 @@ lazy = true
     [[jup349_nameid.download]]
     sha256 = "0327a4848538c2ef9c4a82fe19fd1018660d308d1ac4f2a482983638bfb099e9"
     url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/jup349_nameid.tar.gz"
+
+[jup365]
+git-tree-sha1 = "c723b0ce44c3ce2fec3618cd2f2f8b1b98e39c47"
+lazy = true
+
+    [[jup365.download]]
+    sha256 = "e0819a0dce3632e56b2a456c0d5c42602f710cab05b9d7447db9295a38ec2e6e"
+    url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/jup365.tar.gz"
+
+[l1_de441]
+git-tree-sha1 = "26ffd2e736837ed0f01b80980a26e894d6f3003c"
+lazy = true
+
+    [[l1_de441.download]]
+    sha256 = "658920fee86575f1def9262e43a3ff031f4e64c97253e2c206a584be2148819c"
+    url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/l1_de441.tar.gz"
+
+[l2_de441]
+git-tree-sha1 = "d535e2eb5bb4592572b53980152ff03e5a2fb323"
+lazy = true
+
+    [[l2_de441.download]]
+    sha256 = "e045c78c4e717c2cd0d2f721c517a38b35e45b732dac7982ce78382a858b4a06"
+    url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/l2_de441.tar.gz"
+
+[l4_de441]
+git-tree-sha1 = "3091dc00f235246ae6a0b06dbfa6e1d68a5b5758"
+lazy = true
+
+    [[l4_de441.download]]
+    sha256 = "d1964debc6d85b3f45ee19382c7c389bfda10b5e58bded59d579794318e15bf9"
+    url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/l4_de441.tar.gz"
+
+[l5_de441]
+git-tree-sha1 = "486aa42296adfc1df31ecf217b144fa71d1bab05"
+lazy = true
+
+    [[l5_de441.download]]
+    sha256 = "1e754e83c96bcb8b164f0ac4574f6a91a2115e91c9fbe468fc6a38a661f754b7"
+    url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/l5_de441.tar.gz"
+
+[mar099]
+git-tree-sha1 = "9201698199bac49abe55a2703aba16ef298c0c18"
+lazy = true
+
+    [[mar099.download]]
+    sha256 = "1edefad3946f0e5ad5bf3f2720e84274c3014ee19744cf2985bfe481c25a0347"
+    url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/mar099.tar.gz"
 
 [mar099s]
 git-tree-sha1 = "24d4f86ea315af460b767f473b14b67358dbab7d"
@@ -255,6 +375,30 @@ lazy = true
     sha256 = "126abdba9b7b32dd58d02ecbaae0fbc4794418413b4c227fad11045fc2e657c4"
     url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/naif0012.tar.gz"
 
+[ndosl_140530_v01]
+git-tree-sha1 = "f8bda1ea14fbbd4b547558a9f34d0253e73f8aa6"
+lazy = true
+
+    [[ndosl_140530_v01.download]]
+    sha256 = "4fa3e34fb5b5736c4163bd4fecda65017f14b73b92f28bb056e272b41dc7686f"
+    url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/ndosl_140530_v01.tar.gz"
+
+[ndosl_190716_v01]
+git-tree-sha1 = "eed4a6a04a28785ffc9fdbb1c7b3184f8cd8544e"
+lazy = true
+
+    [[ndosl_190716_v01.download]]
+    sha256 = "0498d46d8b10c25927012455a46de046d008b9915e90eeea4e99cb759df6c62a"
+    url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/ndosl_190716_v01.tar.gz"
+
+[ndosl_190716_v02]
+git-tree-sha1 = "1160893850cb0471b7ed75b8a8597f2799513242"
+lazy = true
+
+    [[ndosl_190716_v02.download]]
+    sha256 = "395be65c8d261030377c50d86b451fae58d31d1a3b1fa2db647d907786d8a71f"
+    url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/ndosl_190716_v02.tar.gz"
+
 [nep097]
 git-tree-sha1 = "98869c65470a9dbb1bb393244a9fa2d07de20abb"
 lazy = true
@@ -263,6 +407,22 @@ lazy = true
     sha256 = "a4c0b7127e244e9e5397140a3f6acb94e320f477b0e74de2a9cfb894b783cc22"
     url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/nep097.tar.gz"
 
+[nep097xl_801]
+git-tree-sha1 = "28459e9d95b9f561a063b1e2362a817ee59a1ce9"
+lazy = true
+
+    [[nep097xl_801.download]]
+    sha256 = "9b5e481c94048f4a160f883c8a61fd24f9d2acd1be931acebf31b54cdd5c383a"
+    url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/nep097xl_801.tar.gz"
+
+[nep097xl_899]
+git-tree-sha1 = "7a8d1316244e104c5f771b772349bca37d2512d0"
+lazy = true
+
+    [[nep097xl_899.download]]
+    sha256 = "fa55ad3565d3e400b2242533393e015846362952e6c7345fecec1ddd4a44aa08"
+    url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/nep097xl_899.tar.gz"
+
 [nep098_nameid]
 git-tree-sha1 = "ab410fb60409dff92e52f8037f91184aee11be8b"
 lazy = true
@@ -270,6 +430,54 @@ lazy = true
     [[nep098_nameid.download]]
     sha256 = "58d9ad202b5bea7879477a4ffee62f475f42211fc81346db75725da022818b3a"
     url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/nep098_nameid.tar.gz"
+
+[nep098_part1]
+git-tree-sha1 = "027e8ebe60a9a9272766b4fc475df3c321e04fd4"
+lazy = true
+
+    [[nep098_part1.download]]
+    sha256 = "b33ecd18448c85e3fd4df2dd4c3cd75aff10834dbe9bde1339b1c279aeaf1cc6"
+    url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/nep098_part1.tar.gz"
+
+[nep098_part2]
+git-tree-sha1 = "b5203e616916e75230a17de279622b38aea362f6"
+lazy = true
+
+    [[nep098_part2.download]]
+    sha256 = "391de34185e1daa02f69b695709943890a7801c7ae65e97d78bf7b40b3517578"
+    url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/nep098_part2.tar.gz"
+
+[nep098_part3]
+git-tree-sha1 = "e5b66cdbf9044861b3d72bff7294421b475f5e93"
+lazy = true
+
+    [[nep098_part3.download]]
+    sha256 = "9b04c79c05f62433601e7862d4cb38016908e5f5b55e0a50cd552e2993d77325"
+    url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/nep098_part3.tar.gz"
+
+[nep101xl]
+git-tree-sha1 = "19ff8e8a4068bd22c8219c3118264107739812d8"
+lazy = true
+
+    [[nep101xl.download]]
+    sha256 = "da5c2006ebe1994061591440bec4394a9d3bb73e0167c61e499070917da9ea3a"
+    url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/nep101xl.tar.gz"
+
+[nep101xl_802]
+git-tree-sha1 = "329b335de64e058bd25f3bb7389c7a89417254c7"
+lazy = true
+
+    [[nep101xl_802.download]]
+    sha256 = "86c5dcc735fdfff303c02794d52a2a53454c75dedb620aeadb1520d36b59ac08"
+    url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/nep101xl_802.tar.gz"
+
+[nep104]
+git-tree-sha1 = "d8082b631eacb3bb749af512e7e9668a331eb106"
+lazy = true
+
+    [[nep104.download]]
+    sha256 = "377c77ca1d3b53b6f652bbe70a35fc34ecbd79316fe47c213522a3f1a0a38f6f"
+    url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/nep104.tar.gz"
 
 [nep105]
 git-tree-sha1 = "d1db9f25b62cef4bea1c84ff94951b6e4a77e9c6"
@@ -327,6 +535,46 @@ lazy = true
     sha256 = "aae5d6df04c38a314ac8ae3f45dc1225240d0b7288ece50d5d1668c658ddf0d5"
     url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/sat393_daphnis.tar.gz"
 
+[sat415]
+git-tree-sha1 = "87f9772f413ca2fde353559bc82aaf2256d5a894"
+lazy = true
+
+    [[sat415.download]]
+    sha256 = "6fce899f59550b79bf8c7f437cefba87a00e04a9297300ba3ddb6c90b70e3dce"
+    url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/sat415.tar.gz"
+
+[sat441]
+git-tree-sha1 = "e9d7d2b8473f7a918bf7e49751d93f7fb734b985"
+lazy = true
+
+    [[sat441.download]]
+    sha256 = "77cd1190cd60278c51207667dfd3da24b6928fb0e4f421eb65abdeb98268d842"
+    url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/sat441.tar.gz"
+
+[sat441xl_part1]
+git-tree-sha1 = "32f3764d882bea9dbc8085d78b18065c0aa13981"
+lazy = true
+
+    [[sat441xl_part1.download]]
+    sha256 = "33d7626480743c6033387f29502be8d06845139111665653061ac96573d40b9a"
+    url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/sat441xl_part1.tar.gz"
+
+[sat441xl_part2]
+git-tree-sha1 = "5fb004ff2f774181e754fed57c7aa3036224d218"
+lazy = true
+
+    [[sat441xl_part2.download]]
+    sha256 = "ae5c2ee52ae9e22476713d987af697ad2811f9359557e77a9cfa7dac625edd45"
+    url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/sat441xl_part2.tar.gz"
+
+[sat455]
+git-tree-sha1 = "4240987a46dfb27495fc6f24c604cd404d4a7dac"
+lazy = true
+
+    [[sat455.download]]
+    sha256 = "55a0716cc92966e9b961271d8c361637ce308898f92e1361edf350f07a50721e"
+    url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/sat455.tar.gz"
+
 [sat456]
 git-tree-sha1 = "ba93082230266c2fd1809f4f40dc88b8ddbd88ca"
 lazy = true
@@ -375,6 +623,94 @@ lazy = true
     sha256 = "a4c9fbe9ba6d3efc843e877da78e9f12900f1064418c0664a520af6a6bc151cf"
     url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/sat480_nameid.tar.gz"
 
+[tnosat_v001_20000617_jpl082_20230601]
+git-tree-sha1 = "af973dd735843c2630fc9a69106fee8cc91f3de0"
+lazy = true
+
+    [[tnosat_v001_20000617_jpl082_20230601.download]]
+    sha256 = "8c4a5caac3327e229671eb6c732d8789f11e667d431e5c2a3cb0bfef9a0e1217"
+    url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/tnosat_v001_20000617_jpl082_20230601.tar.gz"
+
+[tnosat_v001_20050000_jpl043_20220908]
+git-tree-sha1 = "ec533945823176badd7f9a67743fd037659bdb4f"
+lazy = true
+
+    [[tnosat_v001_20050000_jpl043_20220908.download]]
+    sha256 = "2b4b34eba73be8fb30eac29833ac3ac92daee14be4b90f4a80bbf540374094e3"
+    url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/tnosat_v001_20050000_jpl043_20220908.tar.gz"
+
+[tnosat_v001_20090482_jpl043_20220908]
+git-tree-sha1 = "a808be49305d0fb61228546af3b8735e27843018"
+lazy = true
+
+    [[tnosat_v001_20090482_jpl043_20220908.download]]
+    sha256 = "0fdaaa8e1804ae23149e938c918240d557389e8cbb22a5afcd869ccf9e6d4969"
+    url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/tnosat_v001_20090482_jpl043_20220908.tar.gz"
+
+[tnosat_v001_20120347_jpl025_20220908]
+git-tree-sha1 = "48ab0ea9cb490a54412c0966cef5038a5d155787"
+lazy = true
+
+    [[tnosat_v001_20120347_jpl025_20220908.download]]
+    sha256 = "5ab3224163eb1d5858776d1f2771937472b1fea4524d1d188e7e4b75f5b0a880"
+    url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/tnosat_v001_20120347_jpl025_20220908.tar.gz"
+
+[tnosat_v001_20136199_jpl080_20220908]
+git-tree-sha1 = "51e47ed03f023bda85b1cebef2b3317b46102a39"
+lazy = true
+
+    [[tnosat_v001_20136199_jpl080_20220908.download]]
+    sha256 = "e8ccc8e9864fda173f1a0892d8098aaed649f993ea13786b571a83ca04244f8d"
+    url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/tnosat_v001_20136199_jpl080_20220908.tar.gz"
+
+[tnosat_v001_20469705_jpl009_20220908]
+git-tree-sha1 = "be700aa73da53e507e48a35ec10bebc9d99a0c4a"
+lazy = true
+
+    [[tnosat_v001_20469705_jpl009_20220908.download]]
+    sha256 = "8b2c3707fa19f62807b389511a564d3e334f6cc2cba5737b8b56cf2664c0b1b5"
+    url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/tnosat_v001_20469705_jpl009_20220908.tar.gz"
+
+[tnosat_v001_20612095_jpl006_20220908]
+git-tree-sha1 = "d86bdbf30ed4445f05c68b68d2b1fdce36aaace4"
+lazy = true
+
+    [[tnosat_v001_20612095_jpl006_20220908.download]]
+    sha256 = "bea548c9218406850f9d16ed46d4675286b94359bcdc6e816f82bbaeb0431456"
+    url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/tnosat_v001_20612095_jpl006_20220908.tar.gz"
+
+[tnosat_v001_20612687_jpl008_20220908]
+git-tree-sha1 = "8a646580db9316953cdffb84867fd82a85a869ed"
+lazy = true
+
+    [[tnosat_v001_20612687_jpl008_20220908.download]]
+    sha256 = "0c37858c01ea98b4fe7a55bfc1b675c7a43c7548fe1109c4c8345cd9a25ad198"
+    url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/tnosat_v001_20612687_jpl008_20220908.tar.gz"
+
+[tnosat_v001_53031823_jpl010_20220908]
+git-tree-sha1 = "5fb31ff94d21d3e9c3d2e32332d93c8a79da16c5"
+lazy = true
+
+    [[tnosat_v001_53031823_jpl010_20220908.download]]
+    sha256 = "530e0db6e1496148ec6aab4535f12aa8db5032dfe8b824c9c1d9c7fcf8db9163"
+    url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/tnosat_v001_53031823_jpl010_20220908.tar.gz"
+
+[tnosat_v001_53092511_jpl005_20220908]
+git-tree-sha1 = "45689ac08e46debeaa90fea79bb9cfc48e309f7b"
+lazy = true
+
+    [[tnosat_v001_53092511_jpl005_20220908.download]]
+    sha256 = "6024a0aad39751c8f454743df2024c5ceead4458c3fd0e0128a7082513841712"
+    url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/tnosat_v001_53092511_jpl005_20220908.tar.gz"
+
+[tnosat_v001b_20136108_jpl110_20221014]
+git-tree-sha1 = "e215f2e0f4a41ae2e0c8a57472c8626d06d175b5"
+lazy = true
+
+    [[tnosat_v001b_20136108_jpl110_20221014.download]]
+    sha256 = "e116e3a838e79de235509e56a5dae32ed104fdd1439bb00b691784362adf26b6"
+    url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/tnosat_v001b_20136108_jpl110_20221014.tar.gz"
+
 [tycho2]
 git-tree-sha1 = "6d0b2c3b061d97dbbb5fae2f082ae1c68231c259"
 lazy = true
@@ -382,6 +718,62 @@ lazy = true
     [[tycho2.download]]
     sha256 = "effd19046fd33058e240bc5de4f91d64a098fb84bd943926bc6fd3090c299e56"
     url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/tycho2.tar.gz"
+
+[ura111xl_701]
+git-tree-sha1 = "6ca89f039e84fd922de740a7f911316823af523a"
+lazy = true
+
+    [[ura111xl_701.download]]
+    sha256 = "257fa371d5ba99d10cfc607b13bfdf3743b0778252cf192f4cc23ec6878d69f3"
+    url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/ura111xl_701.tar.gz"
+
+[ura111xl_702]
+git-tree-sha1 = "4932122a7a8808a5732fcd98ede5deaca0223826"
+lazy = true
+
+    [[ura111xl_702.download]]
+    sha256 = "37070cdb4f06a2f3cf973c845d73a65064037f8b0fb6bfacfab097aed29e0881"
+    url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/ura111xl_702.tar.gz"
+
+[ura111xl_703]
+git-tree-sha1 = "e033f7279cdd39995acfed791c156249138ee7a0"
+lazy = true
+
+    [[ura111xl_703.download]]
+    sha256 = "0457a67ad64a1adecc962c34992ecea178e39659f116bf237d290eed7858b773"
+    url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/ura111xl_703.tar.gz"
+
+[ura111xl_704]
+git-tree-sha1 = "8358d1d08d1788122d5bc8812a59e9ae95f05b30"
+lazy = true
+
+    [[ura111xl_704.download]]
+    sha256 = "a18112aac3e9884a644f0bd3cb34a9e1111f5385fec37133e199208144aa59b4"
+    url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/ura111xl_704.tar.gz"
+
+[ura111xl_705]
+git-tree-sha1 = "eb6bc7720c6f4d0ab938e61da3dcafdb93306fd1"
+lazy = true
+
+    [[ura111xl_705.download]]
+    sha256 = "6d78178af26984090e1c16a460a759f9dec834e6f8bb3bfb468040bdc9e112d1"
+    url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/ura111xl_705.tar.gz"
+
+[ura111xl_799]
+git-tree-sha1 = "4aa41c7c869067e6e2d641f28de52b4cff398888"
+lazy = true
+
+    [[ura111xl_799.download]]
+    sha256 = "3a324b2e4ee5dcd54e237755ef8dc75cd820b789756c22faace2bcefc99a30d0"
+    url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/ura111xl_799.tar.gz"
+
+[ura116xl]
+git-tree-sha1 = "8582aef50558cec494f50d8844b23b5bc0174855"
+lazy = true
+
+    [[ura116xl.download]]
+    sha256 = "6b693ec8c69b65669463ef67741e777ecea42ad437334dbce63d927e4fe1d2ff"
+    url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/ura116xl.tar.gz"
 
 [ura184_part1]
 git-tree-sha1 = "1898c197f8195656b77aa0d2205bd244d44d79ed"
