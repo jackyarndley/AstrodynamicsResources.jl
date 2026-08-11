@@ -207,6 +207,14 @@ lazy = true
     sha256 = "0327a4848538c2ef9c4a82fe19fd1018660d308d1ac4f2a482983638bfb099e9"
     url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/jup349_nameid.tar.gz"
 
+[jup365]
+git-tree-sha1 = "04db3031d6f5c608e9e37c85713978ced2a51b8e"
+lazy = true
+
+    [[jup365.download]]
+    sha256 = "e0819a0dce3632e56b2a456c0d5c42602f710cab05b9d7447db9295a38ec2e6e"
+    url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/jup365.tar.gz"
+
 [mar099s]
 git-tree-sha1 = "24d4f86ea315af460b767f473b14b67358dbab7d"
 lazy = true
