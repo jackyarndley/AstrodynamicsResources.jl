@@ -15,6 +15,23 @@ moon_pa_de440 = "moon_pa_de440_200625"
 moon_de440_frames = "moon_de440_250416_frames"
 hip_main = "hipparcos"
 tyc2 = "tycho2"
+dsn_stations = "earthstns_itrf93_260717"
+dsn_stations_itrf93 = "earthstns_itrf93_260717"
+dsn_stations_fx = "earthstns_fx_260717"
+asteroids_300 = "codes_300ast_20100725"
+neptune_triton_extended = "nep097xl_801"
+comet_siding_spring = "c2013a1_s105_merged"
+tno_20000617 = "tnosat_v001_20000617_jpl082_20230601"
+tno_20050000 = "tnosat_v001_20050000_jpl043_20220908"
+tno_20090482 = "tnosat_v001_20090482_jpl043_20220908"
+tno_20120347 = "tnosat_v001_20120347_jpl025_20220908"
+tno_20136108 = "tnosat_v001b_20136108_jpl110_20221014"
+tno_20136199 = "tnosat_v001_20136199_jpl080_20220908"
+tno_20469705 = "tnosat_v001_20469705_jpl009_20220908"
+tno_20612095 = "tnosat_v001_20612095_jpl006_20220908"
+tno_20612687 = "tnosat_v001_20612687_jpl008_20220908"
+tno_53031823 = "tnosat_v001_53031823_jpl010_20220908"
+tno_53092511 = "tnosat_v001_53092511_jpl005_20220908"
 
 # Provider-level license defaults. Every resource resolves terms either from
 # this table (keyed by provider) or from its own `license`/`license_url` fields.
@@ -144,8 +161,20 @@ name = "moon_assoc_me"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/fk/satellites/moon_assoc_me.tf"
 
 [[resource]]
+name = "mar099"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/mar099.bsp"
+metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/mar099.cmt"
+description = "Long-range Mars, Phobos, and Deimos ephemeris (NAIF IDs 499, 401, and 402)."
+
+[[resource]]
 name = "mar099s"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/mar099s.bsp"
+
+[[resource]]
+name = "jup347"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/jup347.bsp"
+metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/jup347.cmt"
+description = "Jupiter irregular-satellite ephemeris, including the Galilean system barycenter context and irregular satellites."
 
 [[resource]]
 name = "jup348"
@@ -160,8 +189,44 @@ name = "jup349_nameid"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/fk/satellites/jup349_nameid.tf"
 
 [[resource]]
+name = "jup365"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/jup365.bsp"
+metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/jup365.cmt"
+description = "Jupiter Galilean and inner-moon ephemeris (NAIF IDs 501–505, 514–516, and 599)."
+
+[[resource]]
 name = "sat393_daphnis"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/sat393_daphnis.bsp"
+
+[[resource]]
+name = "sat415"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/sat415.bsp"
+metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/sat415.cmt"
+description = "Saturn satellite ephemeris complement from NAIF's active generic satellite set."
+
+[[resource]]
+name = "sat441"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/sat441.bsp"
+metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/sat441.cmt"
+description = "Saturn satellite ephemeris complement from NAIF's active generic satellite set."
+
+[[resource]]
+name = "sat441xl_part1"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/sat441xl_part-1.bsp"
+metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/aa_summaries.txt"
+description = "Extended-range Saturn major-satellite ephemeris, part 1 (NAIF IDs 601–609, 612, and 699)."
+
+[[resource]]
+name = "sat441xl_part2"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/sat441xl_part-2.bsp"
+metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/aa_summaries.txt"
+description = "Extended-range Saturn major-satellite ephemeris, part 2 (NAIF IDs 601–609, 612, and 699)."
+
+[[resource]]
+name = "sat455"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/sat455.bsp"
+metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/sat455.cmt"
+description = "Saturn satellite ephemeris complement from NAIF's active generic satellite set."
 
 [[resource]]
 name = "sat456"
@@ -200,12 +265,102 @@ name = "ura184_part3"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/ura184_part-3.bsp"
 
 [[resource]]
+name = "ura111xl_701"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/ura111xl-701.bsp"
+metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/aa_summaries.txt"
+description = "Extended-range Ariel ephemeris (NAIF ID 701) relative to the Uranus barycenter (ID 7)."
+
+[[resource]]
+name = "ura111xl_702"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/ura111xl-702.bsp"
+metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/aa_summaries.txt"
+description = "Extended-range Umbriel ephemeris (NAIF ID 702) relative to the Uranus barycenter (ID 7)."
+
+[[resource]]
+name = "ura111xl_703"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/ura111xl-703.bsp"
+metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/aa_summaries.txt"
+description = "Extended-range Titania ephemeris (NAIF ID 703) relative to the Uranus barycenter (ID 7)."
+
+[[resource]]
+name = "ura111xl_704"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/ura111xl-704.bsp"
+metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/aa_summaries.txt"
+description = "Extended-range Oberon ephemeris (NAIF ID 704) relative to the Uranus barycenter (ID 7)."
+
+[[resource]]
+name = "ura111xl_705"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/ura111xl-705.bsp"
+metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/aa_summaries.txt"
+description = "Extended-range Miranda ephemeris (NAIF ID 705) relative to the Uranus barycenter (ID 7)."
+
+[[resource]]
+name = "ura111xl_799"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/ura111xl-799.bsp"
+metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/aa_summaries.txt"
+description = "Extended-range Uranus mass-center ephemeris (NAIF ID 799) relative to the Uranus barycenter (ID 7)."
+
+[[resource]]
+name = "ura116xl"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/ura116xl.bsp"
+metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/aa_summaries.txt"
+description = "Extended-range Uranus irregular-satellite ephemeris for NAIF IDs 716–724."
+
+[[resource]]
 name = "nep097"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/nep097.bsp"
 
 [[resource]]
+name = "nep097xl_801"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/nep097xl-801.bsp"
+metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/aa_summaries.txt"
+description = "Extended-range Triton ephemeris (NAIF ID 801) relative to the Neptune barycenter (ID 8)."
+
+[[resource]]
+name = "nep097xl_899"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/nep097xl-899.bsp"
+metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/aa_summaries.txt"
+description = "Extended-range Neptune mass-center ephemeris (NAIF ID 899) relative to the Neptune barycenter (ID 8)."
+
+[[resource]]
+name = "nep098_part1"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/nep098_part-1.bsp"
+metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/nep098_part-1.cmt"
+description = "NEP098 Neptune satellite ephemeris, part 1 (Triton, Nereid, and Naiad)."
+
+[[resource]]
+name = "nep098_part2"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/nep098_part-2.bsp"
+metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/nep098_part-2.cmt"
+description = "NEP098 Neptune satellite ephemeris, part 2 (Thalassa, Despina, and Galatea)."
+
+[[resource]]
+name = "nep098_part3"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/nep098_part-3.bsp"
+metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/nep098_part-3.cmt"
+description = "NEP098 Neptune satellite ephemeris, part 3 (outer and recently designated Neptune satellites)."
+
+[[resource]]
 name = "nep098_nameid"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/fk/satellites/nep098_nameid.tf"
+
+[[resource]]
+name = "nep101xl"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/nep101xl.bsp"
+metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/aa_summaries.txt"
+description = "Extended-range Neptune irregular-satellite ephemeris for Halimede, Psamathe, Sao, Laomedeia, and Neso (NAIF IDs 809–813)."
+
+[[resource]]
+name = "nep101xl_802"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/nep101xl-802.bsp"
+metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/aa_summaries.txt"
+description = "Extended-range Nereid ephemeris (NAIF ID 802) relative to the Neptune barycenter (ID 8)."
+
+[[resource]]
+name = "nep104"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/nep104.bsp"
+metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/nep104.cmt"
+description = "Neptune satellite ephemeris complement from NAIF's active generic satellite set."
 
 [[resource]]
 name = "nep105"
@@ -214,6 +369,214 @@ url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/nep105.
 [[resource]]
 name = "plu060"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/plu060.bsp"
+
+[[resource]]
+name = "dss_17_prelim_itrf93_190814"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/stations/dss_17_prelim_itrf93_190814.bsp"
+metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/stations/dss_17_prelim_itrf93_190814.cmt"
+category = "station_ephemeris"
+body = "DSN station DSS-17"
+description = "NAIF DSN station ephemeris in the ITRF93 frame."
+
+[[resource]]
+name = "dss_30_itrf93_210201"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/stations/dss_30_itrf93_210201.bsp"
+metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/stations/dss_30_itrf93_210201.cmt"
+category = "station_ephemeris"
+body = "DSN station DSS-30"
+description = "NAIF DSN station ephemeris in the ITRF93 frame."
+
+[[resource]]
+name = "dss_59_prelim_itrf93_220921"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/stations/dss_59_prelim_itrf93_220921.bsp"
+metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/stations/dss_59_prelim_itrf93_220921.cmt"
+category = "station_ephemeris"
+body = "DSN station DSS-59"
+description = "NAIF DSN station ephemeris in the ITRF93 frame."
+
+[[resource]]
+name = "dss_69_prelim_itrf93_201215"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/stations/dss_69_prelim_itrf93_201215.bsp"
+metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/stations/dss_69_prelim_itrf93_201215.cmt"
+category = "station_ephemeris"
+body = "DSN station DSS-69"
+description = "NAIF DSN station ephemeris in the ITRF93 frame."
+
+[[resource]]
+name = "earthstns_fx_260717"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/stations/earthstns_fx_260717.bsp"
+metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/stations/earthstns_fx_260717.cmt"
+category = "station_ephemeris"
+body = "Earth stations"
+description = "Current NAIF Earth-station ephemeris using the fixed station frame set."
+
+[[resource]]
+name = "earthstns_itrf93_260717"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/stations/earthstns_itrf93_260717.bsp"
+metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/stations/earthstns_itrf93_260717.cmt"
+category = "station_ephemeris"
+body = "Earth stations"
+description = "Current NAIF Earth-station ephemeris in the ITRF93 frame."
+
+[[resource]]
+name = "ndosl_140530_v01"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/stations/ndosl_140530_v01.bsp"
+metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/stations/ndosl_140530_v01.cmt"
+category = "station_ephemeris"
+body = "NDO station network"
+description = "NAIF station ephemeris from the active generic stations directory."
+
+[[resource]]
+name = "ndosl_190716_v01"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/stations/ndosl_190716_v01.bsp"
+metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/stations/ndosl_190716_v01.cmt"
+category = "station_ephemeris"
+body = "NDO station network"
+description = "NAIF station ephemeris from the active generic stations directory."
+
+[[resource]]
+name = "ndosl_190716_v02"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/stations/ndosl_190716_v02.bsp"
+metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/stations/ndosl_190716_v02.cmt"
+category = "station_ephemeris"
+body = "NDO station network"
+description = "NAIF station ephemeris from the active generic stations directory."
+
+[[resource]]
+name = "l1_de441"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/lagrange_point/L1_de441.bsp"
+metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/lagrange_point/AAREADME.TXT"
+category = "lagrange_ephemeris"
+body = "Earth–Moon L1 (NAIF ID 391)"
+description = "Earth–Moon L1 ephemeris relative to the Earth–Moon barycenter (NAIF ID 3), based on DE441."
+
+[[resource]]
+name = "l2_de441"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/lagrange_point/L2_de441.bsp"
+metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/lagrange_point/AAREADME.TXT"
+category = "lagrange_ephemeris"
+body = "Earth–Moon L2 (NAIF ID 392)"
+description = "Earth–Moon L2 ephemeris relative to the Earth–Moon barycenter (NAIF ID 3), based on DE441."
+
+[[resource]]
+name = "l4_de441"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/lagrange_point/L4_de441.bsp"
+metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/lagrange_point/AAREADME.TXT"
+category = "lagrange_ephemeris"
+body = "Sun–Earth L4 (NAIF ID 394)"
+description = "Sun–Earth L4 ephemeris relative to the Sun (NAIF ID 10), based on DE441."
+
+[[resource]]
+name = "l5_de441"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/lagrange_point/L5_de441.bsp"
+metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/lagrange_point/AAREADME.TXT"
+category = "lagrange_ephemeris"
+body = "Sun–Earth L5 (NAIF ID 395)"
+description = "Sun–Earth L5 ephemeris relative to the Sun (NAIF ID 10), based on DE441."
+
+[[resource]]
+name = "codes_300ast_20100725"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/asteroids/codes_300ast_20100725.bsp"
+metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/asteroids/codes_300ast_20100725.cmt"
+category = "asteroid_ephemeris"
+body = "300 numbered asteroids"
+description = "Generic CODES ephemeris for a collection of 300 asteroids; useful where high accuracy is not required."
+
+[[resource]]
+name = "c2013a1_s105_merged"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/comets/c2013a1_s105_merged.bsp"
+metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/comets/aa_summaries.txt"
+category = "comet_ephemeris"
+body = "Siding Spring (NAIF ID 1003228)"
+description = "Long-range generic Siding Spring comet ephemeris spanning 3002 BC to 2999 AD."
+
+[[resource]]
+name = "tnosat_v001_20000617_jpl082_20230601"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/tno/tnosat_v001_20000617_jpl082_20230601.bsp"
+metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/tno/tnosat_v001_20000617_jpl082_20230601.cmt"
+category = "tno_ephemeris"
+body = "TNO system NAIF ID 20000617"
+description = "Generic TNO satellite-system ephemeris for system barycenter NAIF ID 20000617."
+
+[[resource]]
+name = "tnosat_v001_20050000_jpl043_20220908"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/tno/tnosat_v001_20050000_jpl043_20220908.bsp"
+metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/tno/tnosat_v001_20050000_jpl043_20220908.cmt"
+category = "tno_ephemeris"
+body = "TNO system NAIF ID 20050000"
+description = "Generic TNO satellite-system ephemeris for system barycenter NAIF ID 20050000."
+
+[[resource]]
+name = "tnosat_v001_20090482_jpl043_20220908"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/tno/tnosat_v001_20090482_jpl043_20220908.bsp"
+metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/tno/tnosat_v001_20090482_jpl043_20220908.cmt"
+category = "tno_ephemeris"
+body = "TNO system NAIF ID 20090482"
+description = "Generic TNO satellite-system ephemeris for system barycenter NAIF ID 20090482."
+
+[[resource]]
+name = "tnosat_v001_20120347_jpl025_20220908"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/tno/tnosat_v001_20120347_jpl025_20220908.bsp"
+metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/tno/tnosat_v001_20120347_jpl025_20220908.cmt"
+category = "tno_ephemeris"
+body = "TNO system NAIF ID 20120347"
+description = "Generic TNO satellite-system ephemeris for system barycenter NAIF ID 20120347."
+
+[[resource]]
+name = "tnosat_v001_20136199_jpl080_20220908"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/tno/tnosat_v001_20136199_jpl080_20220908.bsp"
+metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/tno/tnosat_v001_20136199_jpl080_20220908.cmt"
+category = "tno_ephemeris"
+body = "TNO system NAIF ID 20136199"
+description = "Generic TNO satellite-system ephemeris for system barycenter NAIF ID 20136199."
+
+[[resource]]
+name = "tnosat_v001_20469705_jpl009_20220908"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/tno/tnosat_v001_20469705_jpl009_20220908.bsp"
+metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/tno/tnosat_v001_20469705_jpl009_20220908.cmt"
+category = "tno_ephemeris"
+body = "TNO system NAIF ID 20469705"
+description = "Generic TNO satellite-system ephemeris for system barycenter NAIF ID 20469705."
+
+[[resource]]
+name = "tnosat_v001_20612095_jpl006_20220908"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/tno/tnosat_v001_20612095_jpl006_20220908.bsp"
+metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/tno/tnosat_v001_20612095_jpl006_20220908.cmt"
+category = "tno_ephemeris"
+body = "TNO system NAIF ID 20612095"
+description = "Generic TNO satellite-system ephemeris for system barycenter NAIF ID 20612095."
+
+[[resource]]
+name = "tnosat_v001_20612687_jpl008_20220908"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/tno/tnosat_v001_20612687_jpl008_20220908.bsp"
+metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/tno/tnosat_v001_20612687_jpl008_20220908.cmt"
+category = "tno_ephemeris"
+body = "TNO system NAIF ID 20612687"
+description = "Generic TNO satellite-system ephemeris for system barycenter NAIF ID 20612687."
+
+[[resource]]
+name = "tnosat_v001_53031823_jpl010_20220908"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/tno/tnosat_v001_53031823_jpl010_20220908.bsp"
+metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/tno/tnosat_v001_53031823_jpl010_20220908.cmt"
+category = "tno_ephemeris"
+body = "TNO system NAIF ID 53031823"
+description = "Generic TNO satellite-system ephemeris for system barycenter NAIF ID 53031823."
+
+[[resource]]
+name = "tnosat_v001_53092511_jpl005_20220908"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/tno/tnosat_v001_53092511_jpl005_20220908.bsp"
+metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/tno/tnosat_v001_53092511_jpl005_20220908.cmt"
+category = "tno_ephemeris"
+body = "TNO system NAIF ID 53092511"
+description = "Generic TNO satellite-system ephemeris for system barycenter NAIF ID 53092511."
+
+[[resource]]
+name = "tnosat_v001b_20136108_jpl110_20221014"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/tno/tnosat_v001b_20136108_jpl110_20221014.bsp"
+metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/tno/tnosat_v001b_20136108_jpl110_20221014.cmt"
+category = "tno_ephemeris"
+body = "TNO system NAIF ID 20136108"
+description = "Generic TNO satellite-system ephemeris for system barycenter NAIF ID 20136108."
 
 [[resource]]
 name = "eros_near_msi_512q"

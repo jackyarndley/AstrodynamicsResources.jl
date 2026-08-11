@@ -76,3 +76,17 @@ ttl = 3600
 ```
 
 Live resources are never mirrored into a release and never update at import.
+
+### Auditing NAIF SPKs
+
+The active generic SPK tree can be compared with the catalog by running:
+
+```text
+julia --project=. scripts/audit_naif_spk.jl
+```
+
+The maintainer-only command reports new upstream files, catalogued files,
+catalog entries no longer present in the active tree, and archive directories
+that it intentionally ignores. It never edits the catalog and does not run
+during package import or ordinary tests. In particular, `a_old_versions/` is
+not part of the active comparison.

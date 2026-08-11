@@ -7,16 +7,20 @@ Immutable resources are public, verified Julia artifacts. Rolling resources
 use `Scratch.jl`, conditional requests, configurable TTLs, atomic replacement,
 and stale-cache fallback. Catalogue inspection is always offline.
 
-The hand-maintained catalogue is deliberately small: every immutable resource
-requires only a name and authoritative URL. Hashes, archive identity, size, and
-Julia artifact bindings live in generated files. Release archives use names
+The hand-maintained catalogue is declarative: every immutable resource requires
+only a name and authoritative URL, with small metadata and bundle declarations
+where useful. Hashes, archive identity, size, and Julia artifact bindings live
+in generated files. Release archives use names
 such as `de440s.tar.gz` and contain the unchanged upstream file at
 `data/de440s.bsp`.
 
 DE440s is the recommended compact planetary default. Full DE440, two-part
 DE431 and DE441, and the newer DE442/DE442s pair remain separate resources.
 Planetary-satellite entries describe natural moons, not artificial satellites
-or spacecraft.
+or spacecraft. The catalog also covers current DSN station SPKs, DE441-based
+Lagrange-point SPKs, a 300-asteroid ephemeris, generic TNO satellite systems,
+the long-range Siding Spring comet ephemeris, and explicitly named
+extended-range Saturn, Uranus, and Neptune kernels.
 
 GOCO06s and GGM05C provide original ICGEM `.gfc` spherical-harmonic
 coefficients. This package returns their paths but does not evaluate them.
@@ -47,6 +51,29 @@ eop = only(resource_paths(:iers_finals2000a))
 preserves bundle order, and downloads only missing members. Use
 `only(resource_paths(id))` for a resource with exactly one primary file. Large
 SPKs and DSKs can consume gigabytes, so inspect their size before materializing.
+
+The normal planetary bundles keep ordinary mission-design epochs convenient;
+large XL kernels are exposed through separate extended bundles such as
+`saturn_satellites_extended`, `uranus_satellites_extended`, and
+`neptune_satellites_extended`.
+
+## Planetary and small-body SPKs
+
+Use logical bundles when a complete family is useful, or request an individual
+versioned resource when only one kernel is needed:
+
+```julia
+jupiter = resource_paths(:jupiter_satellites)
+neptune = resource_paths(:neptune_satellites)
+lagrange = resource_paths(:earth_lagrange_de441)
+stations = resource_paths(:dsn_stations)
+asteroids = only(resource_paths(:asteroids_300))
+```
+
+Jupiter and Saturn bundles retain complementary solutions rather than treating
+the largest solution number as a universal replacement. NEP098, DE431, DE441,
+and URA184 preserve numerical part order. TNO resources identify their NAIF
+system barycenter in their metadata and retain the upstream filename.
 
 ## Lunar DE440 orientation
 
