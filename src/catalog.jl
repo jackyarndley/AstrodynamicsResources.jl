@@ -339,16 +339,18 @@ function _load_catalog!()
     unknown_locks = setdiff(Set(keys(locks)), declared)
     isempty(unknown_locks) ||
         throw(
-        ArgumentError(
-            "ResourceLock.toml contains unknown resources: " *
-                join(sort!(collect(unknown_locks)), ", ")
+            ArgumentError(
+                "ResourceLock.toml contains unknown resources: " *
+                    join(sort!(collect(unknown_locks)), ", ")
+            )
         )
     unknown_artifacts = setdiff(Set(keys(artifact_table)), declared)
     isempty(unknown_artifacts) ||
         throw(
-        ArgumentError(
-            "Artifacts.toml contains unknown resources: " *
-                join(sort!(collect(unknown_artifacts)), ", ")
+            ArgumentError(
+                "Artifacts.toml contains unknown resources: " *
+                    join(sort!(collect(unknown_artifacts)), ", ")
+            )
         )
     for (alias, target) in alias_table
         _ALIASES[Symbol(alias)] = Symbol(target)
@@ -433,16 +435,16 @@ function validate_catalog()
                 for (declared_file, lock_file) in zip(declared, lock_files)
                     String(lock_file["filename"]) == String(declared_file["filename"]) ||
                         throw(
-                        ArgumentError(
-                            "resource $name lock filename does not match its declaration"
+                            ArgumentError(
+                                "resource $name lock filename does not match its declaration"
+                            )
                         )
-                    )
                     String(lock_file["url"]) == String(declared_file["url"]) ||
                         throw(
-                        ArgumentError(
-                            "resource $name lock file URL does not match its declaration"
+                            ArgumentError(
+                                "resource $name lock file URL does not match its declaration"
+                            )
                         )
-                    )
                     occursin(r"^[0-9a-f]{64}$", String(get(lock_file, "sha256", ""))) ||
                         throw(ArgumentError("resource $name has invalid source file sha256"))
                 end
