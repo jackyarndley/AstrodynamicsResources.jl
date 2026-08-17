@@ -3,8 +3,8 @@ using AstrodynamicsResources
 
 @testset "catalogue" begin
     @test validate_catalog()
-    @test length(list_resources()) >= 127
-    @test length(list_resources(backend = :artifact)) >= 115
+    @test length(list_resources()) >= 126
+    @test length(list_resources(backend = :artifact)) >= 114
     @test length(list_resources(backend = :scratch)) == 12
     specs = list_resources()
     @test length(unique(spec.id for spec in specs)) == length(specs)
@@ -31,8 +31,8 @@ using AstrodynamicsResources
     @test resource(:moon_de440_frames).id == :moon_de440_250416_frames
     @test resource(:hip_main).id == :hipparcos
     @test resource(:tyc2).id == :tycho2
-    @test resource(:dsn_stations_current).id == :earthstns_itrf93_260814
-    @test resource(:dsn_stations_itrf93_current).id == :earthstns_itrf93_260814
+    @test resource(:dsn_stations).id == :earthstns_itrf93_260814
+    @test resource(:dsn_stations_itrf93).id == :earthstns_itrf93_260814
     @test resource(:moon_pa_de440).metadata["metadata_url"] ==
         "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/moon_pa_de440_200625.cmt"
     @test resource(:hipparcos).metadata["metadata_url"] ==
@@ -69,10 +69,9 @@ using AstrodynamicsResources
     @test resource(:jup365).metadata["source_filename"] == "jup365.bsp"
     @test resource(:sat441).metadata["metadata_url"] ==
         "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/sat441.cmt"
-    @test resource(:earthstns_itrf93_260717).metadata["source_filename"] ==
-        "earthstns_itrf93_260717.bsp"
     @test resource(:earthstns_itrf93_260814).metadata["source_filename"] ==
         "earthstns_itrf93_260814.bsp"
+    @test_throws KeyError resource(:earthstns_itrf93_260717)
     @test resource(:l1_de441).metadata["body"] == "Earth–Moon L1 (NAIF ID 391)"
     @test resource(:codes_300ast_20100725).metadata["body"] == "300 numbered asteroids"
     @test resource(:comet_siding_spring).metadata["body"] ==
@@ -103,7 +102,7 @@ using AstrodynamicsResources
 
     @test length(list_resources(category = :satellite_ephemeris)) >= 18
     @test length(list_resources(category = :tno_ephemeris)) == 11
-    @test length(list_resources(category = :station_ephemeris)) == 10
+    @test length(list_resources(category = :station_ephemeris)) == 9
     @test resource(:mar099s).metadata["body"] == "Mars"
     @test length(list_resources(category = :star_catalogue)) == 3
     @test resource(:fk5).provider == :cds
