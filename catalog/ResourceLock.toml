@@ -353,6 +353,21 @@ source_sha256 = "03ea700f2b05391e9cec4f41117ed6ca8b4b08c8856abb49c09e8aa88648eba
 source_size_bytes = 1287
 source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/fk/satellites/jup349_nameid.tf"
 
+[resources.jup365]
+archive_sha256 = "e0819a0dce3632e56b2a456c0d5c42602f710cab05b9d7447db9295a38ec2e6e"
+archive_size_bytes = 1022251072
+asset = "jup365.tar.gz"
+download_url = "https://github.com/jackyarndley/AstrodynamicsResources.jl/releases/download/v0.1.0/jup365.tar.gz"
+git_tree_sha1 = "04db3031d6f5c608e9e37c85713978ced2a51b8e"
+license = "NAIF Rules Regarding Use of SPICE; redistribution permitted only for unmodified kernels; acknowledgement encouraged"
+license_url = "https://naif.jpl.nasa.gov/naif/rules.html"
+metadata_sha256 = "3c851a4b5d1223e155320e7f63558ebcc81908c8f68fb1c7b43985a69663e08a"
+metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/jup365.cmt"
+source_filename = "jup365.bsp"
+source_sha256 = "dbf016c01ba4d022154838000cf3f06962cf958ddc503a366f7fe8f81495c5cb"
+source_size_bytes = 1136581632
+source_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/jup365.bsp"
+
 [resources.mar099s]
 archive_sha256 = "f43185689625098a3922101942da77a74f1a7a54a4e6fd0725de57113a78e674"
 archive_size_bytes = 59028975
