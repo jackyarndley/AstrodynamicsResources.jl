@@ -27,11 +27,18 @@ function reject_bad_source(
     return nothing
 end
 
+_retryable_status(status::Integer) =
+    status in (202, 408, 425, 429, 500, 502, 503, 504) || 500 <= status < 600
+
+_backoff(attempt::Integer) = min(2.0^(attempt - 1), 60.0)
+
 function _download_resumable(
         url::String, part::String,
         expected_size::Union{Nothing, Integer}
     )
     attempt = 1
+    max_attempts = parse(Int, get(ENV, "ASTRODYNAMICS_RESOURCES_DOWNLOAD_ATTEMPTS", "8"))
+    max_attempts >= 1 || error("ASTRODYNAMICS_RESOURCES_DOWNLOAD_ATTEMPTS must be positive")
     while true
         offset = isfile(part) ? filesize(part) : 0
         if expected_size !== nothing && offset > expected_size
@@ -49,21 +56,19 @@ function _download_resumable(
                 Downloads.request(url; headers = headers, output = io, timeout)
             end
         catch exception
-            attempt == 5 && rethrow(exception)
-            sleep(min(2.0^(attempt - 1), 15.0))
+            attempt == max_attempts && rethrow(exception)
+            sleep(_backoff(attempt))
             attempt += 1
             continue
         end
         status = response.status
         if offset > 0 && status == 416
-            # Some servers include an error body. Restore the complete part.
             open(part, "r+") do io
                 truncate(io, offset)
             end
             return part
         end
         if offset > 0 && status == 200
-            # The server ignored Range. Keep only the appended complete response.
             replacement = part * ".complete"
             open(part, "r") do source
                 seek(source, offset)
@@ -85,11 +90,11 @@ function _download_resumable(
         else
             rm(part; force = true)
         end
-        attempt == 5 && error("HTTP $status while downloading $url")
-        sleep(min(2.0^(attempt - 1), 15.0))
+        _retryable_status(status) || error("HTTP $status while downloading $url")
+        attempt == max_attempts && error("HTTP $status while downloading $url after $max_attempts attempts")
+        sleep(_backoff(attempt))
         attempt += 1
     end
-    return
 end
 
 """

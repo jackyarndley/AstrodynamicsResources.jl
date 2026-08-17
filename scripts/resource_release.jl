@@ -1,36 +1,8 @@
 #!/usr/bin/env julia
 
 using AstrodynamicsResources
-
-const RELEASE_TAGS = (
-    "resources-ephemerides",
-    "resources-satellite-ephemerides",
-    "resources-star-catalogues",
-    "resources-geopotential",
-    "resources-textures",
-    "resources-reference",
-    "resources-shape-models",
-)
-
-function release_tag(spec::ResourceSpec)
-    spec.backend isa ArtifactBackend ||
-        throw(ArgumentError("$(spec.id) is live and does not belong in an immutable release"))
-
-    category = spec.category
-    category in (
-        :ephemeris, :lagrange_ephemeris, :station_ephemeris,
-        :asteroid_ephemeris, :comet_ephemeris,
-    ) && return "resources-ephemerides"
-    category in (:satellite_ephemeris, :tno_ephemeris) &&
-        return "resources-satellite-ephemerides"
-    category == :star_catalogue && return "resources-star-catalogues"
-    category == :gravity && return "resources-geopotential"
-    category == :texture && return "resources-textures"
-    category == :geometry && return "resources-shape-models"
-    return "resources-reference"
-end
-
-release_tag(id::Symbol) = release_tag(resource(id))
+include(joinpath(@__DIR__, "lib", "resource_releases.jl"))
+using .ResourceReleases
 
 function usage(io::IO = stdout)
     print(
@@ -39,9 +11,11 @@ function usage(io::IO = stdout)
         usage: resource_release.jl COMMAND [ARGS...]
 
         Commands:
-          tag RESOURCE   Print the immutable release tag for RESOURCE.
-          tags           Print all resource-family release tags, one per line.
-          manifest       Print tab-separated ID, asset, and release tag for locked artifacts.
+          tag RESOURCE     Print the immutable release tag for RESOURCE.
+          title RELEASE    Print the display title for a resource release.
+          tags             Print all canonical resource-family release tags.
+          releases         Print tab-separated release tag and display title pairs.
+          manifest         Print ID, asset, target release, and current source release.
         """,
     )
 end
@@ -51,12 +25,21 @@ function main(args = ARGS)
     command = first(args)
     if command == "tag" && length(args) == 2
         return println(release_tag(Symbol(args[2])))
+    elseif command == "title" && length(args) == 2
+        return println(release_title(args[2]))
     elseif command == "tags" && length(args) == 1
-        return foreach(println, RELEASE_TAGS)
+        return foreach(item -> println(first(item)), RELEASES)
+    elseif command == "releases" && length(args) == 1
+        return foreach(item -> println(first(item), '\t', last(item)), RELEASES)
     elseif command == "manifest" && length(args) == 1
         for spec in sort(list_resources(backend = :artifact); by = spec -> String(spec.id))
             spec.available || continue
-            println(spec.id, '\t', spec.metadata["asset"], '\t', release_tag(spec))
+            source = source_release(spec)
+            source === nothing && error("$(spec.id) has no release-backed download URL")
+            println(
+                spec.id, '\t', spec.metadata["asset"], '\t',
+                release_tag(spec), '\t', source,
+            )
         end
         return nothing
     end

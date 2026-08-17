@@ -1,0 +1,137 @@
+# Lunar gravity-field products from the NASA PDS GRAIL LGRS RDR archive.
+# These are spherical-harmonic SHADR products. Bouguer products are intentionally
+# excluded because they are derived anomaly products, not alternate potential fields.
+
+[licenses.nasa_pds]
+terms = "NASA Planetary Data System science data; cite the archived data set and applicable model publication"
+url = "https://pds.nasa.gov/datastandards/citing/"
+
+[[resource]]
+name = "grail_gl0420a"
+url = "https://pds-geosciences.wustl.edu/grail/grail-l-lgrs-5-rdr-v1/grail_1001/shadr/jggrx_0420a_sha.tab"
+metadata_url = "https://pds-geosciences.wustl.edu/grail/grail-l-lgrs-5-rdr-v1/grail_1001/shadr/jggrx_0420a_sha.xml"
+provider = "nasa_pds"
+category = "lunar_gravity"
+body = "Moon"
+description = "JPL GRAIL GL0420A lunar spherical-harmonic gravity field to degree and order 420."
+citation = "Kahan, D. S. (2013), GRAIL Moon LGRS Derived Gravity Science Data Products V1.0, NASA PDS, doi:10.17189/1519529."
+
+[[resource]]
+name = "grail_gl0660b"
+url = "https://pds-geosciences.wustl.edu/grail/grail-l-lgrs-5-rdr-v1/grail_1001/shadr/jggrx_0660b_sha.tab"
+metadata_url = "https://pds-geosciences.wustl.edu/grail/grail-l-lgrs-5-rdr-v1/grail_1001/shadr/jggrx_0660b_sha.xml"
+provider = "nasa_pds"
+category = "lunar_gravity"
+body = "Moon"
+description = "JPL GRAIL GL0660B lunar spherical-harmonic gravity field to degree and order 660."
+citation = "Konopliv et al. (2013), JGR Planets 118, 1415-1434, doi:10.1002/jgre.20097; Kahan (2013), NASA PDS, doi:10.17189/1519529."
+
+[[resource]]
+name = "grail_gl0900c"
+url = "https://pds-geosciences.wustl.edu/grail/grail-l-lgrs-5-rdr-v1/grail_1001/shadr/jggrx_0900c_sha.tab"
+metadata_url = "https://pds-geosciences.wustl.edu/grail/grail-l-lgrs-5-rdr-v1/grail_1001/shadr/jggrx_0900c_sha.xml"
+provider = "nasa_pds"
+category = "lunar_gravity"
+body = "Moon"
+description = "JPL GRAIL GL0900C lunar spherical-harmonic gravity field to degree and order 900."
+citation = "Kahan, D. S. (2013), NASA PDS GRAIL LGRS RDR, doi:10.17189/1519529."
+
+[[resource]]
+name = "grail_gl0900d"
+url = "https://pds-geosciences.wustl.edu/grail/grail-l-lgrs-5-rdr-v1/grail_1001/shadr/jggrx_0900d_sha.tab"
+metadata_url = "https://pds-geosciences.wustl.edu/grail/grail-l-lgrs-5-rdr-v1/grail_1001/shadr/jggrx_0900d_sha.xml"
+provider = "nasa_pds"
+category = "lunar_gravity"
+body = "Moon"
+description = "JPL GRAIL GL0900D lunar spherical-harmonic gravity field to degree and order 900."
+citation = "Kahan, D. S. (2013), NASA PDS GRAIL LGRS RDR, doi:10.17189/1519529."
+
+[[resource]]
+name = "grail_gl1500e"
+url = "https://pds-geosciences.wustl.edu/grail/grail-l-lgrs-5-rdr-v1/grail_1001/shadr/jggrx_1500e_sha.tab"
+metadata_url = "https://pds-geosciences.wustl.edu/grail/grail-l-lgrs-5-rdr-v1/grail_1001/shadr/jggrx_1500e_sha.xml"
+provider = "nasa_pds"
+category = "lunar_gravity"
+body = "Moon"
+description = "JPL GRAIL GL1500E lunar spherical-harmonic gravity field to degree and order 1500."
+citation = "Kahan, D. S. (2013), NASA PDS GRAIL LGRS RDR, doi:10.17189/1519529."
+
+[[resource]]
+name = "grail_gl1800f"
+url = "https://pds-geosciences.wustl.edu/grail/grail-l-lgrs-5-rdr-v1/grail_1001/shadr/jggrx_1800f_sha.tab"
+metadata_url = "https://pds-geosciences.wustl.edu/grail/grail-l-lgrs-5-rdr-v1/grail_1001/shadr/jggrx_1800f_sha.xml"
+provider = "nasa_pds"
+category = "lunar_gravity"
+body = "Moon"
+description = "JPL GRAIL GL1800F lunar spherical-harmonic gravity field to degree and order 1800, released by PDS in 2025."
+citation = "NASA PDS GRAIL LGRS RDR, doi:10.17189/1519529; PDS release dated 2025-03-31."
+
+[[resource]]
+name = "grail_gl1800f_me"
+url = "https://pds-geosciences.wustl.edu/grail/grail-l-lgrs-5-rdr-v1/grail_1001/shadr/jggrx_1800f_me_sha.tab"
+metadata_url = "https://pds-geosciences.wustl.edu/grail/grail-l-lgrs-5-rdr-v1/grail_1001/shadr/jggrx_1800f_me_sha.xml"
+provider = "nasa_pds"
+category = "lunar_gravity"
+body = "Moon"
+description = "Mean-Earth-frame variant of JPL GRAIL GL1800F, degree and order 1800, released by PDS in 2025."
+citation = "NASA PDS GRAIL LGRS RDR, doi:10.17189/1519529; PDS release dated 2025-03-31."
+
+[[resource]]
+name = "grail_grgm660prim"
+url = "https://pds-geosciences.wustl.edu/grail/grail-l-lgrs-5-rdr-v1/grail_1001/shadr/gggrx_0660pm_sha.tab"
+metadata_url = "https://pds-geosciences.wustl.edu/grail/grail-l-lgrs-5-rdr-v1/grail_1001/shadr/gggrx_0660pm_sha.xml"
+provider = "nasa_pds"
+category = "lunar_gravity"
+body = "Moon"
+description = "GSFC GRAIL primary-mission degree/order-660 spherical-harmonic gravity field (GRGM660PRIM)."
+citation = "NASA PDS GRAIL LGRS RDR, doi:10.17189/1519529."
+
+[[resource]]
+name = "grail_grgm900c"
+url = "https://pds-geosciences.wustl.edu/grail/grail-l-lgrs-5-rdr-v1/grail_1001/shadr/gggrx_0900c_sha.tab"
+metadata_url = "https://pds-geosciences.wustl.edu/grail/grail-l-lgrs-5-rdr-v1/grail_1001/shadr/gggrx_0900c_sha.xml"
+provider = "nasa_pds"
+category = "lunar_gravity"
+body = "Moon"
+description = "GSFC GRAIL GRGM900C lunar spherical-harmonic gravity field to degree and order 900."
+citation = "NASA PDS GRAIL LGRS RDR, doi:10.17189/1519529."
+
+[[resource]]
+name = "grail_grgm1200a"
+url = "https://pds-geosciences.wustl.edu/grail/grail-l-lgrs-5-rdr-v1/grail_1001/shadr/gggrx_1200a_sha.tab"
+metadata_url = "https://pds-geosciences.wustl.edu/grail/grail-l-lgrs-5-rdr-v1/grail_1001/shadr/gggrx_1200a_sha.xml"
+provider = "nasa_pds"
+category = "lunar_gravity"
+body = "Moon"
+description = "GSFC GRAIL GRGM1200A lunar spherical-harmonic gravity field to degree and order 1200."
+citation = "NASA PDS GRAIL LGRS RDR, doi:10.17189/1519529."
+
+[[resource]]
+name = "grail_grgm1200b"
+url = "https://pds-geosciences.wustl.edu/grail/grail-l-lgrs-5-rdr-v1/grail_1001/shadr/gggrx_1200b_sha.tab"
+metadata_url = "https://pds-geosciences.wustl.edu/grail/grail-l-lgrs-5-rdr-v1/grail_1001/shadr/gggrx_1200b_sha.xml"
+provider = "nasa_pds"
+category = "lunar_gravity"
+body = "Moon"
+description = "GSFC GRAIL GRGM1200B lunar spherical-harmonic gravity field to degree and order 1200."
+citation = "NASA PDS GRAIL LGRS RDR, doi:10.17189/1519529."
+
+[[resource]]
+name = "grail_grgm1200b_lambda1"
+url = "https://pds-geosciences.wustl.edu/grail/grail-l-lgrs-5-rdr-v1/grail_1001/shadr/gggrx_1200b_lambda1_sha.tab"
+metadata_url = "https://pds-geosciences.wustl.edu/grail/grail-l-lgrs-5-rdr-v1/grail_1001/shadr/gggrx_1200b_lambda1_sha.xml"
+provider = "nasa_pds"
+category = "lunar_gravity"
+body = "Moon"
+description = "Special topography-constrained GSFC GRAIL GRGM1200B Lambda1 lunar gravity solution."
+citation = "NASA PDS GRAIL LGRS RDR, doi:10.17189/1519529."
+
+[[resource]]
+name = "grail_grgm1200l"
+url = "https://pds-geosciences.wustl.edu/grail/grail-l-lgrs-5-rdr-v1/grail_1001/shadr/gggrx_1200l_sha.tab"
+metadata_url = "https://pds-geosciences.wustl.edu/grail/grail-l-lgrs-5-rdr-v1/grail_1001/shadr/gggrx_1200l_sha.xml"
+provider = "nasa_pds"
+category = "lunar_gravity"
+body = "Moon"
+description = "GSFC GRAIL GRGM1200L lunar spherical-harmonic gravity field to degree and order 1200."
+citation = "NASA PDS GRAIL LGRS RDR, doi:10.17189/1519529."

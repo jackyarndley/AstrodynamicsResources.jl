@@ -13,7 +13,7 @@ The documentation and immutable data releases are organised by scientific use ra
 - [Earth Orientation Parameters](earth_orientation.md) — rolling IERS/CelesTrak EOP products and the current high-precision Earth PCK.
 - [Space weather](space_weather.md) — Kp/Ap, F10.7, sunspot and forecast products.
 - [Star catalogues](star_catalogues.md) — FK5, Hipparcos and Tycho-2.
-- [Geopotential models](geopotential_models.md) — spherical-harmonic gravity coefficient files.
+- [Gravity models](geopotential_models.md) — Earth and lunar spherical-harmonic gravity coefficient sets.
 - [Planet textures](planet_textures.md) — Solar System Scope 2k textures selected from the Simple Space Data mirror registry.
 - [Reference kernels and shape models](reference_data.md) — SPICE constants, orientation kernels and DSK shape models.
 
@@ -21,19 +21,19 @@ The complete generated table is available in the [resource catalogue](resources.
 
 ## Immutable release layout
 
-New immutable resources are cached into stable data-family releases rather than the package source release:
+Immutable assets are cached into stable data-family releases rather than package-version releases:
 
-| Family | Release tag |
-|:---|:---|
-| General ephemerides | `resources-ephemerides` |
-| Satellite ephemerides | `resources-satellite-ephemerides` |
-| Star catalogues | `resources-star-catalogues` |
-| Geopotential models | `resources-geopotential` |
-| Planet textures | `resources-textures` |
-| Reference kernels | `resources-reference` |
-| Shape models | `resources-shape-models` |
+| Family | Release tag | Display name |
+|:---|:---|:---|
+| General ephemerides | `resources-ephemerides` | Ephemerides |
+| Satellite ephemerides | `resources-satellite-ephemerides` | Satellite Ephemerides |
+| Star catalogues | `resources-star-catalogues` | Star Catalogues |
+| Gravity models | `resources-gravity-models` | Gravity Models |
+| Planet textures | `resources-textures` | Textures |
+| Reference data | `resources-reference` | Reference Data |
+| Shape models | `resources-shape-models` | Shape Models |
 
-The original `v0.1.0` resource release remains a valid legacy source for already locked artifacts. EOP and space-weather products are deliberately **not** frozen into releases because they are rolling operational data.
+Package releases (`v*`) contain package source only and are marked as the repository's latest release. EOP and space-weather products are deliberately not frozen into releases because they are rolling operational data.
 
 ## Basic usage
 
@@ -44,8 +44,8 @@ using AstrodynamicsResources
 
 resource(:de440s)
 list_resources(category = :gravity)
-find_resources("moon pa")
-bundle(:planet_textures)
+find_resources("moon gravity")
+bundle(:lunar_gravity_grail)
 ```
 
 Path operations explicitly permit lazy materialisation:

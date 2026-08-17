@@ -37,4 +37,5 @@ jobs:
           gh release create "$GITHUB_REF_NAME" \
             --verify-tag \
             --generate-notes \
+            --latest \
             --title "AstrodynamicsResources.jl $GITHUB_REF_NAME"

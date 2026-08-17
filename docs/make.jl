@@ -12,7 +12,7 @@ const RESOURCE_GROUPS = [
     "Earth Orientation Parameters" => Set((:earth_orientation,)),
     "Space weather" => Set((:space_weather,)),
     "Star catalogues" => Set((:star_catalogue,)),
-    "Geopotential models" => Set((:gravity,)),
+    "Gravity models" => Set((:gravity, :lunar_gravity)),
     "Planet textures" => Set((:texture,)),
     "Reference kernels and shape models" => Set((:constants, :orientation, :geometry, :data)),
 ]
@@ -78,7 +78,7 @@ makedocs(
             "Earth Orientation Parameters" => "earth_orientation.md",
             "Space weather" => "space_weather.md",
             "Star catalogues" => "star_catalogues.md",
-            "Geopotential models" => "geopotential_models.md",
+            "Gravity models" => "geopotential_models.md",
             "Planet textures" => "planet_textures.md",
             "Reference kernels and shape models" => "reference_data.md",
             "Complete catalogue" => "resources.md",

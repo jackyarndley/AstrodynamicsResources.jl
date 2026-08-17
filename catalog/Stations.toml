@@ -1,0 +1,12 @@
+# Current station products that supersede versioned historical snapshots kept in Resources.toml.
+
+[aliases]
+dsn_stations_current = "earthstns_itrf93_260814"
+dsn_stations_itrf93_current = "earthstns_itrf93_260814"
+
+[[resource]]
+name = "earthstns_itrf93_260814"
+url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/stations/earthstns_itrf93_260814.bsp"
+category = "station_ephemeris"
+body = "Earth stations"
+description = "Current NAIF Earth-station ephemeris in the ITRF93 frame, dated 2026-08-14. The earlier 260717 archive remains catalogued for reproducibility."
