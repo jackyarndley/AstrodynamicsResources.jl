@@ -44,7 +44,7 @@ function crawl!(url::String, root::String, seen::Set{String}, files::Set{String}
         end
         current = child_url(url, href)
         startswith(current, root) || continue
-        relative = current[length(root) + 1:end]
+        relative = current[(length(root) + 1):end]
         if archive_path(relative)
             endswith(href, '/') && push!(ignored, relative)
             continue
@@ -55,6 +55,7 @@ function crawl!(url::String, root::String, seen::Set{String}, files::Set{String}
             push!(files, current)
         end
     end
+    return
 end
 
 function catalog_urls(path::AbstractString)
@@ -76,7 +77,7 @@ function print_group(title::AbstractString, values)
     for value in sort!(collect(values))
         println("  ", value)
     end
-    isempty(values) && println("  (none)")
+    return isempty(values) && println("  (none)")
 end
 
 function main()
