@@ -1,0 +1,127 @@
+# Solar System Scope 2k rendering textures, selected to match the Simple Space
+# Data mirror. These are immutable library resources and are cached as Julia
+# artifacts; the source files remain unchanged.
+
+[licenses.solarsystemscope]
+terms = "CC BY 4.0; attribution to Solar System Scope required"
+url = "https://www.solarsystemscope.com/textures/"
+
+[[resource]]
+name = "texture_sun"
+url = "https://www.solarsystemscope.com/textures/download/2k_sun.jpg"
+body = "Sun"
+description = "2k Solar System Scope equirectangular Sun texture."
+
+[[resource]]
+name = "texture_mercury"
+url = "https://www.solarsystemscope.com/textures/download/2k_mercury.jpg"
+body = "Mercury"
+description = "2k Solar System Scope equirectangular Mercury texture."
+
+[[resource]]
+name = "texture_venus_surface"
+url = "https://www.solarsystemscope.com/textures/download/2k_venus_surface.jpg"
+body = "Venus"
+description = "2k Solar System Scope Venus surface texture."
+
+[[resource]]
+name = "texture_venus_atmosphere"
+url = "https://www.solarsystemscope.com/textures/download/2k_venus_atmosphere.jpg"
+body = "Venus"
+description = "2k Solar System Scope Venus atmosphere texture."
+
+[[resource]]
+name = "texture_earth_day"
+url = "https://www.solarsystemscope.com/textures/download/2k_earth_daymap.jpg"
+body = "Earth"
+description = "2k Solar System Scope Earth daytime texture."
+
+[[resource]]
+name = "texture_earth_night"
+url = "https://www.solarsystemscope.com/textures/download/2k_earth_nightmap.jpg"
+body = "Earth"
+description = "2k Solar System Scope Earth nighttime texture."
+
+[[resource]]
+name = "texture_earth_clouds"
+url = "https://www.solarsystemscope.com/textures/download/2k_earth_clouds.jpg"
+body = "Earth"
+description = "2k Solar System Scope Earth cloud texture."
+
+[[resource]]
+name = "texture_moon"
+url = "https://www.solarsystemscope.com/textures/download/2k_moon.jpg"
+body = "Moon"
+description = "2k Solar System Scope equirectangular Moon texture."
+
+[[resource]]
+name = "texture_mars"
+url = "https://www.solarsystemscope.com/textures/download/2k_mars.jpg"
+body = "Mars"
+description = "2k Solar System Scope equirectangular Mars texture."
+
+[[resource]]
+name = "texture_jupiter"
+url = "https://www.solarsystemscope.com/textures/download/2k_jupiter.jpg"
+body = "Jupiter"
+description = "2k Solar System Scope equirectangular Jupiter texture."
+
+[[resource]]
+name = "texture_saturn"
+url = "https://www.solarsystemscope.com/textures/download/2k_saturn.jpg"
+body = "Saturn"
+description = "2k Solar System Scope equirectangular Saturn texture."
+
+[[resource]]
+name = "texture_saturn_ring"
+url = "https://www.solarsystemscope.com/textures/download/2k_saturn_ring_alpha.png"
+body = "Saturn"
+description = "Solar System Scope Saturn ring alpha texture; unlike the body maps this is not 2:1 equirectangular."
+
+[[resource]]
+name = "texture_uranus"
+url = "https://www.solarsystemscope.com/textures/download/2k_uranus.jpg"
+body = "Uranus"
+description = "2k Solar System Scope equirectangular Uranus texture."
+
+[[resource]]
+name = "texture_neptune"
+url = "https://www.solarsystemscope.com/textures/download/2k_neptune.jpg"
+body = "Neptune"
+description = "2k Solar System Scope equirectangular Neptune texture."
+
+[[resource]]
+name = "texture_ceres_fictional"
+url = "https://www.solarsystemscope.com/textures/download/2k_ceres_fictional.jpg"
+body = "Ceres"
+description = "Solar System Scope artistic Ceres texture; the upstream fictional marker is intentionally preserved."
+
+[[resource]]
+name = "texture_haumea_fictional"
+url = "https://www.solarsystemscope.com/textures/download/2k_haumea_fictional.jpg"
+body = "Haumea"
+description = "Solar System Scope artistic Haumea texture; the upstream fictional marker is intentionally preserved."
+
+[[resource]]
+name = "texture_makemake_fictional"
+url = "https://www.solarsystemscope.com/textures/download/2k_makemake_fictional.jpg"
+body = "Makemake"
+description = "Solar System Scope artistic Makemake texture; the upstream fictional marker is intentionally preserved."
+
+[[resource]]
+name = "texture_eris_fictional"
+url = "https://www.solarsystemscope.com/textures/download/2k_eris_fictional.jpg"
+body = "Eris"
+description = "Solar System Scope artistic Eris texture; the upstream fictional marker is intentionally preserved."
+
+[[resource]]
+name = "texture_stars"
+url = "https://www.solarsystemscope.com/textures/download/2k_stars.jpg"
+body = "Celestial sphere"
+description = "2k Solar System Scope star-sphere texture."
+
+[[resource]]
+name = "texture_stars_milky_way"
+url = "https://www.solarsystemscope.com/textures/download/2k_stars_milky_way.jpg"
+body = "Celestial sphere"
+description = "2k Solar System Scope Milky Way star-sphere texture."
