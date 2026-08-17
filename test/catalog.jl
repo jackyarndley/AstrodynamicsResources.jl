@@ -3,8 +3,8 @@ using AstrodynamicsResources
 
 @testset "catalogue" begin
     @test validate_catalog()
-    @test length(list_resources()) >= 113
-    @test length(list_resources(backend = :artifact)) >= 101
+    @test length(list_resources()) >= 127
+    @test length(list_resources(backend = :artifact)) >= 115
     @test length(list_resources(backend = :scratch)) == 12
     specs = list_resources()
     @test length(unique(spec.id for spec in specs)) == length(specs)
@@ -31,6 +31,8 @@ using AstrodynamicsResources
     @test resource(:moon_de440_frames).id == :moon_de440_250416_frames
     @test resource(:hip_main).id == :hipparcos
     @test resource(:tyc2).id == :tycho2
+    @test resource(:dsn_stations_current).id == :earthstns_itrf93_260814
+    @test resource(:dsn_stations_itrf93_current).id == :earthstns_itrf93_260814
     @test resource(:moon_pa_de440).metadata["metadata_url"] ==
         "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/moon_pa_de440_200625.cmt"
     @test resource(:hipparcos).metadata["metadata_url"] ==
@@ -43,9 +45,13 @@ using AstrodynamicsResources
     @test resource(:de442).metadata["source_filename"] == "de442.bsp"
     @test resource(:ura184_part1).metadata["source_filename"] == "ura184_part-1.bsp"
     @test resource(:de440s).metadata["asset"] == "de440s.tar.gz"
+    @test occursin(
+        "/releases/download/",
+        resource(:de440s).metadata["download_url"]
+    )
     @test endswith(
         resource(:de440s).metadata["download_url"],
-        "/v0.1.0/de440s.tar.gz"
+        "/de440s.tar.gz"
     )
     @test all(
         spec -> !spec.available ||
@@ -65,6 +71,8 @@ using AstrodynamicsResources
         "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/sat441.cmt"
     @test resource(:earthstns_itrf93_260717).metadata["source_filename"] ==
         "earthstns_itrf93_260717.bsp"
+    @test resource(:earthstns_itrf93_260814).metadata["source_filename"] ==
+        "earthstns_itrf93_260814.bsp"
     @test resource(:l1_de441).metadata["body"] == "Earth–Moon L1 (NAIF ID 391)"
     @test resource(:codes_300ast_20100725).metadata["body"] == "300 numbered asteroids"
     @test resource(:comet_siding_spring).metadata["body"] ==
@@ -95,7 +103,7 @@ using AstrodynamicsResources
 
     @test length(list_resources(category = :satellite_ephemeris)) >= 18
     @test length(list_resources(category = :tno_ephemeris)) == 11
-    @test length(list_resources(category = :station_ephemeris)) == 9
+    @test length(list_resources(category = :station_ephemeris)) == 10
     @test resource(:mar099s).metadata["body"] == "Mars"
     @test length(list_resources(category = :star_catalogue)) == 3
     @test resource(:fk5).provider == :cds
@@ -128,7 +136,7 @@ using AstrodynamicsResources
         [:l1_de441, :l2_de441, :l4_de441, :l5_de441]
     @test bundle(:comet_ephemerides).members == [:c2013a1_s105_merged]
     @test bundle(:dsn_stations).members[1:2] ==
-        [:earthstns_itrf93_260717, :earthstns_fx_260717]
+        [:earthstns_itrf93_260814, :earthstns_fx_260717]
     @test !haskey(AstrodynamicsResources._ALIASES, :latest)
 
     @test bundle(:earth_gravity_standard).members == [:ggm05c, :goco06s]
@@ -136,6 +144,14 @@ using AstrodynamicsResources
         spec -> occursin("spherical-harmonic", spec.metadata["format"]),
         list_resources(category = :gravity)
     )
+    @test length(list_resources(category = :lunar_gravity)) == 13
+    @test all(spec -> spec.provider == :nasa_pds, list_resources(category = :lunar_gravity))
+    @test resource(:grail_gl0660b).metadata["body"] == "Moon"
+    @test resource(:grail_gl0660b).metadata["source_filename"] == "jggrx_0660b_sha.tab"
+    @test endswith(resource(:grail_gl1800f).metadata["metadata_url"], "jggrx_1800f_sha.xml")
+    @test bundle(:lunar_gravity_standard).members == [:grail_gl0660b]
+    @test bundle(:lunar_gravity_high_degree).members == [:grail_gl1800f, :grail_gl1800f_me]
+    @test length(AstrodynamicsResources._bundle_resource_ids(:lunar_gravity_grail)) == 13
 end
 
 @testset "queries, display, and laziness" begin
@@ -152,6 +168,7 @@ end
     @test length(list_resources(category = :ephemeris)) == 12
     @test !isempty(find_resources("moon pa"; body = :moon))
     @test any(spec -> spec.id == :de442, find_resources("DE442"))
+    @test any(spec -> spec.id == :grail_gl0660b, find_resources("GL0660B"))
     @test occursin("Resource de440s", sprint(show, resource(:de440s)))
     @test resource_status(:de440s).backend == :artifact
     @test_throws KeyError resource(:not_a_resource)
@@ -186,6 +203,7 @@ end
     @test AstrodynamicsResources._bundle_resource_ids(:moon_de440_orientation) ==
         [:pck00011, :moon_pa_de440, :moon_de440_frames]
     @test bundle(:earth_gravity_standard).members == [:ggm05c, :goco06s]
+    @test bundle(:lunar_gravity_standard).members == [:grail_gl0660b]
     @test bundle(:neptune_satellites).members[2:4] ==
         [:nep098_part1, :nep098_part2, :nep098_part3]
     @test bundle(:saturn_satellites_extended).members ==
