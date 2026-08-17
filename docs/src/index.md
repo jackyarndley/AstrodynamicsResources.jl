@@ -1,31 +1,41 @@
 # AstrodynamicsResources.jl
 
-AstrodynamicsResources.jl is a lazy path provider for astrodynamics data. It
-does not interpret the files or alter global SPICE state.
+AstrodynamicsResources.jl is a lazy path provider for astrodynamics data. It returns local paths to authoritative data products without interpreting the files or altering global SPICE state.
 
-Immutable resources are public, verified Julia artifacts. Rolling resources
-use `Scratch.jl`, conditional requests, configurable TTLs, atomic replacement,
-and stale-cache fallback. Catalogue inspection is always offline.
+Immutable resources are verified Julia artifacts. Rolling products such as Earth Orientation Parameters (EOP) and space-weather feeds use `Scratch.jl` with conditional requests, configurable TTLs, atomic replacement, and stale-cache fallback. Catalogue inspection is always offline.
 
-The hand-maintained catalogue is declarative: every immutable resource requires
-only a name and authoritative URL, with small metadata and bundle declarations
-where useful. Hashes, archive identity, size, and Julia artifact bindings live
-in generated files. Release archives use names
-such as `de440s.tar.gz` and contain the unchanged upstream file at
-`data/de440s.bsp`.
+## Resource families
 
-DE440s is the recommended compact planetary default. Full DE440, two-part
-DE431 and DE441, and the newer DE442/DE442s pair remain separate resources.
-Planetary-satellite entries describe natural moons, not artificial satellites
-or spacecraft. The catalog also covers current DSN station SPKs, DE441-based
-Lagrange-point SPKs, a 300-asteroid ephemeris, generic TNO satellite systems,
-the long-range Siding Spring comet ephemeris, and explicitly named
-extended-range Saturn, Uranus, and Neptune kernels.
+The documentation and immutable data releases are organised by scientific use rather than by file extension:
 
-GOCO06s and GGM05C provide original ICGEM `.gfc` spherical-harmonic
-coefficients. This package returns their paths but does not evaluate them.
+- [General ephemerides](general_ephemerides.md) — DE planetary ephemerides, station kernels, Lagrange-point kernels, asteroid and comet SPKs.
+- [Satellite ephemerides](satellite_ephemerides.md) — natural-satellite and TNO-system ephemerides.
+- [Earth Orientation Parameters](earth_orientation.md) — rolling IERS/CelesTrak EOP products and the current high-precision Earth PCK.
+- [Space weather](space_weather.md) — Kp/Ap, F10.7, sunspot and forecast products.
+- [Star catalogues](star_catalogues.md) — FK5, Hipparcos and Tycho-2.
+- [Geopotential models](geopotential_models.md) — spherical-harmonic gravity coefficient files.
+- [Planet textures](planet_textures.md) — Solar System Scope 2k textures selected from the Simple Space Data mirror registry.
+- [Reference kernels and shape models](reference_data.md) — SPICE constants, orientation kernels and DSK shape models.
 
-## Using resources
+The complete generated table is available in the [resource catalogue](resources.md).
+
+## Immutable release layout
+
+New immutable resources are cached into stable data-family releases rather than the package source release:
+
+| Family | Release tag |
+|:---|:---|
+| General ephemerides | `resources-ephemerides-v1` |
+| Satellite ephemerides | `resources-satellite-ephemerides-v1` |
+| Star catalogues | `resources-star-catalogues-v1` |
+| Geopotential models | `resources-geopotential-v1` |
+| Planet textures | `resources-textures-v1` |
+| Reference kernels | `resources-reference-v1` |
+| Shape models | `resources-shape-models-v1` |
+
+The original `v0.1.0` resource release remains a valid legacy source for already locked artifacts. EOP and space-weather products are deliberately **not** frozen into releases because they are rolling operational data.
+
+## Basic usage
 
 Catalogue operations never download:
 
@@ -33,104 +43,19 @@ Catalogue operations never download:
 using AstrodynamicsResources
 
 resource(:de440s)
-list_resources(category=:gravity)
+list_resources(category = :gravity)
 find_resources("moon pa")
-bundle(:moon_de440_pa)
+bundle(:planet_textures)
 ```
 
-Path operations explicitly permit lazy materialization:
+Path operations explicitly permit lazy materialisation:
 
 ```julia
 de440s = only(resource_paths(:de440s))
-de441 = resource_paths(:de441)
-lunar_pa = resource_paths(:moon_de440_pa)
 eop = only(resource_paths(:iers_finals2000a))
+earth = only(resource_paths(:texture_earth_day))
 ```
 
-`resource_paths` is the single path accessor: it always returns a vector,
-preserves bundle order, and downloads only missing members. Use
-`only(resource_paths(id))` for a resource with exactly one primary file. Large
-SPKs and DSKs can consume gigabytes, so inspect their size before materializing.
+`resource_paths` always returns a vector, preserves bundle order, and downloads only missing members. Use `only(resource_paths(id))` for a resource with exactly one primary file.
 
-The normal planetary bundles keep ordinary mission-design epochs convenient;
-large XL kernels are exposed through separate extended bundles such as
-`saturn_satellites_extended`, `uranus_satellites_extended`, and
-`neptune_satellites_extended`.
-
-## Planetary and small-body SPKs
-
-Use logical bundles when a complete family is useful, or request an individual
-versioned resource when only one kernel is needed:
-
-```julia
-jupiter = resource_paths(:jupiter_satellites)
-neptune = resource_paths(:neptune_satellites)
-lagrange = resource_paths(:earth_lagrange_de441)
-stations = resource_paths(:dsn_stations)
-asteroids = only(resource_paths(:asteroids_300))
-```
-
-Jupiter and Saturn bundles retain complementary solutions rather than treating
-the largest solution number as a universal replacement. NEP098, DE431, DE441,
-and URA184 preserve numerical part order. TNO resources identify their NAIF
-system barycenter in their metadata and retain the upstream filename.
-
-## Lunar DE440 orientation
-
-- `moon_pa_de440` is the binary principal-axis PCK.
-- `moon_de440_frames` defines the PA and mean-Earth frame relationships.
-- `moon_assoc_pa` selects the principal-axis association.
-- `moon_assoc_me` selects the mean-Earth association.
-
-The binary PCK and frame kernel are both required. Users should not normally
-load both association kernels. This package makes no global choice and never
-loads SPICE kernels:
-
-```julia
-pa = resource_paths(:moon_de440_pa)
-me = resource_paths(:moon_de440_me)
-```
-
-## Star catalogues
-
-- `fk5` — FK5 Part I fundamental catalogue (1,535 stars; VizieR I/149A).
-- `hipparcos` — Hipparcos main catalogue (118,218 entries; VizieR I/239).
-- `tycho2` — Tycho-2 catalogue (2,539,913 stars; VizieR I/259).
-
-Each entry contains the original CDS data file and its ReadMe:
-
-```julia
-fk5 = only(resource_paths(:fk5))          # the catalog.gz data file
-stars = resource_paths(:star_catalogues)  # all data files and ReadMes
-```
-
-These are raw catalogue files returned as paths; this package does not parse
-them. License terms for each catalogue are recorded in the catalogue and shown
-by `resource`. Tycho-2 is distributed by CDS as 20 gzipped parts, so
-`resource_paths(:tycho2)` returns those 20 ordered parts plus its ReadMe.
-
-## Offline operation and integrity
-
-Set `ASTRODYNAMICS_RESOURCES_OFFLINE=true` to prohibit network access.
-Installed artifacts continue to work, and cached live products can be returned
-with `stale_ok=true`.
-
-```julia
-status = resource_status(:iers_finals2000a)
-refresh!(:iers_finals2000a)
-verify_resource(:iers_finals2000a)
-clear_resource!(:iers_finals2000a)
-```
-
-Live downloads use conditional requests, temporary files, atomic replacement,
-and stale-cache fallback. Immutable SHA-256 and Julia tree hashes are recorded
-in `ResourceLock.toml` and `Artifacts.toml`, while release assets keep readable
-filenames.
-
-## Public API
-
-```@autodocs
-Modules = [AstrodynamicsResources]
-Private = false
-Order = [:type, :function]
-```
+The SPICE resources are sourced from NAIF's generic-kernel archive [NAIFGenericKernels](@cite). Provider-specific attribution and licensing are recorded on every resource and shown in the generated catalogue.
