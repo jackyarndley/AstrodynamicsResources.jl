@@ -21,4 +21,4 @@ textures = resource_paths(:planet_textures)
 
 The upstream `_fictional` marker is deliberately retained for Ceres, Haumea, Makemake and Eris so artistic impressions cannot be mistaken for measured surface imagery. The Earth normal and specular TIFF products are not included because they are auxiliary rendering maps rather than appearance textures.
 
-Solar System Scope publishes this set under CC BY 4.0; the catalogue records the attribution requirement and source page [SolarSystemScopeTextures](@cite). Immutable texture assets are routed to `resources-textures-v1`.
+Solar System Scope publishes this set under CC BY 4.0; the catalogue records the attribution requirement and source page [SolarSystemScopeTextures](@cite). Immutable texture assets are routed to `resources-textures`.

@@ -28,7 +28,7 @@ jobs:
         run: |
           while read -r RELEASE; do
             if ! gh release view "$RELEASE" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
-              TITLE=$(echo "$RELEASE" | sed -e 's/^resources-//' -e 's/-v1$//' -e 's/-/ /g')
+              TITLE=$(echo "$RELEASE" | sed -e 's/^resources-//' -e 's/-/ /g')
               gh release create "$RELEASE" --repo "$GITHUB_REPOSITORY" \
                 --target main --title "Astrodynamics resources: $TITLE" \
                 --notes "Immutable data assets for the $TITLE resource family."

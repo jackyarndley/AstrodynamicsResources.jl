@@ -15,7 +15,7 @@ stations = resource_paths(:dsn_stations)
 asteroids = only(resource_paths(:asteroids_300))
 ```
 
-Immutable assets in this family are routed to `resources-ephemerides-v1`. Existing artifacts whose lock still points at the legacy `v0.1.0` release remain valid.
+Immutable assets in this family are routed to `resources-ephemerides`. Existing artifacts whose lock still points at the legacy `v0.1.0` release remain valid.
 
 Use `list_resources` to inspect the family without downloading anything:
 

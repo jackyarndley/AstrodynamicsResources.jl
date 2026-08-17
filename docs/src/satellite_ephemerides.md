@@ -23,4 +23,4 @@ tnos = list_resources(category = :tno_ephemeris)
 triton_xl = only(resource_paths(:neptune_triton_extended))
 ```
 
-Immutable assets in this family are routed to `resources-satellite-ephemerides-v1`.
+Immutable assets in this family are routed to `resources-satellite-ephemerides`.

@@ -25,13 +25,13 @@ New immutable resources are cached into stable data-family releases rather than 
 
 | Family | Release tag |
 |:---|:---|
-| General ephemerides | `resources-ephemerides-v1` |
-| Satellite ephemerides | `resources-satellite-ephemerides-v1` |
-| Star catalogues | `resources-star-catalogues-v1` |
-| Geopotential models | `resources-geopotential-v1` |
-| Planet textures | `resources-textures-v1` |
-| Reference kernels | `resources-reference-v1` |
-| Shape models | `resources-shape-models-v1` |
+| General ephemerides | `resources-ephemerides` |
+| Satellite ephemerides | `resources-satellite-ephemerides` |
+| Star catalogues | `resources-star-catalogues` |
+| Geopotential models | `resources-geopotential` |
+| Planet textures | `resources-textures` |
+| Reference kernels | `resources-reference` |
+| Shape models | `resources-shape-models` |
 
 The original `v0.1.0` resource release remains a valid legacy source for already locked artifacts. EOP and space-weather products are deliberately **not** frozen into releases because they are rolling operational data.
 

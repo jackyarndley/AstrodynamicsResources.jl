@@ -18,4 +18,4 @@ Inspect all currently catalogued coefficient sets without downloading them:
 list_resources(category = :gravity)
 ```
 
-Immutable geopotential-model assets are routed to `resources-geopotential-v1`. Model-specific licensing and citation metadata remain attached to each resource.
+Immutable geopotential-model assets are routed to `resources-geopotential`. Model-specific licensing and citation metadata remain attached to each resource.

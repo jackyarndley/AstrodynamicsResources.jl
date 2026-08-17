@@ -15,4 +15,4 @@ all_stars = resource_paths(:star_catalogues)
 
 Tycho-2 is distributed upstream as 20 ordered gzipped parts plus its ReadMe; `resource_paths(:tycho2)` preserves that order. The library deliberately does not concatenate or reinterpret the source archive.
 
-Immutable star-catalogue assets are routed to `resources-star-catalogues-v1`.
+Immutable star-catalogue assets are routed to `resources-star-catalogues`.

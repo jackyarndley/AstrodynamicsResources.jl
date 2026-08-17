@@ -20,4 +20,4 @@ itokawa = only(resource_paths(:itokawa_hayabusa_amica_512q))
 phobos = only(resource_paths(:phobos512))
 ```
 
-Reference kernels are routed to `resources-reference-v1`; DSK geometry assets are routed to `resources-shape-models-v1`.
+Reference kernels are routed to `resources-reference`; DSK geometry assets are routed to `resources-shape-models`.

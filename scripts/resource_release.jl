@@ -3,13 +3,13 @@
 using AstrodynamicsResources
 
 const RELEASE_TAGS = (
-    "resources-ephemerides-v1",
-    "resources-satellite-ephemerides-v1",
-    "resources-star-catalogues-v1",
-    "resources-geopotential-v1",
-    "resources-textures-v1",
-    "resources-reference-v1",
-    "resources-shape-models-v1",
+    "resources-ephemerides",
+    "resources-satellite-ephemerides",
+    "resources-star-catalogues",
+    "resources-geopotential",
+    "resources-textures",
+    "resources-reference",
+    "resources-shape-models",
 )
 
 function release_tag(spec::ResourceSpec)
@@ -20,14 +20,14 @@ function release_tag(spec::ResourceSpec)
     category in (
         :ephemeris, :lagrange_ephemeris, :station_ephemeris,
         :asteroid_ephemeris, :comet_ephemeris,
-    ) && return "resources-ephemerides-v1"
+    ) && return "resources-ephemerides"
     category in (:satellite_ephemeris, :tno_ephemeris) &&
-        return "resources-satellite-ephemerides-v1"
-    category == :star_catalogue && return "resources-star-catalogues-v1"
-    category == :gravity && return "resources-geopotential-v1"
-    category == :texture && return "resources-textures-v1"
-    category == :geometry && return "resources-shape-models-v1"
-    return "resources-reference-v1"
+        return "resources-satellite-ephemerides"
+    category == :star_catalogue && return "resources-star-catalogues"
+    category == :gravity && return "resources-geopotential"
+    category == :texture && return "resources-textures"
+    category == :geometry && return "resources-shape-models"
+    return "resources-reference"
 end
 
 release_tag(id::Symbol) = release_tag(resource(id))
