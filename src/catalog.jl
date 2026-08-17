@@ -68,6 +68,7 @@ function _provider(url::AbstractString)
     occursin("celestrak.org", host) && return :celestrak
     occursin("swpc.noaa.gov", host) && return :noaa_swpc
     occursin("sidc.be", host) && return :silso
+    occursin("solarsystemscope.com", host) && return :solarsystemscope
     occursin("icgem", host) && return :icgem
     occursin("gfz", host) && return :gfz
     return Symbol(replace(first(split(host, '.')), '-' => '_'))
@@ -85,6 +86,9 @@ function _format(filename::AbstractString)
             ".ker" => "SPICE text kernel",
             ".bds" => "SPICE DSK",
             ".gfc" => "ICGEM spherical-harmonic coefficients",
+            ".jpg" => "JPEG image",
+            ".jpeg" => "JPEG image",
+            ".png" => "PNG image",
             ".json" => "JSON",
             ".csv" => "CSV",
             ".txt" => "text",
@@ -106,6 +110,7 @@ function _category(name::AbstractString, filename::AbstractString, live::Bool)
     extension == ".dat" && return :star_catalogue
     extension == ".gfc" && return :gravity
     extension == ".bds" && return :geometry
+    extension in (".jpg", ".jpeg", ".png") && return :texture
     extension == ".bsp" && return occursin(r"^de\d", id) ? :ephemeris : :satellite_ephemeris
     extension == ".bpc" && return startswith(id, "moon_") ? :orientation : :earth_orientation
     extension == ".tf" && startswith(id, "moon_") && return :orientation
@@ -126,6 +131,7 @@ function _role(category::Symbol, filename::AbstractString)
     category == :star_catalogue && return :catalogue
     category == :earth_orientation && return :eop
     category == :space_weather && return :space_weather
+    category == :texture && return :texture
     return :data
 end
 
@@ -200,6 +206,19 @@ function _lock_table(catalog_dir::String)
     return Dict{String, Any}(get(parsed, "resources", Dict{String, Any}()))
 end
 
+function _catalog_source_paths(catalog_dir::String)
+    primary = joinpath(catalog_dir, "Resources.toml")
+    isfile(primary) || throw(ArgumentError("catalogue is missing $primary"))
+    excluded = Set(("Resources.toml", "ResourceLock.toml", "bundles.toml"))
+    extras = sort!(
+        filter(
+            path -> endswith(lowercase(path), ".toml") && !(basename(path) in excluded),
+            readdir(catalog_dir; join = true),
+        )
+    )
+    return [primary; extras]
+end
+
 function _parse_resource(
         entry::Dict{String, Any}, aliases::Vector{Symbol},
         lock::Union{Nothing, Dict{String, Any}},
@@ -272,32 +291,50 @@ function _load_catalog!()
     empty!(_BUNDLES)
     empty!(_LICENSES)
     catalog_dir = _catalog_dir_path()
-    resources_path = joinpath(catalog_dir, "Resources.toml")
-    isfile(resources_path) ||
-        throw(ArgumentError("catalogue is missing $resources_path"))
-    parsed = TOML.parsefile(resources_path)
-    for (provider, defaults) in get(parsed, "licenses", Dict{String, Any}())
-        _LICENSES[Symbol(provider)] = Dict{String, String}(
-            String(key) => String(value) for (key, value) in defaults
-        )
+    catalogues = TOML.parsefile.(_catalog_source_paths(catalog_dir))
+
+    for parsed in catalogues
+        for (provider, defaults) in get(parsed, "licenses", Dict{String, Any}())
+            key = Symbol(provider)
+            value = Dict{String, String}(
+                String(k) => String(v) for (k, v) in defaults
+            )
+            if haskey(_LICENSES, key) && _LICENSES[key] != value
+                throw(ArgumentError("conflicting license defaults for provider $provider"))
+            end
+            _LICENSES[key] = value
+        end
     end
-    alias_table = Dict{String, Any}(get(parsed, "aliases", Dict{String, Any}()))
+
+    alias_table = Dict{String, Any}()
+    for parsed in catalogues
+        for (alias, target) in get(parsed, "aliases", Dict{String, Any}())
+            if haskey(alias_table, alias) && alias_table[alias] != target
+                throw(ArgumentError("conflicting alias declaration for $alias"))
+            end
+            alias_table[String(alias)] = String(target)
+        end
+    end
     aliases_by_target = Dict{String, Vector{Symbol}}()
     for (alias, target) in alias_table
         push!(get!(aliases_by_target, String(target), Symbol[]), Symbol(alias))
     end
+
     locks = _lock_table(catalog_dir)
     artifact_table = _artifact_table()
-    for raw in get(parsed, "resource", Any[])
-        entry = Dict{String, Any}(raw)
-        name = String(entry["name"])
-        haskey(_RESOURCES, Symbol(name)) &&
-            throw(ArgumentError("duplicate resource name $name"))
-        lock = haskey(locks, name) ? Dict{String, Any}(locks[name]) : nothing
-        _RESOURCES[Symbol(name)] = _parse_resource(
-            entry, get(aliases_by_target, name, Symbol[]), lock, artifact_table
-        )
+    for parsed in catalogues
+        for raw in get(parsed, "resource", Any[])
+            entry = Dict{String, Any}(raw)
+            name = String(entry["name"])
+            haskey(_RESOURCES, Symbol(name)) &&
+                throw(ArgumentError("duplicate resource name $name"))
+            lock = haskey(locks, name) ? Dict{String, Any}(locks[name]) : nothing
+            _RESOURCES[Symbol(name)] = _parse_resource(
+                entry, get(aliases_by_target, name, Symbol[]), lock, artifact_table
+            )
+        end
     end
+
     declared = Set(String(id) for id in keys(_RESOURCES))
     unknown_locks = setdiff(Set(keys(locks)), declared)
     isempty(unknown_locks) ||
@@ -306,7 +343,6 @@ function _load_catalog!()
             "ResourceLock.toml contains unknown resources: " *
                 join(sort!(collect(unknown_locks)), ", ")
         )
-    )
     unknown_artifacts = setdiff(Set(keys(artifact_table)), declared)
     isempty(unknown_artifacts) ||
         throw(
@@ -314,7 +350,6 @@ function _load_catalog!()
             "Artifacts.toml contains unknown resources: " *
                 join(sort!(collect(unknown_artifacts)), ", ")
         )
-    )
     for (alias, target) in alias_table
         _ALIASES[Symbol(alias)] = Symbol(target)
     end
@@ -349,7 +384,7 @@ end
 """
     validate_catalog()
 
-Validate the small hand-edited catalogue, generated lock, artifacts, aliases,
+Validate the hand-edited catalogues, generated lock, artifacts, aliases,
 and bundles without accessing the network.
 """
 function validate_catalog()
