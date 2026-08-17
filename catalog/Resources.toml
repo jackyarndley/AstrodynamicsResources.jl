@@ -15,8 +15,8 @@ moon_pa_de440 = "moon_pa_de440_200625"
 moon_de440_frames = "moon_de440_250416_frames"
 hip_main = "hipparcos"
 tyc2 = "tycho2"
-dsn_stations = "earthstns_itrf93_260717"
-dsn_stations_itrf93 = "earthstns_itrf93_260717"
+dsn_stations = "earthstns_itrf93_260814"
+dsn_stations_itrf93 = "earthstns_itrf93_260814"
 dsn_stations_fx = "earthstns_fx_260717"
 asteroids_300 = "codes_300ast_20100725"
 neptune_triton_extended = "nep097xl_801"
@@ -409,14 +409,6 @@ metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/stations/
 category = "station_ephemeris"
 body = "Earth stations"
 description = "Current NAIF Earth-station ephemeris using the fixed station frame set."
-
-[[resource]]
-name = "earthstns_itrf93_260717"
-url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/stations/earthstns_itrf93_260717.bsp"
-metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/stations/earthstns_itrf93_260717.cmt"
-category = "station_ephemeris"
-body = "Earth stations"
-description = "Current NAIF Earth-station ephemeris in the ITRF93 frame."
 
 [[resource]]
 name = "ndosl_140530_v01"
