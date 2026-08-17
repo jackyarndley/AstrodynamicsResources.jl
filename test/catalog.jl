@@ -113,13 +113,17 @@ using AstrodynamicsResources
         [:jup365, :jup347, :jup348, :jup349, :jup349_nameid]
     @test bundle(:mars_satellites).members == [:mar099s, :mar099]
     @test bundle(:saturn_satellites).members ==
-        [:sat393_daphnis, :sat415, :sat441, :sat455, :sat456, :sat457,
-            :sat459, :sat459_nameid, :sat480, :sat480_nameid]
+        [
+        :sat393_daphnis, :sat415, :sat441, :sat455, :sat456, :sat457,
+        :sat459, :sat459_nameid, :sat480, :sat480_nameid,
+    ]
     @test bundle(:uranus_satellites).members ==
         [:ura184_part1, :ura184_part2, :ura184_part3]
     @test bundle(:neptune_satellites).members ==
-        [:nep097, :nep098_part1, :nep098_part2, :nep098_part3,
-            :nep098_nameid, :nep104, :nep105]
+        [
+        :nep097, :nep098_part1, :nep098_part2, :nep098_part3,
+        :nep098_nameid, :nep104, :nep105,
+    ]
     @test bundle(:earth_lagrange_de441).members ==
         [:l1_de441, :l2_de441, :l4_de441, :l5_de441]
     @test bundle(:comet_ephemerides).members == [:c2013a1_s105_merged]
@@ -187,8 +191,10 @@ end
     @test bundle(:saturn_satellites_extended).members ==
         [:sat441xl_part1, :sat441xl_part2]
     @test bundle(:uranus_satellites_extended).members ==
-        [:ura111xl_701, :ura111xl_702, :ura111xl_703, :ura111xl_704,
-            :ura111xl_705, :ura111xl_799, :ura116xl]
+        [
+        :ura111xl_701, :ura111xl_702, :ura111xl_703, :ura111xl_704,
+        :ura111xl_705, :ura111xl_799, :ura116xl,
+    ]
     @test bundle(:neptune_satellites_extended).members ==
         [:nep097xl_801, :nep097xl_899, :nep101xl_802, :nep101xl]
     @test isdefined(AstrodynamicsResources, :resource_paths)
