@@ -4,7 +4,9 @@ on:
   push:
     branches: [main]
     paths:
-      - catalog/Resources.toml
+      - catalog/*.toml
+      - scripts/catalog.jl
+      - scripts/resource_release.jl
   workflow_dispatch:
 
 permissions:
@@ -14,9 +16,6 @@ permissions:
 concurrency:
   group: resource-cache
   cancel-in-progress: false
-
-env:
-  RESOURCE_RELEASE: v0.1.0
 
 jobs:
   scan:
@@ -31,14 +30,18 @@ jobs:
           version: "1"
       - name: Instantiate
         run: julia --project=. -e 'using Pkg; Pkg.instantiate()'
-      - name: Compare catalogue and release
+      - name: Compare catalogue and resource releases
         id: scan
         env:
           GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
-          gh release view "$RESOURCE_RELEASE" --json assets \
-            --jq '.assets[].name' > release-assets.txt 2>/dev/null || true
+          : > release-assets.txt
+          for RELEASE in v0.1.0 $(julia --project=. scripts/resource_release.jl tags); do
+            gh release view "$RELEASE" --json assets --jq '.assets[].name' \
+              >> release-assets.txt 2>/dev/null || true
+          done
+          sort -u -o release-assets.txt release-assets.txt
           julia --project=. scripts/catalog.jl scan release-assets.txt
 
   prepare:
@@ -46,16 +49,25 @@ jobs:
     if: needs.scan.outputs.uncached_count != '0'
     runs-on: ubuntu-latest
     steps:
-      - name: Ensure target release exists
+      - uses: actions/checkout@v7.0.1
+      - uses: julia-actions/setup-julia@v3.0.2
+        with:
+          version: "1"
+      - name: Instantiate
+        run: julia --project=. -e 'using Pkg; Pkg.instantiate()'
+      - name: Ensure resource-family releases exist
         env:
           GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
-          if ! gh release view "$RESOURCE_RELEASE" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
-            gh release create "$RESOURCE_RELEASE" --repo "$GITHUB_REPOSITORY" \
-              --draft --target main --title "AstrodynamicsResources.jl $RESOURCE_RELEASE" \
-              --notes "Package source and immutable resource archives."
-          fi
+          while read -r RELEASE; do
+            if ! gh release view "$RELEASE" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+              TITLE=$(echo "$RELEASE" | sed -e 's/^resources-//' -e 's/-v1$//' -e 's/-/ /g')
+              gh release create "$RELEASE" --repo "$GITHUB_REPOSITORY" \
+                --target main --title "Astrodynamics resources: $TITLE" \
+                --notes "Immutable data assets for the $TITLE resource family."
+            fi
+          done < <(julia --project=. scripts/resource_release.jl tags)
 
   build:
     needs: [scan, prepare]
@@ -82,11 +94,12 @@ jobs:
           julia --project=scripts -e 'using Pkg; Pkg.develop(path="."); Pkg.instantiate()'
       - name: Build deterministic archive
         run: julia --project=scripts scripts/catalog.jl build "${{ matrix.name }}"
-      - name: Publish without overwriting
+      - name: Publish to resource-family release without overwriting
         env:
           GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
+          RESOURCE_RELEASE=$(julia --project=. scripts/resource_release.jl tag "${{ matrix.name }}")
           ASSET="build/artifacts/${{ matrix.name }}.tar.gz"
           NAME=$(basename "$ASSET")
           REMOTE=$(gh release view "$RESOURCE_RELEASE" --repo "$GITHUB_REPOSITORY" \
@@ -119,10 +132,25 @@ jobs:
           version: "1"
       - name: Instantiate
         run: julia --project=. -e 'using Pkg; Pkg.instantiate()'
-      - name: Generate lock and artifact bindings
+      - name: Generate lock and artifact bindings by release family
+        shell: bash
         run: |
-          julia --project=. scripts/catalog.jl update-lock build/reports \
-            "https://github.com/${GITHUB_REPOSITORY}/releases/download/${RESOURCE_RELEASE}"
+          mkdir -p build/reports-by-release
+          for REPORT in build/reports/*.toml; do
+            NAME=$(basename "$REPORT" .toml)
+            RELEASE=$(julia --project=. scripts/resource_release.jl tag "$NAME")
+            mkdir -p "build/reports-by-release/$RELEASE"
+            cp "$REPORT" "build/reports-by-release/$RELEASE/"
+          done
+
+          while read -r RELEASE; do
+            DIR="build/reports-by-release/$RELEASE"
+            if [ -d "$DIR" ] && compgen -G "$DIR/*.toml" >/dev/null; then
+              julia --project=. scripts/catalog.jl update-lock "$DIR" \
+                "https://github.com/${GITHUB_REPOSITORY}/releases/download/${RELEASE}"
+            fi
+          done < <(julia --project=. scripts/resource_release.jl tags)
+
           julia --project=. scripts/catalog.jl validate
       - uses: peter-evans/create-pull-request@v8.1.1
         with:
@@ -132,4 +160,4 @@ jobs:
           commit-message: "Lock newly cached resources"
           body: |
             Generated immutable hashes and lazy Julia artifact bindings for the
-            new URL/name declarations in `catalog/Resources.toml`.
+            new URL/name declarations, with each asset published in its resource-family release.
