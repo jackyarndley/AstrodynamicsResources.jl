@@ -1,0 +1,57 @@
+name: Migrate resource releases
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: resource-release-migration
+  cancel-in-progress: false
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: julia-actions/setup-julia@v3.0.2
+        with:
+          version: "1"
+      - uses: julia-actions/cache@v3.2.0
+      - name: Instantiate
+        run: julia --project=. -e 'using Pkg; Pkg.instantiate()'
+      - name: Ensure resource-family releases exist
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          while read -r RELEASE; do
+            if ! gh release view "$RELEASE" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+              TITLE=$(echo "$RELEASE" | sed -e 's/^resources-//' -e 's/-v1$//' -e 's/-/ /g')
+              gh release create "$RELEASE" --repo "$GITHUB_REPOSITORY" \
+                --target main --title "Astrodynamics resources: $TITLE" \
+                --notes "Immutable data assets for the $TITLE resource family."
+            fi
+          done < <(julia --project=. scripts/resource_release.jl tags)
+      - name: Copy legacy assets into resource-family releases
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          mkdir -p migration-download
+          while IFS=$'\t' read -r ID ASSET RELEASE; do
+            echo "$ID -> $RELEASE/$ASSET"
+            EXISTS=$(gh release view "$RELEASE" --repo "$GITHUB_REPOSITORY" \
+              --json assets --jq ".assets[] | select(.name == \"$ASSET\") | .name")
+            if [ -n "$EXISTS" ]; then
+              continue
+            fi
+
+            rm -f "migration-download/$ASSET"
+            gh release download v0.1.0 --repo "$GITHUB_REPOSITORY" \
+              --pattern "$ASSET" --dir migration-download
+            gh release upload "$RELEASE" "migration-download/$ASSET" \
+              --repo "$GITHUB_REPOSITORY"
+            rm -f "migration-download/$ASSET"
+          done < <(julia --project=. scripts/resource_release.jl manifest)
