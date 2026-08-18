@@ -7,6 +7,8 @@ on:
       - catalog/*.toml
       - scripts/catalog.jl
       - scripts/resource_release.jl
+      - scripts/release_audit.jl
+      - scripts/lib/**
   workflow_dispatch:
 
 permissions:
@@ -30,19 +32,20 @@ jobs:
           version: "1"
       - name: Instantiate
         run: julia --project=. -e 'using Pkg; Pkg.instantiate()'
-      - name: Compare catalogue and resource releases
+      - name: Compare catalogue with canonical releases
         id: scan
         env:
           GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
           : > release-assets.txt
-          for RELEASE in v0.1.0 $(julia --project=. scripts/resource_release.jl tags); do
-            gh release view "$RELEASE" --json assets --jq '.assets[].name' \
-              >> release-assets.txt 2>/dev/null || true
-          done
+          while read -r RELEASE; do
+            gh release view "$RELEASE" --repo "$GITHUB_REPOSITORY" --json assets \
+              --jq '.assets[].name' 2>/dev/null | \
+              while read -r ASSET; do printf '%s\t%s\n' "$RELEASE" "$ASSET"; done || true
+          done < <(julia --project=. scripts/resource_release.jl tags)
           sort -u -o release-assets.txt release-assets.txt
-          julia --project=. scripts/catalog.jl scan release-assets.txt
+          julia --project=. scripts/release_audit.jl release-assets.txt
 
   prepare:
     needs: scan
@@ -55,19 +58,18 @@ jobs:
           version: "1"
       - name: Instantiate
         run: julia --project=. -e 'using Pkg; Pkg.instantiate()'
-      - name: Ensure resource-family releases exist
+      - name: Ensure canonical releases exist
         env:
           GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
-          while read -r RELEASE; do
+          while IFS=$'\t' read -r RELEASE TITLE; do
             if ! gh release view "$RELEASE" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
-              TITLE=$(echo "$RELEASE" | sed -e 's/^resources-//' -e 's/-/ /g')
               gh release create "$RELEASE" --repo "$GITHUB_REPOSITORY" \
-                --target main --title "Astrodynamics resources: $TITLE" \
+                --target main --latest=false --title "$TITLE" \
                 --notes "Immutable data assets for the $TITLE resource family."
             fi
-          done < <(julia --project=. scripts/resource_release.jl tags)
+          done < <(julia --project=. scripts/resource_release.jl releases)
 
   build:
     needs: [scan, prepare]
@@ -75,7 +77,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      max-parallel: 4
+      max-parallel: 2
       matrix:
         name: ${{ fromJSON(needs.scan.outputs.uncached) }}
     steps:
@@ -93,8 +95,10 @@ jobs:
           julia --project=. -e 'using Pkg; Pkg.instantiate()'
           julia --project=scripts -e 'using Pkg; Pkg.develop(path="."); Pkg.instantiate()'
       - name: Build deterministic archive
+        env:
+          ASTRODYNAMICS_RESOURCES_DOWNLOAD_ATTEMPTS: "8"
         run: julia --project=scripts scripts/catalog.jl build "${{ matrix.name }}"
-      - name: Publish to resource-family release without overwriting
+      - name: Publish to canonical release without overwriting
         env:
           GH_TOKEN: ${{ github.token }}
         shell: bash
@@ -159,5 +163,5 @@ jobs:
           title: "Lock newly cached resources"
           commit-message: "Lock newly cached resources"
           body: |
-            Generated immutable hashes and lazy Julia artifact bindings for the
-            new URL/name declarations, with each asset published in its resource-family release.
+            Generated immutable hashes and lazy Julia artifact bindings for new
+            declarations, with each asset published in its canonical resource release.
