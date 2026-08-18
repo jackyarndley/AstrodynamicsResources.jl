@@ -1,18 +1,15 @@
 using Test
 using AstrodynamicsResources
 
-function audit_command(path::String; strict::Bool = false)
+function audit_command(path::String)
     root = normpath(joinpath(@__DIR__, ".."))
     script = joinpath(root, "scripts", "release_audit.jl")
-    command = `$(Base.julia_cmd()) --project=$root $script $path`
-    return strict ? `$command --strict` : command
+    return `$(Base.julia_cmd()) --project=$root $script $path`
 end
 
-function write_available_assets(path::String; omit::Union{Nothing, Symbol} = nothing)
+function write_assets(path::String, specs)
     open(path, "w") do io
-        for spec in list_resources(backend = :artifact)
-            spec.available || continue
-            spec.id == omit && continue
+        for spec in specs
             println(
                 io,
                 AstrodynamicsResources.release_tag(spec), '\t',
@@ -23,25 +20,42 @@ function write_available_assets(path::String; omit::Union{Nothing, Symbol} = not
     return path
 end
 
-@testset "release audit repair and strict modes" begin
-    available = filter(spec -> spec.available, list_resources(backend = :artifact))
+@testset "release audit classification" begin
+    specs = list_resources(backend = :artifact)
+    available = filter(spec -> spec.available, specs)
+    unavailable = filter(spec -> !spec.available, specs)
     @test !isempty(available)
+    @test !isempty(unavailable)
 
     mktempdir() do directory
-        complete = write_available_assets(joinpath(directory, "complete.txt"))
+        # All committed hashes have corresponding canonical assets. Unpublished
+        # resources are correctly classified as build candidates.
+        complete = write_assets(joinpath(directory, "complete.txt"), available)
         output = read(audit_command(complete), String)
-        @test occursin("restore canonical copies: ", output)
-        @test success(run(pipeline(audit_command(complete; strict = true); stdout = devnull)))
+        @test occursin("published canonical assets: $(length(available))", output)
+        @test occursin("adopt existing archives: ", output)
+        @test success(run(pipeline(audit_command(complete); stdout = devnull)))
 
-        missing_id = first(available).id
-        incomplete = write_available_assets(
-            joinpath(directory, "incomplete.txt"); omit = missing_id,
+        # If an unhashed resource already has an archive, it must be adopted,
+        # never rebuilt.
+        existing_unhashed = first(unavailable)
+        adopt_inventory = write_assets(
+            joinpath(directory, "adopt.txt"), [available; existing_unhashed],
         )
-        output = read(audit_command(incomplete), String)
-        @test occursin("restore canonical copies: $(missing_id)", output)
+        output = read(audit_command(adopt_inventory), String)
+        @test occursin("adopt existing archives: $(existing_unhashed.id)", output)
+        build_line = only(filter(line -> startswith(line, "build missing archives:"), split(output, '\n')))
+        @test !occursin(String(existing_unhashed.id), build_line)
 
+        # A resource with committed hashes but no canonical archive is an
+        # integrity error. Do not silently rebuild or copy it from elsewhere.
+        missing_hashed = first(available)
+        incomplete = write_assets(
+            joinpath(directory, "incomplete.txt"),
+            filter(spec -> spec.id != missing_hashed.id, available),
+        )
         process = run(
-            pipeline(ignorestatus(audit_command(incomplete; strict = true));
+            pipeline(ignorestatus(audit_command(incomplete));
                 stdout = devnull, stderr = devnull),
         )
         @test !success(process)
