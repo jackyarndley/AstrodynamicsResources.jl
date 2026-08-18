@@ -51,7 +51,7 @@ jobs:
               if ! gh release view "$RELEASE" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
                 gh release create "$RELEASE" --repo "$GITHUB_REPOSITORY" \
                   --target main --latest=false --title "$TITLE" \
-                  --notes "Immutable data assets for the $TITLE resource family."
+                  --notes "Immutable data assets for the $TITLE resource family." >/dev/null
               fi
 
               RELEASE_ID=$(gh api "repos/$GITHUB_REPOSITORY/releases/tags/$RELEASE" --jq '.id')
