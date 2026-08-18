@@ -18,11 +18,44 @@ function published_assets(path::AbstractString)
     return pairs
 end
 
-function main(args = ARGS)
-    length(args) == 1 || error("usage: release_audit.jl RELEASE_ASSET_FILE")
-    published = published_assets(first(args))
-    specs = list_resources(backend = :artifact)
+function emit_uncached(specs, published)
+    uncached = sort!(String[String(spec.id) for spec in specs if !spec.available])
+    reusable = sort!(
+        String[
+            String(spec.id) for spec in specs
+                if !spec.available && (release_tag(spec), "$(spec.id).tar.gz") in published
+        ]
+    )
+    if haskey(ENV, "GITHUB_OUTPUT")
+        open(ENV["GITHUB_OUTPUT"], "a") do io
+            println(io, "uncached=", json(uncached))
+            println(io, "uncached_count=", length(uncached))
+            println(io, "reusable=", json(reusable))
+            println(io, "reusable_count=", length(reusable))
+        end
+    end
+    println("unlocked: ", join(uncached, ", "))
+    isempty(reusable) || println("already published and reusable: ", join(reusable, ", "))
+    return nothing
+end
 
+function cache_audit(specs, published)
+    missing = String[]
+    for spec in specs
+        spec.available || continue
+        source = source_release(spec)
+        source === nothing && error("$(spec.id) has no release-backed download URL")
+        asset = String(spec.metadata["asset"])
+        (source, asset) in published || push!(missing, "$(spec.id) -> $source/$asset")
+    end
+    sort!(missing)
+    isempty(missing) || error(
+        "locked resources missing from their configured releases:\n  " * join(missing, "\n  ")
+    )
+    return nothing
+end
+
+function canonical_audit(specs, published)
     expected = Dict{String, String}()
     for spec in specs
         asset = spec.available ? String(spec.metadata["asset"]) : "$(spec.id).tar.gz"
@@ -31,18 +64,11 @@ function main(args = ARGS)
     end
 
     missing = String[]
-    migration_pending = String[]
     for spec in specs
         spec.available || continue
         target = release_tag(spec)
         asset = String(spec.metadata["asset"])
-        (target, asset) in published && continue
-        source = source_release(spec)
-        if source !== nothing && source != target
-            push!(migration_pending, "$(spec.id): $source/$asset -> $target/$asset")
-        else
-            push!(missing, "$(spec.id) -> $target/$asset")
-        end
+        (target, asset) in published || push!(missing, "$(spec.id) -> $target/$asset")
     end
 
     misplaced = String[]
@@ -56,26 +82,31 @@ function main(args = ARGS)
         end
     end
 
-    uncached = sort!(String[String(spec.id) for spec in specs if !spec.available])
     sort!(missing)
-    sort!(migration_pending)
     sort!(misplaced)
     sort!(unknown)
-
-    if haskey(ENV, "GITHUB_OUTPUT")
-        open(ENV["GITHUB_OUTPUT"], "a") do io
-            println(io, "uncached=", json(uncached))
-            println(io, "uncached_count=", length(uncached))
-        end
-    end
-
-    println("uncached: ", join(uncached, ", "))
-    isempty(migration_pending) || println(
-        "legacy release migration pending:\n  ", join(migration_pending, "\n  ")
+    isempty(missing) || error(
+        "locked resources missing from canonical releases:\n  " * join(missing, "\n  ")
     )
-    isempty(missing) || error("locked resources missing from canonical releases:\n  " * join(missing, "\n  "))
-    isempty(misplaced) || error("assets published in the wrong canonical release:\n  " * join(misplaced, "\n  "))
-    isempty(unknown) || error("unrecognised assets in canonical releases:\n  " * join(unknown, "\n  "))
+    isempty(misplaced) || error(
+        "assets published in the wrong canonical release:\n  " * join(misplaced, "\n  ")
+    )
+    isempty(unknown) || error(
+        "unrecognised assets in canonical releases:\n  " * join(unknown, "\n  ")
+    )
+    return nothing
+end
+
+function main(args = ARGS)
+    1 <= length(args) <= 2 ||
+        error("usage: release_audit.jl RELEASE_ASSET_FILE [cache|canonical]")
+    mode = length(args) == 2 ? args[2] : "cache"
+    mode in ("cache", "canonical") || error("unknown audit mode $mode")
+
+    published = published_assets(first(args))
+    specs = list_resources(backend = :artifact)
+    emit_uncached(specs, published)
+    mode == "cache" ? cache_audit(specs, published) : canonical_audit(specs, published)
     return nothing
 end
 
