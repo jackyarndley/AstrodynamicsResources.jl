@@ -69,6 +69,11 @@ description = "2k Solar System Scope Earth nighttime texture."
 
 [[resource]]
 name = "texture_earth_clouds"
+artifact_sha256 = "3f63886ef3b08fd13a1c3ca9f7b68763a28009c2ec9094c4e26905f56857b893"
+artifact_size_bytes = 964452
+git_tree_sha1 = "ffea01269a48287aca86f38554051f3870429181"
+sha256 = "fffd7f68d41b37274822150e54a6ef605af1d3ec35624d9f628c3b896bfa42ed"
+size_bytes = 965676
 url = "https://www.solarsystemscope.com/textures/download/2k_earth_clouds.jpg"
 body = "Earth"
 description = "2k Solar System Scope Earth cloud texture."
@@ -86,12 +91,22 @@ description = "2k Solar System Scope equirectangular Moon texture."
 
 [[resource]]
 name = "texture_mars"
+artifact_sha256 = "457ab1d9bc4926b17d28ac1c31bffeeaa8a398d913fabeb9ed868ecf11654027"
+artifact_size_bytes = 749600
+git_tree_sha1 = "28cf8e7dad4fa41ef587548dbc65068569e5b2bc"
+sha256 = "2d187f3e77a98eaa8cea5f4cc722f633c122ef170b9e94ace6b5fb6cbc3f8e01"
+size_bytes = 750547
 url = "https://www.solarsystemscope.com/textures/download/2k_mars.jpg"
 body = "Mars"
 description = "2k Solar System Scope equirectangular Mars texture."
 
 [[resource]]
 name = "texture_jupiter"
+artifact_sha256 = "b2540ed5e934afb678a0ba2aebcb12b79565e7c3593741707b32790c3b6a627f"
+artifact_size_bytes = 498060
+git_tree_sha1 = "573f0659c3e9eda2629d704cdfeb002c2d810f90"
+sha256 = "b0f04d005350252636b0e3396fc592548cbd9e9126b269d32d5c6abd4b0e4f2b"
+size_bytes = 498976
 url = "https://www.solarsystemscope.com/textures/download/2k_jupiter.jpg"
 body = "Jupiter"
 description = "2k Solar System Scope equirectangular Jupiter texture."
@@ -131,6 +146,11 @@ description = "2k Solar System Scope equirectangular Uranus texture."
 
 [[resource]]
 name = "texture_neptune"
+artifact_sha256 = "7db291c1fcbe316d40f1fc4eb39ba3a22b4c1d4bec366f77e43d48f75dbf4049"
+artifact_size_bytes = 239950
+git_tree_sha1 = "5c7b5f6474dcdaf90913a7631b6918286425e442"
+sha256 = "cb42ea82709741d28b0af44d8b283cbc6dbd0c521a7f0e1e1e010ade00977df6"
+size_bytes = 241580
 url = "https://www.solarsystemscope.com/textures/download/2k_neptune.jpg"
 body = "Neptune"
 description = "2k Solar System Scope equirectangular Neptune texture."
@@ -192,6 +212,11 @@ description = "2k Solar System Scope star-sphere texture."
 
 [[resource]]
 name = "texture_stars_milky_way"
+artifact_sha256 = "8e0fcdafa5295e54cd64a2776f7d98a325e957f889cf2ddca6394997c303fa15"
+artifact_size_bytes = 241873
+git_tree_sha1 = "aa1bfaa993c664f05dcf8967c05c14d67083d089"
+sha256 = "ec2240e6f3784d962ab81609b228bfd470e87c86d1fed5e99134d4cd3de24239"
+size_bytes = 251454
 url = "https://www.solarsystemscope.com/textures/download/2k_stars_milky_way.jpg"
 body = "Celestial sphere"
 description = "2k Solar System Scope Milky Way star-sphere texture."
