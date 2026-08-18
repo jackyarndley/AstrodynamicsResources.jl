@@ -8,18 +8,33 @@ url = "https://www.solarsystemscope.com/textures/"
 
 [[resource]]
 name = "texture_sun"
+artifact_sha256 = "a379a8c9468c44f5efaa2fffedcf2faac4ada65d96e8d9d5871bd8afe4868d3b"
+artifact_size_bytes = 821109
+git_tree_sha1 = "1a86b9974f91e4c03f28f3efe3ddfefd060cf26f"
+sha256 = "ff0f076ba65e03b5ab518451bc96699325be38e3ccbdd5869ee1c00f3a0c8816"
+size_bytes = 822427
 url = "https://www.solarsystemscope.com/textures/download/2k_sun.jpg"
 body = "Sun"
 description = "2k Solar System Scope equirectangular Sun texture."
 
 [[resource]]
 name = "texture_mercury"
+artifact_sha256 = "bb881c5ce5dba730fc424c4fee9b177faa1fac2cfdc5be2ae0a702c7a5b61ced"
+artifact_size_bytes = 871977
+git_tree_sha1 = "a9f56ebe2eea5836a51d69fd928d68a25042a433"
+sha256 = "5a5c80607f643496bac9a631e71957def35ed788895f18b678ac849c2b38e48a"
+size_bytes = 872555
 url = "https://www.solarsystemscope.com/textures/download/2k_mercury.jpg"
 body = "Mercury"
 description = "2k Solar System Scope equirectangular Mercury texture."
 
 [[resource]]
 name = "texture_venus_surface"
+artifact_sha256 = "d9c54f8f9bac11553881aec9c936ab7c61a87221cd43339cc3a8c85c4f037b34"
+artifact_size_bytes = 885107
+git_tree_sha1 = "5ba5563e1c2d927517ff0b495c6b07fe4fc47367"
+sha256 = "dbe5db1c794a8ab4cbf7dd6bf193540c400fc833ce1e6cc399318aa68026278b"
+size_bytes = 885075
 url = "https://www.solarsystemscope.com/textures/download/2k_venus_surface.jpg"
 body = "Venus"
 description = "2k Solar System Scope Venus surface texture."
@@ -32,12 +47,22 @@ description = "2k Solar System Scope Venus atmosphere texture."
 
 [[resource]]
 name = "texture_earth_day"
+artifact_sha256 = "a16212ef506c77139acb2a86df5c932ef05aadeecb090b60e51454b96a0700e5"
+artifact_size_bytes = 442664
+git_tree_sha1 = "20ca034cd379d0b5c87eed1b6d426315d9189b27"
+sha256 = "767ee1dc6eb3802699bfccf6f264880f8acd0b80de3191cd24984fe279b07b7c"
+size_bytes = 463087
 url = "https://www.solarsystemscope.com/textures/download/2k_earth_daymap.jpg"
 body = "Earth"
 description = "2k Solar System Scope Earth daytime texture."
 
 [[resource]]
 name = "texture_earth_night"
+artifact_sha256 = "872f23022c91a191acf022a756cdfd664ffed9f0347c3b81c6d10a54a2b6f9ff"
+artifact_size_bytes = 244982
+git_tree_sha1 = "11b0f8f7eb27aedbc56113c373f38c4ddba730e8"
+sha256 = "c16fd1bc096ab91a5c5265c6ff9847c43f489f2e2ee790ccdbcbd03251cf3a5a"
+size_bytes = 255287
 url = "https://www.solarsystemscope.com/textures/download/2k_earth_nightmap.jpg"
 body = "Earth"
 description = "2k Solar System Scope Earth nighttime texture."
@@ -50,6 +75,11 @@ description = "2k Solar System Scope Earth cloud texture."
 
 [[resource]]
 name = "texture_moon"
+artifact_sha256 = "5534ed411a3c8a9f5f31e78ebc477e34e3f3b650dcb7293d7561f10b7c397bf2"
+artifact_size_bytes = 1053391
+git_tree_sha1 = "2a73ec468f1ac3707bf6611c2200a1c80a4c913b"
+sha256 = "2764ba6535ea0481a062846ee033cc7a909dae05b31a8fd13f3e98f3a7fd92bd"
+size_bytes = 1053869
 url = "https://www.solarsystemscope.com/textures/download/2k_moon.jpg"
 body = "Moon"
 description = "2k Solar System Scope equirectangular Moon texture."
@@ -68,18 +98,33 @@ description = "2k Solar System Scope equirectangular Jupiter texture."
 
 [[resource]]
 name = "texture_saturn"
+artifact_sha256 = "3cee2ec989d7d4e6b0d7bd3c4fe3fc912cbc6cd91651cd8a106c66f8cdf022f1"
+artifact_size_bytes = 192381
+git_tree_sha1 = "245447fe0e2df3e6a4201e0784b45c0e28ad75df"
+sha256 = "54a900ca9bf7ab62e70f862852759abdf342e6d6436a95a2fe9ebdb6bcd3bbac"
+size_bytes = 199916
 url = "https://www.solarsystemscope.com/textures/download/2k_saturn.jpg"
 body = "Saturn"
 description = "2k Solar System Scope equirectangular Saturn texture."
 
 [[resource]]
 name = "texture_saturn_ring"
+artifact_sha256 = "a75cc12f1d9fade1329ec3aae1516776ced16e9b220e253e87b71c11db6c0e1d"
+artifact_size_bytes = 12086
+git_tree_sha1 = "acee766603dc85c984bc9be18f793b12ad7a63ae"
+sha256 = "4b0644b2f3ef259fd0bfaedd9dc52f9e7d9738f65f50363e8c4dd19f650d7334"
+size_bytes = 12119
 url = "https://www.solarsystemscope.com/textures/download/2k_saturn_ring_alpha.png"
 body = "Saturn"
 description = "Solar System Scope Saturn ring alpha texture; unlike the body maps this is not 2:1 equirectangular."
 
 [[resource]]
 name = "texture_uranus"
+artifact_sha256 = "2d27b45b884981ebf6d2984bb2f0128c6b0124e09bf9d11ce46cdd56e423c995"
+artifact_size_bytes = 21206
+git_tree_sha1 = "f3226602ca023d861a448799929e9bd30789e447"
+sha256 = "d15239d46f82d3ea13d2b260b5b29b2a382f42f2916dae0694d0387b1204a09d"
+size_bytes = 77751
 url = "https://www.solarsystemscope.com/textures/download/2k_uranus.jpg"
 body = "Uranus"
 description = "2k Solar System Scope equirectangular Uranus texture."
@@ -92,30 +137,55 @@ description = "2k Solar System Scope equirectangular Neptune texture."
 
 [[resource]]
 name = "texture_ceres_fictional"
+artifact_sha256 = "e6a562f9175fb0dbc670afdbd00ca301c544e3773387ae7a19e00414fb2aeb79"
+artifact_size_bytes = 1126461
+git_tree_sha1 = "4219d4331e5e7877482856ead487f8f1899f8b4a"
+sha256 = "ee59b2c7aa399dfdc810078c723373670133fe8505e439601dff4ce6f3cc5ad8"
+size_bytes = 1127678
 url = "https://www.solarsystemscope.com/textures/download/2k_ceres_fictional.jpg"
 body = "Ceres"
 description = "Solar System Scope artistic Ceres texture; the upstream fictional marker is intentionally preserved."
 
 [[resource]]
 name = "texture_haumea_fictional"
+artifact_sha256 = "5160bd44042f910c03de2023d8d6315388e1a6282f895b79e1d2882a268ee267"
+artifact_size_bytes = 895353
+git_tree_sha1 = "89ddf23166d409a02d074e253d5550df2b5af98b"
+sha256 = "6fc091868a7c5ea1b8a7d4d76ce946695e98358f4c4277a2c88f76c36fc95ca1"
+size_bytes = 900211
 url = "https://www.solarsystemscope.com/textures/download/2k_haumea_fictional.jpg"
 body = "Haumea"
 description = "Solar System Scope artistic Haumea texture; the upstream fictional marker is intentionally preserved."
 
 [[resource]]
 name = "texture_makemake_fictional"
+artifact_sha256 = "6c84e3b13bb69bafd0cc9150dad5c152b7678b6ba51c5a04831ccb04792aa89c"
+artifact_size_bytes = 1177900
+git_tree_sha1 = "ed94c599063c2061d4d6ea969e5769fb878b86e6"
+sha256 = "796b654648df0b241ad2e03ce60677bd7fd854c98fd8ff8b5c5f9750c01be082"
+size_bytes = 1179218
 url = "https://www.solarsystemscope.com/textures/download/2k_makemake_fictional.jpg"
 body = "Makemake"
 description = "Solar System Scope artistic Makemake texture; the upstream fictional marker is intentionally preserved."
 
 [[resource]]
 name = "texture_eris_fictional"
+artifact_sha256 = "56e271e3dd978f31404139bd68dfa1cdeaca40bae827841169ccaaffd0fd9bca"
+artifact_size_bytes = 1068766
+git_tree_sha1 = "d3dc8cd5db837327f494bf89d731d48862dbb89b"
+sha256 = "0f19f080aa7b4b047a1c6c5e169d62c38a5763e6a3d7724180cb471000fb04fb"
+size_bytes = 1070441
 url = "https://www.solarsystemscope.com/textures/download/2k_eris_fictional.jpg"
 body = "Eris"
 description = "Solar System Scope artistic Eris texture; the upstream fictional marker is intentionally preserved."
 
 [[resource]]
 name = "texture_stars"
+artifact_sha256 = "8a1eac962680a4a3885ca675bec03927b2f16e319cd47a3336f1c774c2ddfebf"
+artifact_size_bytes = 210471
+git_tree_sha1 = "c44452149270d12463b35b8758574b8e0096898f"
+sha256 = "d19468ddf451851dfa74bfd85637f43533200631319ffa90cc822d4049eee604"
+size_bytes = 223691
 url = "https://www.solarsystemscope.com/textures/download/2k_stars.jpg"
 body = "Celestial sphere"
 description = "2k Solar System Scope star-sphere texture."

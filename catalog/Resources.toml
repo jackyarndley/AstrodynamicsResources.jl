@@ -272,6 +272,12 @@ url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/fk/satellites/moon_ass
 
 [[resource]]
 name = "mar099"
+artifact_sha256 = "1edefad3946f0e5ad5bf3f2720e84274c3014ee19744cf2985bfe481c25a0347"
+artifact_size_bytes = 1072494211
+git_tree_sha1 = "9201698199bac49abe55a2703aba16ef298c0c18"
+sha256 = "9991e57b196bae1a096acc6e2afc6718102ee420d684695de0f0333064c046bc"
+size_bytes = 1227574272
+metadata_sha256 = "d31daf5598d91785521d4935f6082c9a8c7cbf1787c3f172c0b33d7c93f1d3b6"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/mar099.bsp"
 metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/mar099.cmt"
 description = "Long-range Mars, Phobos, and Deimos ephemeris (NAIF IDs 499, 401, and 402)."
@@ -287,6 +293,12 @@ url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/mar099s
 
 [[resource]]
 name = "jup347"
+artifact_sha256 = "acf55fe1cbf5e1bb0967f94742f342371bc56120f20123c5cf5b87e3df1f89b3"
+artifact_size_bytes = 604489808
+git_tree_sha1 = "73c7088d3946e529d61c3430b64039f19b859a90"
+sha256 = "b68bd0af2797aaebe1df0885672e116ad1627e45564212c2ac42a53907e8142e"
+size_bytes = 921358336
+metadata_sha256 = "227f9dccfae4e90ad41a8a82ebc3a5586eac2e7b89ca1ddf0b2d38117ebca71b"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/jup347.bsp"
 metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/jup347.cmt"
 description = "Jupiter irregular-satellite ephemeris, including the Galilean system barycenter context and irregular satellites."
@@ -341,30 +353,60 @@ url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/sat393_
 
 [[resource]]
 name = "sat415"
+artifact_sha256 = "6fce899f59550b79bf8c7f437cefba87a00e04a9297300ba3ddb6c90b70e3dce"
+artifact_size_bytes = 556006748
+git_tree_sha1 = "87f9772f413ca2fde353559bc82aaf2256d5a894"
+sha256 = "5bc92ff62953ce4ab460a1816024dda3f560112aed6c76b181e19bfa7307d909"
+size_bytes = 624325632
+metadata_sha256 = "3f9dc65e228296864ad03a1a6cfb4d450f859a1cd17c1d825bd7152ed826dd5e"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/sat415.bsp"
 metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/sat415.cmt"
 description = "Saturn satellite ephemeris complement from NAIF's active generic satellite set."
 
 [[resource]]
 name = "sat441"
+artifact_sha256 = "77cd1190cd60278c51207667dfd3da24b6928fb0e4f421eb65abdeb98268d842"
+artifact_size_bytes = 588820311
+git_tree_sha1 = "e9d7d2b8473f7a918bf7e49751d93f7fb734b985"
+sha256 = "d7e444a9ba7a52b8f448ff0747030789524d2f0c1212e4e2bd7f5fc3c96444d5"
+size_bytes = 661592064
+metadata_sha256 = "a45d31f6039854593395b539a3fb61df8f83ab13fb621c3ce5d710ed35629882"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/sat441.bsp"
 metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/sat441.cmt"
 description = "Saturn satellite ephemeris complement from NAIF's active generic satellite set."
 
 [[resource]]
 name = "sat441xl_part1"
+artifact_sha256 = "33d7626480743c6033387f29502be8d06845139111665653061ac96573d40b9a"
+artifact_size_bytes = 1830563551
+git_tree_sha1 = "32f3764d882bea9dbc8085d78b18065c0aa13981"
+sha256 = "45e6f6687cf9a4d7c94c206c13650d35583740019df939c19f2ee0f0f7d2750d"
+size_bytes = 2045657088
+metadata_sha256 = "550672e14f58f8b11c70352360d4f48204a62ecd3029da266401b27a9a06979f"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/sat441xl_part-1.bsp"
 metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/aa_summaries.txt"
 description = "Extended-range Saturn major-satellite ephemeris, part 1 (NAIF IDs 601–609, 612, and 699)."
 
 [[resource]]
 name = "sat441xl_part2"
+artifact_sha256 = "ae5c2ee52ae9e22476713d987af697ad2811f9359557e77a9cfa7dac625edd45"
+artifact_size_bytes = 1808297047
+git_tree_sha1 = "5fb004ff2f774181e754fed57c7aa3036224d218"
+sha256 = "d021819387e6045e2cd2819a7907ca62cc8cb3091ca925dfe894d2e0f4f7af1e"
+size_bytes = 2021645312
+metadata_sha256 = "550672e14f58f8b11c70352360d4f48204a62ecd3029da266401b27a9a06979f"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/sat441xl_part-2.bsp"
 metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/aa_summaries.txt"
 description = "Extended-range Saturn major-satellite ephemeris, part 2 (NAIF IDs 601–609, 612, and 699)."
 
 [[resource]]
 name = "sat455"
+artifact_sha256 = "55a0716cc92966e9b961271d8c361637ce308898f92e1361edf350f07a50721e"
+artifact_size_bytes = 238752261
+git_tree_sha1 = "4240987a46dfb27495fc6f24c604cd404d4a7dac"
+sha256 = "c2269e9b18c70a7a66219e1209cde73c90e328864b1204598ecea8ae9115c672"
+size_bytes = 291619840
+metadata_sha256 = "00b64fdd6ff0aa7b9d76d430eb84041f8092af8706b331f7a6fa14306dbb6080"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/sat455.bsp"
 metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/sat455.cmt"
 description = "Saturn satellite ephemeris complement from NAIF's active generic satellite set."
@@ -452,42 +494,84 @@ url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/ura184_
 
 [[resource]]
 name = "ura111xl_701"
+artifact_sha256 = "257fa371d5ba99d10cfc607b13bfdf3743b0778252cf192f4cc23ec6878d69f3"
+artifact_size_bytes = 1848685414
+git_tree_sha1 = "6ca89f039e84fd922de740a7f911316823af523a"
+sha256 = "7d0719a91507322b11746ceb2dc0bf769c83c3d9a2e46fda1711ca06bba64ac6"
+size_bytes = 2118418432
+metadata_sha256 = "550672e14f58f8b11c70352360d4f48204a62ecd3029da266401b27a9a06979f"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/ura111xl-701.bsp"
 metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/aa_summaries.txt"
 description = "Extended-range Ariel ephemeris (NAIF ID 701) relative to the Uranus barycenter (ID 7)."
 
 [[resource]]
 name = "ura111xl_702"
+artifact_sha256 = "849b6feebdc769b2b6b58f312913a433fc05626c0e3d6e9f012c62114ff4686b"
+artifact_size_bytes = 806182856
+git_tree_sha1 = "e0c9e04af18d7af865aecb56ace9896f3f54f2b5"
+sha256 = "39edd3b16a88d6c2b13d945721c50b56b29231bab405bf76a1417b1e910f327a"
+size_bytes = 868558848
+metadata_sha256 = "550672e14f58f8b11c70352360d4f48204a62ecd3029da266401b27a9a06979f"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/ura111xl-702.bsp"
 metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/aa_summaries.txt"
 description = "Extended-range Umbriel ephemeris (NAIF ID 702) relative to the Uranus barycenter (ID 7)."
 
 [[resource]]
 name = "ura111xl_703"
+artifact_sha256 = "0457a67ad64a1adecc962c34992ecea178e39659f116bf237d290eed7858b773"
+artifact_size_bytes = 400910511
+git_tree_sha1 = "e033f7279cdd39995acfed791c156249138ee7a0"
+sha256 = "62caf2f4dd04473b523a7d598266e120fe4c09d77bd5fec095776490ae5de7ea"
+size_bytes = 434285568
+metadata_sha256 = "550672e14f58f8b11c70352360d4f48204a62ecd3029da266401b27a9a06979f"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/ura111xl-703.bsp"
 metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/aa_summaries.txt"
 description = "Extended-range Titania ephemeris (NAIF ID 703) relative to the Uranus barycenter (ID 7)."
 
 [[resource]]
 name = "ura111xl_704"
+artifact_sha256 = "a18112aac3e9884a644f0bd3cb34a9e1111f5385fec37133e199208144aa59b4"
+artifact_size_bytes = 393539978
+git_tree_sha1 = "8358d1d08d1788122d5bc8812a59e9ae95f05b30"
+sha256 = "399c2b34ced7aee25f5a3c93a835d838099dd788ed43f6b44af28a4d80dc8b58"
+size_bytes = 434285568
+metadata_sha256 = "550672e14f58f8b11c70352360d4f48204a62ecd3029da266401b27a9a06979f"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/ura111xl-704.bsp"
 metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/aa_summaries.txt"
 description = "Extended-range Oberon ephemeris (NAIF ID 704) relative to the Uranus barycenter (ID 7)."
 
 [[resource]]
 name = "ura111xl_705"
+artifact_sha256 = "6d78178af26984090e1c16a460a759f9dec834e6f8bb3bfb468040bdc9e112d1"
+artifact_size_bytes = 1936539236
+git_tree_sha1 = "eb6bc7720c6f4d0ab938e61da3dcafdb93306fd1"
+sha256 = "dff9a3f68d7eb74df071c4e64276303d8e081c2ace16c212130b87980a5862ea"
+size_bytes = 2118418432
+metadata_sha256 = "550672e14f58f8b11c70352360d4f48204a62ecd3029da266401b27a9a06979f"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/ura111xl-705.bsp"
 metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/aa_summaries.txt"
 description = "Extended-range Miranda ephemeris (NAIF ID 705) relative to the Uranus barycenter (ID 7)."
 
 [[resource]]
 name = "ura111xl_799"
+artifact_sha256 = "3a324b2e4ee5dcd54e237755ef8dc75cd820b789756c22faace2bcefc99a30d0"
+artifact_size_bytes = 987034524
+git_tree_sha1 = "4aa41c7c869067e6e2d641f28de52b4cff398888"
+sha256 = "fa55665eb129613574a5d029bf2cc7b521d3f0d2edc7de5790add3cf950714bf"
+size_bytes = 1059215360
+metadata_sha256 = "550672e14f58f8b11c70352360d4f48204a62ecd3029da266401b27a9a06979f"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/ura111xl-799.bsp"
 metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/aa_summaries.txt"
 description = "Extended-range Uranus mass-center ephemeris (NAIF ID 799) relative to the Uranus barycenter (ID 7)."
 
 [[resource]]
 name = "ura116xl"
+artifact_sha256 = "6b693ec8c69b65669463ef67741e777ecea42ad437334dbce63d927e4fe1d2ff"
+artifact_size_bytes = 557405444
+git_tree_sha1 = "8582aef50558cec494f50d8844b23b5bc0174855"
+sha256 = "2c83ba49de90c6fdaf7de0f90ea749dd11c432dd836b4829b55d590f423883df"
+size_bytes = 691533824
+metadata_sha256 = "550672e14f58f8b11c70352360d4f48204a62ecd3029da266401b27a9a06979f"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/ura116xl.bsp"
 metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/aa_summaries.txt"
 description = "Extended-range Uranus irregular-satellite ephemeris for NAIF IDs 716–724."
@@ -503,30 +587,60 @@ url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/nep097.
 
 [[resource]]
 name = "nep097xl_801"
+artifact_sha256 = "9b5e481c94048f4a160f883c8a61fd24f9d2acd1be931acebf31b54cdd5c383a"
+artifact_size_bytes = 1694060408
+git_tree_sha1 = "28459e9d95b9f561a063b1e2362a817ee59a1ce9"
+sha256 = "3b4ec5b6f23a3b10da9574bc8fb35cfd93ebf9d7951bdcba0c7e26309304bfb1"
+size_bytes = 2118416384
+metadata_sha256 = "550672e14f58f8b11c70352360d4f48204a62ecd3029da266401b27a9a06979f"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/nep097xl-801.bsp"
 metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/aa_summaries.txt"
 description = "Extended-range Triton ephemeris (NAIF ID 801) relative to the Neptune barycenter (ID 8)."
 
 [[resource]]
 name = "nep097xl_899"
+artifact_sha256 = "fa55ad3565d3e400b2242533393e015846362952e6c7345fecec1ddd4a44aa08"
+artifact_size_bytes = 346603875
+git_tree_sha1 = "7a8d1316244e104c5f771b772349bca37d2512d0"
+sha256 = "95e815cb8584e530d3c83f35e39af4bf67d0874f01b65538cbe9dbf279818df8"
+size_bytes = 370729984
+metadata_sha256 = "550672e14f58f8b11c70352360d4f48204a62ecd3029da266401b27a9a06979f"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/nep097xl-899.bsp"
 metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/aa_summaries.txt"
 description = "Extended-range Neptune mass-center ephemeris (NAIF ID 899) relative to the Neptune barycenter (ID 8)."
 
 [[resource]]
 name = "nep098_part1"
+artifact_sha256 = "b33ecd18448c85e3fd4df2dd4c3cd75aff10834dbe9bde1339b1c279aeaf1cc6"
+artifact_size_bytes = 627646892
+git_tree_sha1 = "027e8ebe60a9a9272766b4fc475df3c321e04fd4"
+sha256 = "5327f47abba438d993237ff676ab03b728778a965bb238f86de883c0ad7790b8"
+size_bytes = 821838848
+metadata_sha256 = "3f89f88f0a247d4dc945501f512a4e6d5ed5c7288cd89f03822301befc7ade2f"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/nep098_part-1.bsp"
 metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/nep098_part-1.cmt"
 description = "NEP098 Neptune satellite ephemeris, part 1 (Triton, Nereid, and Naiad)."
 
 [[resource]]
 name = "nep098_part2"
+artifact_sha256 = "391de34185e1daa02f69b695709943890a7801c7ae65e97d78bf7b40b3517578"
+artifact_size_bytes = 1389504339
+git_tree_sha1 = "b5203e616916e75230a17de279622b38aea362f6"
+sha256 = "7f1ddadea0661822d47e41b8086f45720aa40900567bdcd565e65c14d62db52e"
+size_bytes = 1791917056
+metadata_sha256 = "f9be7ab11ea6dd31ccdb310a98321b55c422b4e574f178987a47cb0ef85316a7"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/nep098_part-2.bsp"
 metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/nep098_part-2.cmt"
 description = "NEP098 Neptune satellite ephemeris, part 2 (Thalassa, Despina, and Galatea)."
 
 [[resource]]
 name = "nep098_part3"
+artifact_sha256 = "9b04c79c05f62433601e7862d4cb38016908e5f5b55e0a50cd552e2993d77325"
+artifact_size_bytes = 1303832119
+git_tree_sha1 = "e5b66cdbf9044861b3d72bff7294421b475f5e93"
+sha256 = "16955f87878e41b16934e697213350bc2d6a1b3e04d98f29ba7e0fce328b4355"
+size_bytes = 1791917056
+metadata_sha256 = "228ccb63793a7133bace28f74af16829f72845bf135158e62aa92e9a94639690"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/nep098_part-3.bsp"
 metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/nep098_part-3.cmt"
 description = "NEP098 Neptune satellite ephemeris, part 3 (outer and recently designated Neptune satellites)."
@@ -542,18 +656,36 @@ url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/fk/satellites/nep098_n
 
 [[resource]]
 name = "nep101xl"
+artifact_sha256 = "da5c2006ebe1994061591440bec4394a9d3bb73e0167c61e499070917da9ea3a"
+artifact_size_bytes = 1060745991
+git_tree_sha1 = "19ff8e8a4068bd22c8219c3118264107739812d8"
+sha256 = "567b0c85684bd8884fca4c6c564eade6c4c926dbaa2bfb8907aa5b7ae32d76a6"
+size_bytes = 1588813824
+metadata_sha256 = "550672e14f58f8b11c70352360d4f48204a62ecd3029da266401b27a9a06979f"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/nep101xl.bsp"
 metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/aa_summaries.txt"
 description = "Extended-range Neptune irregular-satellite ephemeris for Halimede, Psamathe, Sao, Laomedeia, and Neso (NAIF IDs 809–813)."
 
 [[resource]]
 name = "nep101xl_802"
+artifact_sha256 = "86c5dcc735fdfff303c02794d52a2a53454c75dedb620aeadb1520d36b59ac08"
+artifact_size_bytes = 570598270
+git_tree_sha1 = "329b335de64e058bd25f3bb7389c7a89417254c7"
+sha256 = "006ed86a0ecea070cf209c17d08de0fe10ab3c4925e8d26ad14da64045c1b9af"
+size_bytes = 767016960
+metadata_sha256 = "550672e14f58f8b11c70352360d4f48204a62ecd3029da266401b27a9a06979f"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/nep101xl-802.bsp"
 metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/aa_summaries.txt"
 description = "Extended-range Nereid ephemeris (NAIF ID 802) relative to the Neptune barycenter (ID 8)."
 
 [[resource]]
 name = "nep104"
+artifact_sha256 = "377c77ca1d3b53b6f652bbe70a35fc34ecbd79316fe47c213522a3f1a0a38f6f"
+artifact_size_bytes = 198031766
+git_tree_sha1 = "d8082b631eacb3bb749af512e7e9668a331eb106"
+sha256 = "ef1906c0693f30952eb42b8d9640e9a3e4a6aa03cd899ffd94f7c3e8e1f6c8a0"
+size_bytes = 333170688
+metadata_sha256 = "fe7ea40ad9cf99de3d0f89397dd212b2698f765050fff7c4e3d2591c4d6bc3ee"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/nep104.bsp"
 metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/nep104.cmt"
 description = "Neptune satellite ephemeris complement from NAIF's active generic satellite set."
@@ -578,6 +710,12 @@ url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/plu060.
 
 [[resource]]
 name = "dss_17_prelim_itrf93_190814"
+artifact_sha256 = "e1e9736d123d654763b602c4b57cb65b1b8bf7a3f7034e900768b47bcdb17df7"
+artifact_size_bytes = 1797
+git_tree_sha1 = "3877cb6945381aef5dd02be997ee9d47e0456299"
+sha256 = "91250326db80cc64594cbcfd8eef7f6df66a532a1f5d1a61eef648c6b34587bb"
+size_bytes = 7168
+metadata_sha256 = "bca4b2f52b27ff63ae09a9d62c708334fc5c52f67b8fece2a3e9ba7f18799250"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/stations/dss_17_prelim_itrf93_190814.bsp"
 metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/stations/dss_17_prelim_itrf93_190814.cmt"
 category = "station_ephemeris"
@@ -586,6 +724,12 @@ description = "NAIF DSN station ephemeris in the ITRF93 frame."
 
 [[resource]]
 name = "dss_30_itrf93_210201"
+artifact_sha256 = "bb81afdbe53a24b1b29865993a52206d3f7ce8d9847e1b81302f06b4320e6c6d"
+artifact_size_bytes = 2761
+git_tree_sha1 = "747b4b11c38989681dce079c8abacc1308fe01ea"
+sha256 = "c48abfea7a6f0e0c2fa71bb734ee87d8183ba123d08117ee8916e8d67209fb1b"
+size_bytes = 9216
+metadata_sha256 = "1b4df0fc16cc53df6dbcd5c8a6f4c486fadb3dc9313c380d2f30744037d9c05a"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/stations/dss_30_itrf93_210201.bsp"
 metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/stations/dss_30_itrf93_210201.cmt"
 category = "station_ephemeris"
@@ -594,6 +738,12 @@ description = "NAIF DSN station ephemeris in the ITRF93 frame."
 
 [[resource]]
 name = "dss_59_prelim_itrf93_220921"
+artifact_sha256 = "24d0412f218d3f0d16bdcac6f9b93b185cb66cef7cbaee81d2d129c5707ab1b1"
+artifact_size_bytes = 2592
+git_tree_sha1 = "98e20123efa5bba3881cd57a023e8b12a88715a3"
+sha256 = "15b12cf12e1b6a5dd57bda1417eb87f6ab5bc5dda8c046f5fa8b13eb7da81ca8"
+size_bytes = 8192
+metadata_sha256 = "e5d2e739f2ab54027f225db1e4cb8623def1f649119e5e1412f8b36c00118d1e"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/stations/dss_59_prelim_itrf93_220921.bsp"
 metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/stations/dss_59_prelim_itrf93_220921.cmt"
 category = "station_ephemeris"
@@ -602,6 +752,12 @@ description = "NAIF DSN station ephemeris in the ITRF93 frame."
 
 [[resource]]
 name = "dss_69_prelim_itrf93_201215"
+artifact_sha256 = "f64deddd15e317b7c2ebb5140ad666a1960c959af1c82ebaed0bd551684b9806"
+artifact_size_bytes = 3012
+git_tree_sha1 = "826b26c8ed8c30ba655f237750a5499b3f730ad1"
+sha256 = "5b84167c9a9482bd5e507e5d515c73ca68ae3d07da7c57097c7f9b5497c69a8c"
+size_bytes = 9216
+metadata_sha256 = "8e5ea4f90936b9ff72a3ae9269c9462006f34c17b5187dc03652e2c25f6fa759"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/stations/dss_69_prelim_itrf93_201215.bsp"
 metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/stations/dss_69_prelim_itrf93_201215.cmt"
 category = "station_ephemeris"
@@ -610,6 +766,12 @@ description = "NAIF DSN station ephemeris in the ITRF93 frame."
 
 [[resource]]
 name = "earthstns_fx_260717"
+artifact_sha256 = "3cf30b8db61504f8330e90040fb3410fb6c2e8fbf52978e1bf1adebc345586c0"
+artifact_size_bytes = 8430
+git_tree_sha1 = "0cfbf11d06134773fe57b8f324941f21097dd447"
+sha256 = "db1414ace58f0228b2d844444501f7a608f76e770f3749a6842306fa98a00cdc"
+size_bytes = 27648
+metadata_sha256 = "762eade370b76d94b502ebd382a4078c8805acf0870c26b77bd714a5459ab385"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/stations/earthstns_fx_260717.bsp"
 metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/stations/earthstns_fx_260717.cmt"
 category = "station_ephemeris"
@@ -618,6 +780,12 @@ description = "Current NAIF Earth-station ephemeris using the fixed station fram
 
 [[resource]]
 name = "ndosl_140530_v01"
+artifact_sha256 = "4fa3e34fb5b5736c4163bd4fecda65017f14b73b92f28bb056e272b41dc7686f"
+artifact_size_bytes = 65281
+git_tree_sha1 = "f8bda1ea14fbbd4b547558a9f34d0253e73f8aa6"
+sha256 = "7ca46642ab87b591a420c53c71aeed73a9083ad8942f5a1f403250f4e9aa6bfc"
+size_bytes = 228352
+metadata_sha256 = "885b313401169841124c6d887bfa3018c274fdef7eaec705f7115555716058fa"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/stations/ndosl_140530_v01.bsp"
 metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/stations/ndosl_140530_v01.cmt"
 category = "station_ephemeris"
@@ -626,6 +794,12 @@ description = "NAIF station ephemeris from the active generic stations directory
 
 [[resource]]
 name = "ndosl_190716_v01"
+artifact_sha256 = "0498d46d8b10c25927012455a46de046d008b9915e90eeea4e99cb759df6c62a"
+artifact_size_bytes = 69373
+git_tree_sha1 = "eed4a6a04a28785ffc9fdbb1c7b3184f8cd8544e"
+sha256 = "4efc0ed66cf3d98a61f3284cb3270c49b0880ec0d336f1a6ac6882143ffe64c8"
+size_bytes = 241664
+metadata_sha256 = "afd43b25f30cac8c99c6f7f7d2ea902461ec39ec9d8e3cfe834c32362982500d"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/stations/ndosl_190716_v01.bsp"
 metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/stations/ndosl_190716_v01.cmt"
 category = "station_ephemeris"
@@ -634,6 +808,12 @@ description = "NAIF station ephemeris from the active generic stations directory
 
 [[resource]]
 name = "ndosl_190716_v02"
+artifact_sha256 = "395be65c8d261030377c50d86b451fae58d31d1a3b1fa2db647d907786d8a71f"
+artifact_size_bytes = 69395
+git_tree_sha1 = "1160893850cb0471b7ed75b8a8597f2799513242"
+sha256 = "94483749206e1188c594c426496ccea226e34619ea89faebe586736f581d7cba"
+size_bytes = 241664
+metadata_sha256 = "a04f04d46ff6754e9cf2c75c88f9e898fca85e94e1e52f092dede0d4c8e1733a"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/stations/ndosl_190716_v02.bsp"
 metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/stations/ndosl_190716_v02.cmt"
 category = "station_ephemeris"
@@ -642,6 +822,12 @@ description = "NAIF station ephemeris from the active generic stations directory
 
 [[resource]]
 name = "l1_de441"
+artifact_sha256 = "658920fee86575f1def9262e43a3ff031f4e64c97253e2c206a584be2148819c"
+artifact_size_bytes = 2967830
+git_tree_sha1 = "26ffd2e736837ed0f01b80980a26e894d6f3003c"
+sha256 = "ec1931712072b71d34641a925324f7a05b7bf0c7f171cc79eea33e355ba47925"
+size_bytes = 3151872
+metadata_sha256 = "193ec5ecc7371921f1eeb48ce2808b93f08fd9ec5cb6a33091e3dd86dc77b542"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/lagrange_point/L1_de441.bsp"
 metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/lagrange_point/AAREADME.TXT"
 category = "lagrange_ephemeris"
@@ -650,6 +836,12 @@ description = "Earth–Moon L1 ephemeris relative to the Earth–Moon barycenter
 
 [[resource]]
 name = "l2_de441"
+artifact_sha256 = "e045c78c4e717c2cd0d2f721c517a38b35e45b732dac7982ce78382a858b4a06"
+artifact_size_bytes = 2967333
+git_tree_sha1 = "d535e2eb5bb4592572b53980152ff03e5a2fb323"
+sha256 = "a68f08f85cd243d87415fab1be3e07e9e2feb3cc17dc380c5603cc79ecb6183e"
+size_bytes = 3151872
+metadata_sha256 = "193ec5ecc7371921f1eeb48ce2808b93f08fd9ec5cb6a33091e3dd86dc77b542"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/lagrange_point/L2_de441.bsp"
 metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/lagrange_point/AAREADME.TXT"
 category = "lagrange_ephemeris"
@@ -658,6 +850,12 @@ description = "Earth–Moon L2 ephemeris relative to the Earth–Moon barycenter
 
 [[resource]]
 name = "l4_de441"
+artifact_sha256 = "d1964debc6d85b3f45ee19382c7c389bfda10b5e58bded59d579794318e15bf9"
+artifact_size_bytes = 3054358
+git_tree_sha1 = "3091dc00f235246ae6a0b06dbfa6e1d68a5b5758"
+sha256 = "4292c90f0ba0e4764f38646e76cf13d3ebc56281559ef312dfb75bf6a8bcf6ac"
+size_bytes = 3151872
+metadata_sha256 = "193ec5ecc7371921f1eeb48ce2808b93f08fd9ec5cb6a33091e3dd86dc77b542"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/lagrange_point/L4_de441.bsp"
 metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/lagrange_point/AAREADME.TXT"
 category = "lagrange_ephemeris"
@@ -666,6 +864,12 @@ description = "Sun–Earth L4 ephemeris relative to the Sun (NAIF ID 10), based 
 
 [[resource]]
 name = "l5_de441"
+artifact_sha256 = "1e754e83c96bcb8b164f0ac4574f6a91a2115e91c9fbe468fc6a38a661f754b7"
+artifact_size_bytes = 3054433
+git_tree_sha1 = "486aa42296adfc1df31ecf217b144fa71d1bab05"
+sha256 = "2f30be734f2df2ca8290768b005d73f6be1b160982941c997a15e2d3de0c1393"
+size_bytes = 3151872
+metadata_sha256 = "193ec5ecc7371921f1eeb48ce2808b93f08fd9ec5cb6a33091e3dd86dc77b542"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/lagrange_point/L5_de441.bsp"
 metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/lagrange_point/AAREADME.TXT"
 category = "lagrange_ephemeris"
@@ -674,6 +878,12 @@ description = "Sun–Earth L5 ephemeris relative to the Sun (NAIF ID 10), based 
 
 [[resource]]
 name = "codes_300ast_20100725"
+artifact_sha256 = "f3bb0a19d323aa7735c53f84079323c6c6f9ae52aa98f03d2b123c84aeacdb69"
+artifact_size_bytes = 54902014
+git_tree_sha1 = "978161a81a3b00493b577b8d7b60ccfebb7b20e1"
+sha256 = "7bb92faaadac29ec0b62aa96041a37c92ae24b9a5460de03d3fcaa2f63fe51f0"
+size_bytes = 61864960
+metadata_sha256 = "6fffa31a3d91276aa9bcb2ef9737806df57c6d95702193a785f6cc53534de1f8"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/asteroids/codes_300ast_20100725.bsp"
 metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/asteroids/codes_300ast_20100725.cmt"
 category = "asteroid_ephemeris"
@@ -682,6 +892,12 @@ description = "Generic CODES ephemeris for a collection of 300 asteroids; useful
 
 [[resource]]
 name = "c2013a1_s105_merged"
+artifact_sha256 = "dae8159dac63a1d75fa9b1f8f5751cda34e5c777a209bcff936a89dd4466a5d5"
+artifact_size_bytes = 7332126
+git_tree_sha1 = "fae14b75fc8c7d1986e7835e60bdbade4a77085e"
+sha256 = "0e858f2f393b426b1dfb02e6178bfb3fe63824c52a4900bca5f6ef518316f5a2"
+size_bytes = 14888960
+metadata_sha256 = "31202b3bf10a31e2c6bcba0cfaa072a69a3dd76671e3a68334c3738ea6f57f22"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/comets/c2013a1_s105_merged.bsp"
 metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/comets/aa_summaries.txt"
 category = "comet_ephemeris"
@@ -690,6 +906,12 @@ description = "Long-range generic Siding Spring comet ephemeris spanning 3002 BC
 
 [[resource]]
 name = "tnosat_v001_20000617_jpl082_20230601"
+artifact_sha256 = "8c4a5caac3327e229671eb6c732d8789f11e667d431e5c2a3cb0bfef9a0e1217"
+artifact_size_bytes = 203184341
+git_tree_sha1 = "af973dd735843c2630fc9a69106fee8cc91f3de0"
+sha256 = "3ebad511d730055cc68bf7489c453b4c9b0f7d6b1ba17414a58013b09d24eb18"
+size_bytes = 298477568
+metadata_sha256 = "4cc15c32a9bcd0bc7c56cf5258019734b04be58d9432a7927adf3d2537e89cb3"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/tno/tnosat_v001_20000617_jpl082_20230601.bsp"
 metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/tno/tnosat_v001_20000617_jpl082_20230601.cmt"
 category = "tno_ephemeris"
@@ -698,6 +920,12 @@ description = "Generic TNO satellite-system ephemeris for system barycenter NAIF
 
 [[resource]]
 name = "tnosat_v001_20050000_jpl043_20220908"
+artifact_sha256 = "2b4b34eba73be8fb30eac29833ac3ac92daee14be4b90f4a80bbf540374094e3"
+artifact_size_bytes = 55945169
+git_tree_sha1 = "ec533945823176badd7f9a67743fd037659bdb4f"
+sha256 = "c7acd99a09c8df041a861cad928eab44f58bc44e67e890a38d83182ac25212f1"
+size_bytes = 175923200
+metadata_sha256 = "6e881cced567c92e6e5c393a9900dc964828fb024e00be6a2e2ba0f0bcf9c818"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/tno/tnosat_v001_20050000_jpl043_20220908.bsp"
 metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/tno/tnosat_v001_20050000_jpl043_20220908.cmt"
 category = "tno_ephemeris"
@@ -706,6 +934,12 @@ description = "Generic TNO satellite-system ephemeris for system barycenter NAIF
 
 [[resource]]
 name = "tnosat_v001_20090482_jpl043_20220908"
+artifact_sha256 = "0fdaaa8e1804ae23149e938c918240d557389e8cbb22a5afcd869ccf9e6d4969"
+artifact_size_bytes = 55806367
+git_tree_sha1 = "a808be49305d0fb61228546af3b8735e27843018"
+sha256 = "94f0d25a4fa8f7013a9ff960bc4bd8c10c0969e8dd7546efcb654d163f6d1b5f"
+size_bytes = 175923200
+metadata_sha256 = "7ba991982756fa88667f9961a787b43a5cf44629257ec5557ef8bb412bfbfe4a"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/tno/tnosat_v001_20090482_jpl043_20220908.bsp"
 metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/tno/tnosat_v001_20090482_jpl043_20220908.cmt"
 category = "tno_ephemeris"
@@ -714,6 +948,12 @@ description = "Generic TNO satellite-system ephemeris for system barycenter NAIF
 
 [[resource]]
 name = "tnosat_v001_20120347_jpl025_20220908"
+artifact_sha256 = "5ab3224163eb1d5858776d1f2771937472b1fea4524d1d188e7e4b75f5b0a880"
+artifact_size_bytes = 58552385
+git_tree_sha1 = "48ab0ea9cb490a54412c0966cef5038a5d155787"
+sha256 = "96913c4d111a25f9893aea5b7dcee588fb10bb1f3b5b77ea3ad399fae5daf491"
+size_bytes = 175915008
+metadata_sha256 = "1b746e00083c5d46c705ebdce13815898bc8397f8e1380ea0d3294123270bb9e"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/tno/tnosat_v001_20120347_jpl025_20220908.bsp"
 metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/tno/tnosat_v001_20120347_jpl025_20220908.cmt"
 category = "tno_ephemeris"
@@ -722,6 +962,12 @@ description = "Generic TNO satellite-system ephemeris for system barycenter NAIF
 
 [[resource]]
 name = "tnosat_v001_20136199_jpl080_20220908"
+artifact_sha256 = "e8ccc8e9864fda173f1a0892d8098aaed649f993ea13786b571a83ca04244f8d"
+artifact_size_bytes = 53887561
+git_tree_sha1 = "51e47ed03f023bda85b1cebef2b3317b46102a39"
+sha256 = "f405b6db26e114c856622de6a4c1e29f124279598c4e04c0e01d08fa28160cfe"
+size_bytes = 175898624
+metadata_sha256 = "24db3f9d480fa8d7d0b32d43f33bef8763272b14cba8c61f9a80d16542171d6a"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/tno/tnosat_v001_20136199_jpl080_20220908.bsp"
 metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/tno/tnosat_v001_20136199_jpl080_20220908.cmt"
 category = "tno_ephemeris"
@@ -730,6 +976,12 @@ description = "Generic TNO satellite-system ephemeris for system barycenter NAIF
 
 [[resource]]
 name = "tnosat_v001_20469705_jpl009_20220908"
+artifact_sha256 = "8b2c3707fa19f62807b389511a564d3e334f6cc2cba5737b8b56cf2664c0b1b5"
+artifact_size_bytes = 46135171
+git_tree_sha1 = "be700aa73da53e507e48a35ec10bebc9d99a0c4a"
+sha256 = "1e788babf0f62a69619c692a1df5e212bb84dc9a461b62f44e1aec35b05aad89"
+size_bytes = 175927296
+metadata_sha256 = "fc501876ef427e017f9f3f4772535ed03d71b82604f3c6c2677ecbdd8ac31e23"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/tno/tnosat_v001_20469705_jpl009_20220908.bsp"
 metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/tno/tnosat_v001_20469705_jpl009_20220908.cmt"
 category = "tno_ephemeris"
@@ -738,6 +990,12 @@ description = "Generic TNO satellite-system ephemeris for system barycenter NAIF
 
 [[resource]]
 name = "tnosat_v001_20612095_jpl006_20220908"
+artifact_sha256 = "bea548c9218406850f9d16ed46d4675286b94359bcdc6e816f82bbaeb0431456"
+artifact_size_bytes = 48050374
+git_tree_sha1 = "d86bdbf30ed4445f05c68b68d2b1fdce36aaace4"
+sha256 = "92f4a2dfae815185f2de3f008adad6f17b337ee0d5843d2eb5fc9f0e8edf7f18"
+size_bytes = 175923200
+metadata_sha256 = "14040ffcfd6070d69f787d427ffe3cc84af0fb09f0218f4c01cd0768c9e560ff"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/tno/tnosat_v001_20612095_jpl006_20220908.bsp"
 metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/tno/tnosat_v001_20612095_jpl006_20220908.cmt"
 category = "tno_ephemeris"
@@ -746,6 +1004,12 @@ description = "Generic TNO satellite-system ephemeris for system barycenter NAIF
 
 [[resource]]
 name = "tnosat_v001_20612687_jpl008_20220908"
+artifact_sha256 = "0c37858c01ea98b4fe7a55bfc1b675c7a43c7548fe1109c4c8345cd9a25ad198"
+artifact_size_bytes = 38590808
+git_tree_sha1 = "8a646580db9316953cdffb84867fd82a85a869ed"
+sha256 = "451b4f2d1566a96b74af111399f69d0b0781e4909e79eb86c97d69f1a6407aec"
+size_bytes = 175928320
+metadata_sha256 = "56a08a75419ff925aa74b855deed1d600b506230480855b7d4706cccef9bf6f3"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/tno/tnosat_v001_20612687_jpl008_20220908.bsp"
 metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/tno/tnosat_v001_20612687_jpl008_20220908.cmt"
 category = "tno_ephemeris"
@@ -754,6 +1018,12 @@ description = "Generic TNO satellite-system ephemeris for system barycenter NAIF
 
 [[resource]]
 name = "tnosat_v001_53031823_jpl010_20220908"
+artifact_sha256 = "530e0db6e1496148ec6aab4535f12aa8db5032dfe8b824c9c1d9c7fcf8db9163"
+artifact_size_bytes = 41046924
+git_tree_sha1 = "5fb31ff94d21d3e9c3d2e32332d93c8a79da16c5"
+sha256 = "fe870f85511be4993977a82d4cf26560aa3c3556bff7116852b8248ef2fd8e2a"
+size_bytes = 175926272
+metadata_sha256 = "5593c639d707c40c9bf5b7fed339c9e8f23020c5da9165bf537450dcbea676bf"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/tno/tnosat_v001_53031823_jpl010_20220908.bsp"
 metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/tno/tnosat_v001_53031823_jpl010_20220908.cmt"
 category = "tno_ephemeris"
@@ -762,6 +1032,12 @@ description = "Generic TNO satellite-system ephemeris for system barycenter NAIF
 
 [[resource]]
 name = "tnosat_v001_53092511_jpl005_20220908"
+artifact_sha256 = "6024a0aad39751c8f454743df2024c5ceead4458c3fd0e0128a7082513841712"
+artifact_size_bytes = 37613517
+git_tree_sha1 = "45689ac08e46debeaa90fea79bb9cfc48e309f7b"
+sha256 = "f8086db5b37d9c04823c32d19fdcd070ca847b1b4a00312fb947305c215835ff"
+size_bytes = 175918080
+metadata_sha256 = "4509e9521e2beb7f6cc343c05c89a8e049cb2f4a96d83bc2d8c10e04889a9ed8"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/tno/tnosat_v001_53092511_jpl005_20220908.bsp"
 metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/tno/tnosat_v001_53092511_jpl005_20220908.cmt"
 category = "tno_ephemeris"
@@ -770,6 +1046,12 @@ description = "Generic TNO satellite-system ephemeris for system barycenter NAIF
 
 [[resource]]
 name = "tnosat_v001b_20136108_jpl110_20221014"
+artifact_sha256 = "e116e3a838e79de235509e56a5dae32ed104fdd1439bb00b691784362adf26b6"
+artifact_size_bytes = 149941711
+git_tree_sha1 = "e215f2e0f4a41ae2e0c8a57472c8626d06d175b5"
+sha256 = "f9a300516860638ea7b534a44b0005ce887a3b0b10393594eed9fcd9045a03e2"
+size_bytes = 263605248
+metadata_sha256 = "7ce9d83dd2590e4725ecf8579d96d9072047eced957c90ed4dcc5e68738eeb6a"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/tno/tnosat_v001b_20136108_jpl110_20221014.bsp"
 metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/tno/tnosat_v001b_20136108_jpl110_20221014.cmt"
 category = "tno_ephemeris"
