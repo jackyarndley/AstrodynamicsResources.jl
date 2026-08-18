@@ -8,7 +8,7 @@ Add a declaration with the CLI:
 julia --project=. scripts/catalog.jl add example https://authoritative.example/example.dat
 ```
 
-or edit `catalog/Resources.toml` directly:
+or edit a catalogue TOML file directly:
 
 ```toml
 [[resource]]
@@ -19,49 +19,54 @@ url = "https://authoritative.example/path/example.dat"
 The name must be a lowercase Julia-style identifier and the URL must use HTTPS.
 The committed declaration asserts that the repository may redistribute the
 unchanged upstream bytes under the recorded terms. License terms are resolved
-from the provider-level `[licenses]` table; add `license` and `license_url`
-only to override the provider default. Check the upstream terms before
-committing.
+from provider-level `[licenses]` tables; add `license` and `license_url` only
+to override a provider default.
 
 After merge, `.github/workflows/cache-resources.yml`:
 
-1. detects that `example` is not locked or published;
-2. downloads it into a persistent content-addressed Actions cache;
-3. rejects empty files and HTML error pages;
-4. computes the source SHA-256;
-5. packages `data/<upstream filename>` and `provenance.toml` deterministically;
-6. uploads `example.tar.gz` without overwriting an existing asset; and
-7. opens a PR with generated `ResourceLock.toml` and `Artifacts.toml` changes.
+1. derives the canonical release and `<name>.tar.gz` asset name;
+2. adopts an existing canonical archive if one is already published;
+3. otherwise downloads the upstream source with retry/resume support;
+4. rejects empty files and HTML error pages;
+5. computes and verifies source SHA-256 values;
+6. packages `data/<upstream filename>` plus `provenance.toml` deterministically;
+7. uploads the archive without overwriting different bytes; and
+8. opens a PR writing the source, archive, metadata, and artifact-tree hashes
+   directly into every successful resource declaration.
+
+A failure in one matrix member does not discard successful reports. Therefore a
+resource that was successfully published is adopted/recorded rather than built
+again on the next run.
+
+A completed single-file immutable declaration looks like:
+
+```toml
+[[resource]]
+name = "example"
+sha256 = "<source SHA-256>"
+artifact_sha256 = "<release archive SHA-256>"
+git_tree_sha1 = "<Julia artifact tree SHA-1>"
+url = "https://authoritative.example/path/example.dat"
+```
+
+`size_bytes` and `artifact_size_bytes` are recorded as diagnostics. If a
+resource has `metadata_url`, `metadata_sha256` is recorded as well. Multi-file
+resources put `sha256` and `size_bytes` beside each `[[resource.files]]` URL.
+
+The catalogue is the persistent source of truth. `Artifacts.toml` is generated
+ephemerally only when calling Julia's artifact installer; there is no committed
+resource lock database.
 
 Use optional `metadata_url` for an inseparable comment/readme file. Use
 `filename`, `mirrors`, `category`, or `provider` only when inference is wrong.
 
-The CLI accepts the same optional flags:
-
-```sh
-julia --project=. scripts/catalog.jl add example https://authoritative.example/example.dat \
-  --category star_catalogue --license "..." --license-url "https://..."
-```
-
 ### Star catalogues
 
 Star catalogues are ordinary immutable resources. Give them
-`category = "star_catalogue"` and the CDS ReadMe as `metadata_url`:
-
-```toml
-[[resource]]
-name = "fk5"
-url = "https://cdsarc.cds.unistra.fr/ftp/I/149A/catalog.gz"
-metadata_url = "https://cdsarc.cds.unistra.fr/ftp/I/149A/ReadMe"
-category = "star_catalogue"
-citation = "Fricke et al. 1988, FK5 Part I (VizieR On-line Data Catalogue I/149A)."
-```
-
-Hipparcos and Tycho-2 use `provider = "esa"` because their redistribution
-terms come from ESA rather than from CDS itself. When an upstream product is
-split across several files (Tycho-2 is 20 gzipped parts), declare each part in
-a `[[resource.files]]` block instead of `url`; the parts are downloaded in
-declaration order and returned by `resource_paths` in that order.
+`category = "star_catalogue"` and the CDS ReadMe as `metadata_url`. When an
+upstream product is split across several files (Tycho-2 is 20 gzipped parts),
+declare each part in a `[[resource.files]]` block instead of `url`; parts are
+returned by `resource_paths` in declaration order.
 
 ## Live data
 
@@ -79,7 +84,7 @@ Live resources are never mirrored into a release and never update at import.
 
 ### Auditing NAIF SPKs
 
-The active generic SPK tree can be compared with the catalog by running:
+The active generic SPK tree can be compared with the catalogue by running:
 
 ```text
 julia --project=. scripts/audit_naif_spk.jl
@@ -87,6 +92,4 @@ julia --project=. scripts/audit_naif_spk.jl
 
 The maintainer-only command reports new upstream files, catalogued files,
 catalog entries no longer present in the active tree, and archive directories
-that it intentionally ignores. It never edits the catalog and does not run
-during package import or ordinary tests. In particular, `a_old_versions/` is
-not part of the active comparison.
+that it intentionally ignores. It never edits the catalogue.

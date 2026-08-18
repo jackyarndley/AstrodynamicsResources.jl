@@ -202,7 +202,7 @@ end
 function _catalog_source_paths(catalog_dir::String)
     primary = joinpath(catalog_dir, "Resources.toml")
     isfile(primary) || throw(ArgumentError("catalogue is missing $primary"))
-    excluded = Set(("Resources.toml", "bundles.toml"))
+    excluded = Set(("Resources.toml", "ResourceLock.toml", "bundles.toml"))
     extras = sort!(
         filter(
             path -> endswith(lowercase(path), ".toml") && !(basename(path) in excluded),
@@ -234,17 +234,17 @@ function _merge_immutable_metadata!(
             metadata["size_bytes"] = source["size_bytes"]
         end
     else
-        metadata["source_files"] = [copy(spec) for spec in source_specs]
+        sources = [copy(spec) for spec in source_specs]
+        metadata["source_files"] = sources
+        metadata["files"] = sources
     end
     for key in ("artifact_sha256", "artifact_size_bytes", "git_tree_sha1", "metadata_sha256")
         haskey(entry, key) && (metadata[key] = entry[key])
     end
-    if haskey(metadata, "artifact_sha256")
-        metadata["archive_sha256"] = metadata["artifact_sha256"]
-    end
-    if haskey(metadata, "artifact_size_bytes")
-        metadata["archive_size_bytes"] = metadata["artifact_size_bytes"]
-    end
+    haskey(metadata, "artifact_sha256") &&
+        (metadata["archive_sha256"] = metadata["artifact_sha256"])
+    haskey(metadata, "artifact_size_bytes") &&
+        (metadata["archive_size_bytes"] = metadata["artifact_size_bytes"])
     metadata["asset"] = "$name.tar.gz"
     base = rstrip(
         get(
@@ -270,8 +270,7 @@ function _parse_resource(entry::Dict{String, Any}, aliases::Vector{Symbol})
         ResourceFile(
             live ? spec["filename"] : joinpath("data", spec["filename"]),
             _role(category, spec["filename"]), i == 1
-        )
-        for (i, spec) in enumerate(source_specs)
+        ) for (i, spec) in enumerate(source_specs)
     ]
     metadata_url = get(entry, "metadata_url", nothing)
     if metadata_url !== nothing
@@ -359,7 +358,7 @@ function _load_catalog!()
             id = Symbol(name)
             _BUNDLES[id] = ResourceBundle(
                 id, _symbols(members), _title(name), "Ordered resource bundle.",
-                Dict{String, Any}("ordered" => true),
+                Dict{String, Any}("ordered" => true)
             )
         end
     end
@@ -374,7 +373,6 @@ function _ensure_catalog()
 end
 
 _canonical_id(id::Symbol) = get(_ALIASES, id, id)
-
 _valid_sha256(value) = occursin(r"^[0-9a-f]{64}$", lowercase(String(value)))
 _valid_tree_hash(value) = occursin(r"^[0-9a-f]{40}$", lowercase(String(value)))
 
@@ -396,7 +394,7 @@ function _validate_artifact_metadata(spec::ResourceSpec)
         end
     else
         _valid_sha256(get(spec.metadata, "source_sha256", "")) ||
-            throw(ArgumentError("resource $(spec.id) has invalid source sha256"))
+            throw(ArgumentError("resource $(spec.id) has invalid source_sha256"))
     end
     if haskey(spec.metadata, "metadata_url")
         _valid_sha256(get(spec.metadata, "metadata_sha256", "")) ||

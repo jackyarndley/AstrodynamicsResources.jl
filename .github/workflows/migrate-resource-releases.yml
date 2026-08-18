@@ -20,6 +20,11 @@ jobs:
           version: "1"
       - name: Instantiate
         run: julia --project=. -e 'using Pkg; Pkg.instantiate()'
+      - name: Require inline metadata layout
+        shell: bash
+        run: |
+          test ! -f catalog/ResourceLock.toml
+          test ! -f Artifacts.toml
 
       - name: Normalize canonical resource releases
         env:
@@ -65,7 +70,8 @@ jobs:
             gh api --paginate "repos/$GITHUB_REPOSITORY/releases/$RELEASE_ID/assets?per_page=100" \
               --jq '.[] | [.id, .name] | @tsv' |
               while IFS=$'\t' read -r ASSET_ID ASSET; do
-                if ! grep -Fqx "$RELEASE	$ASSET" expected-assets.txt; then
+                PAIR=$(printf '%s\t%s' "$RELEASE" "$ASSET")
+                if ! grep -Fqx "$PAIR" expected-assets.txt; then
                   echo "Deleting undeclared asset $RELEASE/$ASSET"
                   gh api -X DELETE "repos/$GITHUB_REPOSITORY/releases/assets/$ASSET_ID"
                 fi
@@ -87,7 +93,7 @@ jobs:
             fi
           done
 
-      - name: Recreate the package release without uploaded data assets
+      - name: Recreate package release without uploaded data assets
         env:
           GH_TOKEN: ${{ github.token }}
         shell: bash
