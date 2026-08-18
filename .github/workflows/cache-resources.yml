@@ -15,8 +15,9 @@ permissions:
   contents: write
   pull-requests: write
 
+# Both resource workflows mutate the same GitHub releases. Keep them serialized.
 concurrency:
-  group: resource-cache
+  group: resource-release-mutations
   cancel-in-progress: false
 
 jobs:
@@ -27,6 +28,8 @@ jobs:
       build_count: ${{ steps.scan.outputs.build_count }}
       adopt: ${{ steps.scan.outputs.adopt }}
       adopt_count: ${{ steps.scan.outputs.adopt_count }}
+      restore: ${{ steps.scan.outputs.restore }}
+      restore_count: ${{ steps.scan.outputs.restore_count }}
     steps:
       - uses: actions/checkout@v7.0.1
       - uses: julia-actions/setup-julia@v3.0.2
@@ -53,7 +56,7 @@ jobs:
 
   prepare:
     needs: scan
-    if: needs.scan.outputs.build_count != '0' || needs.scan.outputs.adopt_count != '0'
+    if: needs.scan.outputs.build_count != '0' || needs.scan.outputs.adopt_count != '0' || needs.scan.outputs.restore_count != '0'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7.0.1
@@ -74,6 +77,66 @@ jobs:
                 --notes "Immutable data assets for the $TITLE resource family."
             fi
           done < <(julia --project=. scripts/resource_release.jl releases)
+
+  # A resource can have complete inline hashes while its canonical release copy
+  # is missing (for example after a partial migration). Repair that state from
+  # any other release containing byte-identical immutable data instead of
+  # aborting every new cache build.
+  restore:
+    needs: [scan, prepare]
+    if: needs.scan.outputs.restore_count != '0'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        name: ${{ fromJSON(needs.scan.outputs.restore) }}
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: julia-actions/setup-julia@v3.0.2
+        with:
+          version: "1"
+      - name: Instantiate
+        run: julia --project=. -e 'using Pkg; Pkg.instantiate()'
+      - name: Restore verified archive to canonical release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          NAME="${{ matrix.name }}"
+          TARGET=$(julia --project=. scripts/resource_release.jl tag "$NAME")
+          ASSET="$NAME.tar.gz"
+          EXPECTED=$(julia --project=. -e \
+            'using AstrodynamicsResources; print(resource(Symbol(ARGS[1])).metadata["artifact_sha256"])' \
+            "$NAME")
+
+          mkdir -p build/restore
+          SOURCE=""
+          while read -r CANDIDATE; do
+            [ "$CANDIDATE" = "$TARGET" ] && continue
+            rm -f "build/restore/$ASSET"
+            if gh release download "$CANDIDATE" --repo "$GITHUB_REPOSITORY" \
+                --pattern "$ASSET" --dir build/restore >/dev/null 2>&1; then
+              ACTUAL=$(sha256sum "build/restore/$ASSET" | cut -d' ' -f1)
+              if [ "$ACTUAL" = "$EXPECTED" ]; then
+                SOURCE="$CANDIDATE"
+                break
+              fi
+            fi
+          done < <(gh release list --repo "$GITHUB_REPOSITORY" --limit 1000 \
+            --json tagName --jq '.[].tagName')
+
+          [ -n "$SOURCE" ] || {
+            echo "No release contains a verified copy of $ASSET (expected SHA-256 $EXPECTED)."
+            exit 1
+          }
+
+          echo "Restoring $ASSET from $SOURCE to $TARGET"
+          gh release upload "$TARGET" "build/restore/$ASSET" --repo "$GITHUB_REPOSITORY"
+          TARGET_ID=$(gh api "repos/$GITHUB_REPOSITORY/releases/tags/$TARGET" --jq '.id')
+          REMOTE=$(gh api --paginate "repos/$GITHUB_REPOSITORY/releases/$TARGET_ID/assets?per_page=100" \
+            --jq ".[] | select(.name == \"$ASSET\") | .digest")
+          test "$REMOTE" = "sha256:$EXPECTED"
 
   build:
     needs: [scan, prepare]
@@ -164,7 +227,7 @@ jobs:
           retention-days: 1
 
   update-catalogue:
-    needs: [scan, build, adopt]
+    needs: [scan, build, adopt, restore]
     if: always() && needs.scan.result == 'success' && (needs.scan.outputs.build_count != '0' || needs.scan.outputs.adopt_count != '0')
     runs-on: ubuntu-latest
     steps:

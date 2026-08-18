@@ -11,6 +11,7 @@ if run_group("Core")
     @time @safetestset "catalogue editor" include("catalog_editor.jl")
     @time @safetestset "planet textures" include("textures.jl")
     @time @safetestset "artifacts" include("artifacts.jl")
+    @time @safetestset "release audit" include("release_audit.jl")
     @time @safetestset "scratch" include("scratch.jl")
 end
 

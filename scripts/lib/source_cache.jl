@@ -48,7 +48,11 @@ function _download_resumable(
             return part
         end
 
-        headers = offset > 0 ? ["Range" => "bytes=$(offset)-"] : Pair{String, String}[]
+        headers = Pair{String, String}[
+            "User-Agent" => "AstrodynamicsResources.jl resource cache (+https://github.com/jackyarndley/AstrodynamicsResources.jl)",
+            "Accept" => "*/*",
+        ]
+        offset > 0 && push!(headers, "Range" => "bytes=$(offset)-")
         timeout = parse(Float64, get(ENV, "ASTRODYNAMICS_RESOURCES_TIMEOUT", "60"))
         mode = offset > 0 ? "a" : "w"
         response = try

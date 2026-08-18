@@ -17,13 +17,18 @@ function published_assets(path::AbstractString)
 end
 
 function main(args = ARGS)
-    length(args) == 1 || error("usage: release_audit.jl RELEASE_ASSET_FILE")
+    length(args) in (1, 2) ||
+        error("usage: release_audit.jl RELEASE_ASSET_FILE [--strict]")
+    strict = length(args) == 2
+    strict && args[2] != "--strict" &&
+        error("usage: release_audit.jl RELEASE_ASSET_FILE [--strict]")
+
     published = published_assets(first(args))
     specs = list_resources(backend = :artifact)
 
     build = String[]
     adopt = String[]
-    missing = String[]
+    restore = String[]
     expected = Set{Tuple{String, String}}()
 
     for spec in specs
@@ -33,7 +38,7 @@ function main(args = ARGS)
         )
         push!(expected, pair)
         if spec.available
-            pair in published || push!(missing, "$(spec.id) -> $(pair[1])/$(pair[2])")
+            pair in published || push!(restore, String(spec.id))
         elseif pair in published
             push!(adopt, String(spec.id))
         else
@@ -44,7 +49,7 @@ function main(args = ARGS)
     orphans = sort!(String["$release/$asset" for (release, asset) in setdiff(published, expected)])
     sort!(build)
     sort!(adopt)
-    sort!(missing)
+    sort!(restore)
 
     if haskey(ENV, "GITHUB_OUTPUT")
         open(ENV["GITHUB_OUTPUT"], "a") do io
@@ -52,14 +57,18 @@ function main(args = ARGS)
             println(io, "build_count=", length(build))
             println(io, "adopt=", json(adopt))
             println(io, "adopt_count=", length(adopt))
+            println(io, "restore=", json(restore))
+            println(io, "restore_count=", length(restore))
         end
     end
 
     println("build: ", join(build, ", "))
     println("adopt existing archives: ", join(adopt, ", "))
+    println("restore canonical copies: ", join(restore, ", "))
     isempty(orphans) || println("orphan release assets: ", join(orphans, ", "))
-    isempty(missing) || error(
-        "cached resources missing from their canonical releases:\n  " * join(missing, "\n  ")
+
+    strict && !isempty(restore) && error(
+        "cached resources missing from their canonical releases:\n  " * join(restore, "\n  ")
     )
     return nothing
 end
