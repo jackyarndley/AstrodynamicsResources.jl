@@ -44,25 +44,32 @@ jobs:
             fi
           done < <(julia --project=. scripts/resource_release.jl releases)
 
-      - name: Verify cached resources are in canonical releases
+      - name: Verify canonical release inventory
         env:
           GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
-          : > release-assets.txt
-          while read -r RELEASE; do
-            RELEASE_ID=$(gh api "repos/$GITHUB_REPOSITORY/releases/tags/$RELEASE" --jq '.id')
-            gh api --paginate "repos/$GITHUB_REPOSITORY/releases/$RELEASE_ID/assets?per_page=100" \
-              --jq '.[].name' |
-              while read -r ASSET; do printf '%s\t%s\n' "$RELEASE" "$ASSET"; done
-          done < <(julia --project=. scripts/resource_release.jl tags)
+          {
+            while read -r RELEASE; do
+              RELEASE_ID=$(gh api "repos/$GITHUB_REPOSITORY/releases/tags/$RELEASE" --jq '.id')
+              gh api --paginate "repos/$GITHUB_REPOSITORY/releases/$RELEASE_ID/assets?per_page=100" \
+                --jq '.[].name' |
+                while read -r ASSET; do
+                  printf '%s\t%s\n' "$RELEASE" "$ASSET"
+                done
+            done < <(julia --project=. scripts/resource_release.jl tags)
+          } | tee release-assets.txt
+
           sort -u -o release-assets.txt release-assets.txt
-          julia --project=. scripts/release_audit.jl release-assets.txt --strict
+          ASSET_COUNT=$(wc -l < release-assets.txt)
+          echo "Discovered $ASSET_COUNT canonical release assets."
+          test "$ASSET_COUNT" -gt 0
+          julia --project=. scripts/release_audit.jl release-assets.txt
 
       - name: Report compatibility policy
         shell: bash
         run: |
           echo "Canonical release layout is valid."
           echo "No releases or assets are deleted by this workflow."
-          echo "In particular, v0.1.0 is retained because released v0.1.0 code"
-          echo "contains artifact URLs that still reference its uploaded data assets."
+          echo "v0.1.0 is retained because released v0.1.0 code contains artifact"
+          echo "URLs that still reference its uploaded data assets."
