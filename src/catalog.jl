@@ -1,6 +1,7 @@
+include("releases.jl")
+
 const _PACKAGE_ROOT = normpath(joinpath(@__DIR__, ".."))
 const _CATALOG_DIR = joinpath(_PACKAGE_ROOT, "catalog")
-const _ARTIFACTS_TOML = joinpath(_PACKAGE_ROOT, "Artifacts.toml")
 const _RESOURCES = Dict{Symbol, ResourceSpec}()
 const _ALIASES = Dict{Symbol, Symbol}()
 const _BUNDLES = Dict{Symbol, ResourceBundle}()
@@ -9,14 +10,24 @@ const _LICENSES = Dict{Symbol, Dict{String, String}}()
 const _DEFAULT_TTL_SECONDS = 21_600
 
 _catalog_dir_path() = get(ENV, "ASTRODYNAMICS_RESOURCES_CATALOG", _CATALOG_DIR)
-_artifacts_toml_path() = get(
-    ENV, "ASTRODYNAMICS_RESOURCES_ARTIFACTS_TOML", _ARTIFACTS_TOML
-)
 _symbols(values) = Symbol.(String.(values))
 
 function _resource_file_path(url::AbstractString)
     path = first(split(first(split(String(url), '?'; limit = 2)), '#'; limit = 2))
     return basename(path)
+end
+
+function _source_file_spec(raw::AbstractDict)
+    file = Dict{String, Any}(raw)
+    url = get(file, "url", nothing)
+    url === nothing && throw(ArgumentError("resource file is missing url"))
+    filename = String(get(file, "filename", _resource_file_path(url)))
+    (isempty(filename) || basename(filename) != filename) &&
+        throw(ArgumentError("resource has unsafe filename $filename"))
+    spec = Dict{String, Any}("url" => String(url), "filename" => filename)
+    haskey(file, "sha256") && (spec["sha256"] = String(file["sha256"]))
+    haskey(file, "size_bytes") && (spec["size_bytes"] = Int(file["size_bytes"]))
+    return spec
 end
 
 function _source_file_specs(entry::Dict{String, Any})
@@ -26,30 +37,17 @@ function _source_file_specs(entry::Dict{String, Any})
     if url !== nothing
         files === nothing ||
             throw(ArgumentError("resource $name must not declare both url and files"))
-        return [
-            Dict{String, Any}(
-                "url" => String(url),
-                "filename" => String(get(entry, "filename", _resource_file_path(url))),
-            ),
-        ]
+        raw = Dict{String, Any}("url" => String(url))
+        haskey(entry, "filename") && (raw["filename"] = entry["filename"])
+        haskey(entry, "sha256") && (raw["sha256"] = entry["sha256"])
+        haskey(entry, "size_bytes") && (raw["size_bytes"] = entry["size_bytes"])
+        return [_source_file_spec(raw)]
     end
-    files === nothing &&
-        throw(ArgumentError("resource $name must declare url or files"))
-    isempty(files) &&
-        throw(ArgumentError("resource $name declares an empty files list"))
+    files === nothing && throw(ArgumentError("resource $name must declare url or files"))
+    isempty(files) && throw(ArgumentError("resource $name declares an empty files list"))
     haskey(entry, "filename") &&
         throw(ArgumentError("resource $name must use per-file filename fields with files"))
-    specs = Dict{String, Any}[]
-    for raw in files
-        file = Dict{String, Any}(raw)
-        file_url = get(file, "url", nothing)
-        file_url === nothing &&
-            throw(ArgumentError("resource $name has a file without a url"))
-        file_name = String(get(file, "filename", _resource_file_path(file_url)))
-        (isempty(file_name) || basename(file_name) != file_name) &&
-            throw(ArgumentError("resource $name has unsafe filename $file_name"))
-        push!(specs, Dict{String, Any}("url" => String(file_url), "filename" => file_name))
-    end
+    specs = [_source_file_spec(raw) for raw in files]
     length(unique(fs["filename"] for fs in specs)) == length(specs) ||
         throw(ArgumentError("resource $name declares duplicate filenames"))
     return specs
@@ -86,6 +84,7 @@ function _format(filename::AbstractString)
             ".ker" => "SPICE text kernel",
             ".bds" => "SPICE DSK",
             ".gfc" => "ICGEM spherical-harmonic coefficients",
+            ".tab" => "text table",
             ".jpg" => "JPEG image",
             ".jpeg" => "JPEG image",
             ".png" => "PNG image",
@@ -127,7 +126,7 @@ function _role(category::Symbol, filename::AbstractString)
     extension == ".tls" && return :lsk
     extension == ".tf" && return :frame_kernel
     extension == ".bds" && return :dsk
-    extension == ".gfc" && return :gravity_coefficients
+    category in (:gravity, :lunar_gravity) && return :gravity_coefficients
     category == :star_catalogue && return :catalogue
     category == :earth_orientation && return :eop
     category == :space_weather && return :space_weather
@@ -171,10 +170,13 @@ function _resource_metadata(
         entry::Dict{String, Any}, name::String, filename::String,
         category::Symbol, source_url::String, metadata_url
     )
+    format = category in (:gravity, :lunar_gravity) ?
+        "spherical-harmonic coefficients" :
+        (category == :star_catalogue ? "CDS fixed-width catalogue" : _format(filename))
     metadata = Dict{String, Any}(
         "source_url" => source_url,
         "source_filename" => filename,
-        "format" => category == :star_catalogue ? "CDS fixed-width catalogue" : _format(filename),
+        "format" => format,
     )
     body = get(entry, "body", _body(name))
     body === nothing || (metadata["body"] = body)
@@ -197,19 +199,10 @@ function _live_metadata(entry::Dict{String, Any}, filename::String)
     return metadata
 end
 
-function _lock_table(catalog_dir::String)
-    path = joinpath(catalog_dir, "ResourceLock.toml")
-    isfile(path) || return Dict{String, Any}()
-    parsed = TOML.parsefile(path)
-    Int(get(parsed, "version", 0)) == 1 ||
-        throw(ArgumentError("ResourceLock.toml has an unsupported version"))
-    return Dict{String, Any}(get(parsed, "resources", Dict{String, Any}()))
-end
-
 function _catalog_source_paths(catalog_dir::String)
     primary = joinpath(catalog_dir, "Resources.toml")
     isfile(primary) || throw(ArgumentError("catalogue is missing $primary"))
-    excluded = Set(("Resources.toml", "ResourceLock.toml", "bundles.toml"))
+    excluded = Set(("Resources.toml", "bundles.toml"))
     extras = sort!(
         filter(
             path -> endswith(lowercase(path), ".toml") && !(basename(path) in excluded),
@@ -219,11 +212,51 @@ function _catalog_source_paths(catalog_dir::String)
     return [primary; extras]
 end
 
-function _parse_resource(
-        entry::Dict{String, Any}, aliases::Vector{Symbol},
-        lock::Union{Nothing, Dict{String, Any}},
-        artifact_table::Dict{String, Any}
+function _artifact_complete(
+        entry::Dict{String, Any}, source_specs::Vector{Dict{String, Any}}, metadata_url
     )
+    haskey(entry, "artifact_sha256") || return false
+    haskey(entry, "git_tree_sha1") || return false
+    all(haskey(spec, "sha256") for spec in source_specs) || return false
+    metadata_url === nothing || haskey(entry, "metadata_sha256") || return false
+    return true
+end
+
+function _merge_immutable_metadata!(
+        metadata::Dict{String, Any}, entry::Dict{String, Any},
+        source_specs::Vector{Dict{String, Any}}, metadata_url, name::String, category::Symbol
+    )
+    if length(source_specs) == 1
+        source = only(source_specs)
+        haskey(source, "sha256") && (metadata["source_sha256"] = source["sha256"])
+        if haskey(source, "size_bytes")
+            metadata["source_size_bytes"] = source["size_bytes"]
+            metadata["size_bytes"] = source["size_bytes"]
+        end
+    else
+        metadata["source_files"] = [copy(spec) for spec in source_specs]
+    end
+    for key in ("artifact_sha256", "artifact_size_bytes", "git_tree_sha1", "metadata_sha256")
+        haskey(entry, key) && (metadata[key] = entry[key])
+    end
+    if haskey(metadata, "artifact_sha256")
+        metadata["archive_sha256"] = metadata["artifact_sha256"]
+    end
+    if haskey(metadata, "artifact_size_bytes")
+        metadata["archive_size_bytes"] = metadata["artifact_size_bytes"]
+    end
+    metadata["asset"] = "$name.tar.gz"
+    base = rstrip(
+        get(
+            ENV, "ASTRODYNAMICS_RESOURCES_RELEASE_BASE",
+            "https://github.com/$(_RESOURCE_REPOSITORY)/releases/download",
+        ), '/'
+    )
+    metadata["download_url"] = "$base/$(_release_tag(category))/$name.tar.gz"
+    return metadata
+end
+
+function _parse_resource(entry::Dict{String, Any}, aliases::Vector{Symbol})
     name = String(entry["name"])
     source_specs = _source_file_specs(entry)
     url = String(source_specs[1]["url"])
@@ -235,18 +268,16 @@ function _parse_resource(
     provider = Symbol(get(entry, "provider", String(_provider(url))))
     files = ResourceFile[
         ResourceFile(
-                live ? fs["filename"] : joinpath("data", fs["filename"]),
-                _role(category, fs["filename"]), i == 1
-            )
-            for (i, fs) in enumerate(source_specs)
+            live ? spec["filename"] : joinpath("data", spec["filename"]),
+            _role(category, spec["filename"]), i == 1
+        )
+        for (i, spec) in enumerate(source_specs)
     ]
     metadata_url = get(entry, "metadata_url", nothing)
     if metadata_url !== nothing
         push!(
-            files, ResourceFile(
-                joinpath("metadata", _resource_file_path(metadata_url)),
-                :metadata, false
-            )
+            files,
+            ResourceFile(joinpath("metadata", _resource_file_path(metadata_url)), :metadata, false),
         )
     end
 
@@ -257,26 +288,16 @@ function _parse_resource(
         ArtifactBackend(name)
     end
     metadata = _resource_metadata(entry, name, filename, category, url, metadata_url)
-    if length(source_specs) > 1
-        metadata["source_files"] = [
-            Dict{String, Any}("filename" => fs["filename"], "url" => fs["url"])
-                for fs in source_specs
-        ]
-    end
     if live
         merge!(metadata, _live_metadata(entry, filename))
-    elseif lock !== nothing
-        merge!(metadata, lock)
-        haskey(lock, "source_size_bytes") &&
-            (metadata["size_bytes"] = lock["source_size_bytes"])
+    else
+        _merge_immutable_metadata!(metadata, entry, source_specs, metadata_url, name, category)
     end
-    # Catalogue-declared terms win over any lock copy so hand-maintained
-    # licensing metadata stays authoritative.
     merge!(metadata, _license_fields(entry, provider))
 
     title = String(get(entry, "title", _title(name)))
     description = String(get(entry, "description", "Resource from $(_host(url))."))
-    available = live || (lock !== nothing && haskey(artifact_table, name))
+    available = live || _artifact_complete(entry, source_specs, metadata_url)
     return ResourceSpec(
         Symbol(name), aliases, title, description, category,
         provider, live ? "rolling" : "pinned", backend,
@@ -296,9 +317,7 @@ function _load_catalog!()
     for parsed in catalogues
         for (provider, defaults) in get(parsed, "licenses", Dict{String, Any}())
             key = Symbol(provider)
-            value = Dict{String, String}(
-                String(k) => String(v) for (k, v) in defaults
-            )
+            value = Dict{String, String}(String(k) => String(v) for (k, v) in defaults)
             if haskey(_LICENSES, key) && _LICENSES[key] != value
                 throw(ArgumentError("conflicting license defaults for provider $provider"))
             end
@@ -320,38 +339,17 @@ function _load_catalog!()
         push!(get!(aliases_by_target, String(target), Symbol[]), Symbol(alias))
     end
 
-    locks = _lock_table(catalog_dir)
-    artifact_table = _artifact_table()
     for parsed in catalogues
         for raw in get(parsed, "resource", Any[])
             entry = Dict{String, Any}(raw)
             name = String(entry["name"])
             haskey(_RESOURCES, Symbol(name)) &&
                 throw(ArgumentError("duplicate resource name $name"))
-            lock = haskey(locks, name) ? Dict{String, Any}(locks[name]) : nothing
-            _RESOURCES[Symbol(name)] = _parse_resource(
-                entry, get(aliases_by_target, name, Symbol[]), lock, artifact_table
-            )
+            _RESOURCES[Symbol(name)] =
+                _parse_resource(entry, get(aliases_by_target, name, Symbol[]))
         end
     end
 
-    declared = Set(String(id) for id in keys(_RESOURCES))
-    unknown_locks = setdiff(Set(keys(locks)), declared)
-    isempty(unknown_locks) ||
-        throw(
-            ArgumentError(
-                "ResourceLock.toml contains unknown resources: " *
-                    join(sort!(collect(unknown_locks)), ", ")
-            )
-        )
-    unknown_artifacts = setdiff(Set(keys(artifact_table)), declared)
-    isempty(unknown_artifacts) ||
-        throw(
-            ArgumentError(
-                "Artifacts.toml contains unknown resources: " *
-                    join(sort!(collect(unknown_artifacts)), ", ")
-            )
-        )
     for (alias, target) in alias_table
         _ALIASES[Symbol(alias)] = Symbol(target)
     end
@@ -361,7 +359,7 @@ function _load_catalog!()
             id = Symbol(name)
             _BUNDLES[id] = ResourceBundle(
                 id, _symbols(members), _title(name), "Ordered resource bundle.",
-                Dict{String, Any}("ordered" => true)
+                Dict{String, Any}("ordered" => true),
             )
         end
     end
@@ -377,20 +375,43 @@ end
 
 _canonical_id(id::Symbol) = get(_ALIASES, id, id)
 
-function _artifact_table()
-    path = _artifacts_toml_path()
-    isfile(path) || return Dict{String, Any}()
-    return TOML.parsefile(path)
+_valid_sha256(value) = occursin(r"^[0-9a-f]{64}$", lowercase(String(value)))
+_valid_tree_hash(value) = occursin(r"^[0-9a-f]{40}$", lowercase(String(value)))
+
+function _validate_artifact_metadata(spec::ResourceSpec)
+    spec.backend isa ArtifactBackend || return nothing
+    has_artifact = haskey(spec.metadata, "artifact_sha256") ||
+        haskey(spec.metadata, "git_tree_sha1")
+    has_artifact || return nothing
+    spec.available ||
+        throw(ArgumentError("resource $(spec.id) has incomplete inline artifact metadata"))
+    _valid_sha256(spec.metadata["artifact_sha256"]) ||
+        throw(ArgumentError("resource $(spec.id) has invalid artifact_sha256"))
+    _valid_tree_hash(spec.metadata["git_tree_sha1"]) ||
+        throw(ArgumentError("resource $(spec.id) has invalid git_tree_sha1"))
+    if haskey(spec.metadata, "source_files")
+        for source in spec.metadata["source_files"]
+            _valid_sha256(get(source, "sha256", "")) ||
+                throw(ArgumentError("resource $(spec.id) has invalid source file sha256"))
+        end
+    else
+        _valid_sha256(get(spec.metadata, "source_sha256", "")) ||
+            throw(ArgumentError("resource $(spec.id) has invalid source sha256"))
+    end
+    if haskey(spec.metadata, "metadata_url")
+        _valid_sha256(get(spec.metadata, "metadata_sha256", "")) ||
+            throw(ArgumentError("resource $(spec.id) has invalid metadata_sha256"))
+    end
+    return nothing
 end
 
 """
     validate_catalog()
 
-Validate the hand-edited catalogues, generated lock, artifacts, aliases,
-and bundles without accessing the network.
+Validate catalogue declarations, inline immutable hashes, aliases, bundles, and
+licenses without accessing the network.
 """
 function validate_catalog()
-    artifact_table = _artifact_table()
     seen_urls = Dict{String, Symbol}()
     for spec in values(_RESOURCES)
         name = String(spec.id)
@@ -406,80 +427,29 @@ function validate_catalog()
         license_url = get(spec.metadata, "license_url", nothing)
         license_url !== nothing && !startswith(String(license_url), "https://") &&
             throw(ArgumentError("resource $name must use an HTTPS license_url"))
-        url = String(spec.metadata["source_url"])
-        startswith(url, "https://") ||
-            throw(ArgumentError("resource $name must use an HTTPS URL"))
-        haskey(seen_urls, url) &&
-            throw(ArgumentError("resources $(seen_urls[url]) and $name share URL $url"))
-        seen_urls[url] = spec.id
-        filename = String(spec.metadata["source_filename"])
-        (isempty(filename) || basename(filename) != filename) &&
-            throw(ArgumentError("resource $name has unsafe filename $filename"))
+
+        sources = haskey(spec.metadata, "source_files") ?
+            spec.metadata["source_files"] :
+            [Dict{String, Any}(
+                "url" => spec.metadata["source_url"],
+                "filename" => spec.metadata["source_filename"],
+            )]
+        for source in sources
+            url = String(source["url"])
+            startswith(url, "https://") ||
+                throw(ArgumentError("resource $name must use HTTPS source URLs"))
+            haskey(seen_urls, url) &&
+                throw(ArgumentError("resources $(seen_urls[url]) and $name share URL $url"))
+            seen_urls[url] = spec.id
+            filename = String(source["filename"])
+            (isempty(filename) || basename(filename) != filename) &&
+                throw(ArgumentError("resource $name has unsafe filename $filename"))
+        end
         count(file -> file.primary, spec.files) == 1 ||
             throw(ArgumentError("resource $name must have exactly one primary file"))
-        if spec.backend isa ArtifactBackend &&
-                haskey(spec.metadata, "git_tree_sha1")
-            if haskey(spec.metadata, "source_files")
-                lock_files = get(spec.metadata, "files", nothing)
-                lock_files === nothing && throw(
-                    ArgumentError(
-                        "resource $name is missing per-file hashes in ResourceLock.toml"
-                    )
-                )
-                declared = spec.metadata["source_files"]
-                length(lock_files) == length(declared) || throw(
-                    ArgumentError(
-                        "resource $name lock file count does not match its declaration"
-                    )
-                )
-                for (declared_file, lock_file) in zip(declared, lock_files)
-                    String(lock_file["filename"]) == String(declared_file["filename"]) ||
-                        throw(
-                            ArgumentError(
-                                "resource $name lock filename does not match its declaration"
-                            )
-                        )
-                    String(lock_file["url"]) == String(declared_file["url"]) ||
-                        throw(
-                            ArgumentError(
-                                "resource $name lock file URL does not match its declaration"
-                            )
-                        )
-                    occursin(r"^[0-9a-f]{64}$", String(get(lock_file, "sha256", ""))) ||
-                        throw(ArgumentError("resource $name has invalid source file sha256"))
-                end
-            else
-                occursin(
-                    r"^[0-9a-f]{64}$",
-                    String(get(spec.metadata, "source_sha256", ""))
-                ) ||
-                    throw(ArgumentError("resource $name has invalid source_sha256"))
-                String(get(spec.metadata, "source_filename", "")) == filename ||
-                    throw(ArgumentError("resource $name lock filename does not match its URL"))
-            end
-            for (key, pattern) in (
-                    "archive_sha256" => r"^[0-9a-f]{64}$",
-                    "git_tree_sha1" => r"^[0-9a-f]{40}$",
-                )
-                occursin(pattern, String(get(spec.metadata, key, ""))) ||
-                    throw(ArgumentError("resource $name has invalid $key"))
-            end
-            haskey(artifact_table, name) ||
-                throw(ArgumentError("locked resource $name is absent from Artifacts.toml"))
-            binding = artifact_table[name]
-            Bool(get(binding, "lazy", false)) ||
-                throw(ArgumentError("artifact $name must be lazy"))
-            String(get(binding, "git-tree-sha1", "")) == spec.metadata["git_tree_sha1"] ||
-                throw(ArgumentError("artifact $name tree hash differs from ResourceLock.toml"))
-            downloads = get(binding, "download", Any[])
-            length(downloads) == 1 ||
-                throw(ArgumentError("artifact $name must have one immutable download"))
-            String(downloads[1]["sha256"]) == spec.metadata["archive_sha256"] ||
-                throw(ArgumentError("artifact $name archive hash differs from ResourceLock.toml"))
-        elseif spec.backend isa ArtifactBackend && haskey(artifact_table, name)
-            throw(ArgumentError("artifact $name is bound but missing from ResourceLock.toml"))
-        end
+        _validate_artifact_metadata(spec)
     end
+
     for (alias, target) in _ALIASES
         haskey(_RESOURCES, alias) &&
             throw(ArgumentError("alias $alias collides with a resource name"))

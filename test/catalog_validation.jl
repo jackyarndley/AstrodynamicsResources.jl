@@ -1,21 +1,12 @@
 using Test
 using AstrodynamicsResources
 
-function invalid_catalog(
-        resource_text::String, bundle_text::String = "";
-        lock_text::String = "version = 1\n[resources]\n"
-    )
+function invalid_catalog(resource_text::String, bundle_text::String = "")
     return mktempdir() do directory
         write(joinpath(directory, "Resources.toml"), resource_text)
         write(joinpath(directory, "bundles.toml"), bundle_text)
-        write(joinpath(directory, "ResourceLock.toml"), lock_text)
-        artifacts = joinpath(directory, "Artifacts.toml")
-        write(artifacts, "")
         try
-            withenv(
-                "ASTRODYNAMICS_RESOURCES_CATALOG" => directory,
-                "ASTRODYNAMICS_RESOURCES_ARTIFACTS_TOML" => artifacts
-            ) do
+            withenv("ASTRODYNAMICS_RESOURCES_CATALOG" => directory) do
                 AstrodynamicsResources._CATALOG_LOADED[] = false
                 @test_throws ArgumentError AstrodynamicsResources._load_catalog!()
             end
@@ -37,14 +28,8 @@ license_url = "https://fixtures.invalid/terms"
 @testset "minimal and invalid catalogues" begin
     mktempdir() do directory
         write(joinpath(directory, "Resources.toml"), VALIDATION_RESOURCE)
-        write(joinpath(directory, "ResourceLock.toml"), "version = 1\n[resources]\n")
-        write(joinpath(directory, "Artifacts.toml"), "")
         try
-            withenv(
-                "ASTRODYNAMICS_RESOURCES_CATALOG" => directory,
-                "ASTRODYNAMICS_RESOURCES_ARTIFACTS_TOML" =>
-                    joinpath(directory, "Artifacts.toml")
-            ) do
+            withenv("ASTRODYNAMICS_RESOURCES_CATALOG" => directory) do
                 AstrodynamicsResources._CATALOG_LOADED[] = false
                 AstrodynamicsResources._load_catalog!()
                 @test resource(:one).metadata["source_filename"] == "one.txt"
@@ -57,10 +42,31 @@ license_url = "https://fixtures.invalid/terms"
         end
     end
 
-    invalid_catalog(
-        VALIDATION_RESOURCE * replace(
-            VALIDATION_RESOURCE, "one.txt" => "two.txt"
+    mktempdir() do directory
+        write(
+            joinpath(directory, "Resources.toml"),
+            VALIDATION_RESOURCE * """
+            sha256 = "$(repeat("0", 64))"
+            artifact_sha256 = "$(repeat("1", 64))"
+            git_tree_sha1 = "$(repeat("2", 40))"
+            """,
         )
+        try
+            withenv("ASTRODYNAMICS_RESOURCES_CATALOG" => directory) do
+                AstrodynamicsResources._CATALOG_LOADED[] = false
+                AstrodynamicsResources._load_catalog!()
+                @test resource(:one).available
+                @test resource(:one).metadata["source_sha256"] == repeat("0", 64)
+                @test resource(:one).metadata["artifact_sha256"] == repeat("1", 64)
+            end
+        finally
+            AstrodynamicsResources._CATALOG_LOADED[] = false
+            AstrodynamicsResources._load_catalog!()
+        end
+    end
+
+    invalid_catalog(
+        VALIDATION_RESOURCE * replace(VALIDATION_RESOURCE, "one.txt" => "two.txt")
     )
 
     invalid_catalog(
@@ -72,10 +78,7 @@ license_url = "https://fixtures.invalid/terms"
     )
 
     invalid_catalog(
-        replace(
-            VALIDATION_RESOURCE, "name = \"one\"" =>
-                "name = \"Not Safe\""
-        )
+        replace(VALIDATION_RESOURCE, "name = \"one\"" => "name = \"Not Safe\"")
     )
     invalid_catalog(replace(VALIDATION_RESOURCE, "https://" => "http://"))
 
@@ -90,7 +93,7 @@ license_url = "https://fixtures.invalid/terms"
     invalid_catalog(
         replace(
             VALIDATION_RESOURCE,
-            "https://fixtures.invalid/terms" => "http://fixtures.invalid/terms"
+            "https://fixtures.invalid/terms" => "http://fixtures.invalid/terms",
         )
     )
 
@@ -133,6 +136,7 @@ license_url = "https://fixtures.invalid/terms"
 
           [[resource.files]]
           url = "https://fixtures.invalid/sub/dir.txt"
+          filename = "../dir.txt"
         """
     )
 
@@ -144,6 +148,12 @@ license_url = "https://fixtures.invalid/terms"
 
           [[resource.files]]
           url = "https://fixtures.invalid/a.txt"
+        """
+    )
+
+    invalid_catalog(
+        VALIDATION_RESOURCE * """
+        artifact_sha256 = "$(repeat("0", 64))"
         """
     )
 
@@ -164,14 +174,6 @@ license_url = "https://fixtures.invalid/terms"
         VALIDATION_RESOURCE, """
         [bundle]
         duplicate = ["one", "one"]
-        """
-    )
-
-    invalid_catalog(
-        VALIDATION_RESOURCE; lock_text = """
-        version = 1
-        [resources.unknown]
-        source_sha256 = "$(repeat("0", 64))"
         """
     )
 end

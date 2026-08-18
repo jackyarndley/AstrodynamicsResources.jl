@@ -2,19 +2,9 @@ name: Organize resource releases
 
 on:
   workflow_dispatch:
-    inputs:
-      phase:
-        description: "Prepare copies/lock relocation first; cleanup only after that PR is merged"
-        required: true
-        default: prepare
-        type: choice
-        options:
-          - prepare
-          - cleanup
 
 permissions:
   contents: write
-  pull-requests: write
 
 concurrency:
   group: resource-release-organization
@@ -28,18 +18,18 @@ jobs:
       - uses: julia-actions/setup-julia@v3.0.2
         with:
           version: "1"
-      - uses: julia-actions/cache@v3.2.0
       - name: Instantiate
         run: julia --project=. -e 'using Pkg; Pkg.instantiate()'
 
-      - name: Ensure canonical releases and titles
+      - name: Normalize canonical resource releases
         env:
           GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
           while IFS=$'\t' read -r RELEASE TITLE; do
             if gh release view "$RELEASE" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
-              gh release edit "$RELEASE" --repo "$GITHUB_REPOSITORY" --title "$TITLE" --latest=false
+              gh release edit "$RELEASE" --repo "$GITHUB_REPOSITORY" \
+                --title "$TITLE" --latest=false
             else
               gh release create "$RELEASE" --repo "$GITHUB_REPOSITORY" \
                 --target main --title "$TITLE" --latest=false \
@@ -47,77 +37,42 @@ jobs:
             fi
           done < <(julia --project=. scripts/resource_release.jl releases)
 
-      - name: Copy and verify locked assets in canonical releases
-        if: inputs.phase == 'prepare'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        shell: bash
-        run: |
-          mkdir -p migration-download
-          while IFS=$'\t' read -r ID ASSET TARGET SOURCE; do
-            echo "$ID: $SOURCE/$ASSET -> $TARGET/$ASSET"
-            TARGET_DIGEST=$(gh release view "$TARGET" --repo "$GITHUB_REPOSITORY" \
-              --json assets --jq ".assets[] | select(.name == \"$ASSET\") | .digest")
-            SOURCE_DIGEST=$(gh release view "$SOURCE" --repo "$GITHUB_REPOSITORY" \
-              --json assets --jq ".assets[] | select(.name == \"$ASSET\") | .digest")
-            [ -n "$SOURCE_DIGEST" ] || { echo "Missing source asset $SOURCE/$ASSET"; exit 1; }
-            if [ -n "$TARGET_DIGEST" ]; then
-              test "$TARGET_DIGEST" = "$SOURCE_DIGEST"
-              continue
-            fi
-            rm -f "migration-download/$ASSET"
-            gh release download "$SOURCE" --repo "$GITHUB_REPOSITORY" \
-              --pattern "$ASSET" --dir migration-download
-            gh release upload "$TARGET" "migration-download/$ASSET" --repo "$GITHUB_REPOSITORY"
-            TARGET_DIGEST=$(gh release view "$TARGET" --repo "$GITHUB_REPOSITORY" \
-              --json assets --jq ".assets[] | select(.name == \"$ASSET\") | .digest")
-            test "$TARGET_DIGEST" = "$SOURCE_DIGEST"
-            rm -f "migration-download/$ASSET"
-          done < <(julia --project=. scripts/resource_release.jl manifest)
-
-      - name: Audit canonical release placement
+      - name: Verify cached resources are in canonical releases
         env:
           GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
           : > release-assets.txt
           while read -r RELEASE; do
-            gh release view "$RELEASE" --repo "$GITHUB_REPOSITORY" --json assets \
-              --jq '.assets[].name' 2>/dev/null | \
-              while read -r ASSET; do printf '%s\t%s\n' "$RELEASE" "$ASSET"; done || true
+            RELEASE_ID=$(gh api "repos/$GITHUB_REPOSITORY/releases/tags/$RELEASE" --jq '.id')
+            gh api --paginate "repos/$GITHUB_REPOSITORY/releases/$RELEASE_ID/assets?per_page=100" \
+              --jq '.[].name' |
+              while read -r ASSET; do printf '%s\t%s\n' "$RELEASE" "$ASSET"; done
           done < <(julia --project=. scripts/resource_release.jl tags)
           sort -u -o release-assets.txt release-assets.txt
           julia --project=. scripts/release_audit.jl release-assets.txt
 
-      - name: Relocate locked artifact URLs
-        if: inputs.phase == 'prepare'
-        run: |
-          julia --project=. scripts/relocate_resource_locks.jl
-          julia --project=. scripts/catalog.jl validate
-
-      - name: Open relocation pull request
-        if: inputs.phase == 'prepare'
-        uses: peter-evans/create-pull-request@v8.1.1
-        with:
-          branch: automation/resource-release-locks
-          delete-branch: true
-          title: "Relocate resource artifact URLs"
-          commit-message: "Relocate resource artifact URLs"
-          body: |
-            Points every existing immutable artifact binding at its canonical
-            resource-family release after verifying the copied archive digest.
-
-      - name: Verify cleanup is safe
-        if: inputs.phase == 'cleanup'
+      - name: Remove undeclared assets from canonical releases
+        env:
+          GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
-          if grep -Eq '/releases/download/(v0\.1\.0|resources-geopotential)/' catalog/ResourceLock.toml; then
-            echo "Legacy release URLs remain in ResourceLock.toml. Merge the relocation PR first."
-            exit 1
-          fi
+          julia --project=. scripts/resource_release.jl manifest |
+            cut -f2,3 | awk -F'\t' '{print $2 "\t" $1}' | sort -u > expected-assets.txt
 
-      - name: Remove obsolete releases and recreate package release source-only
-        if: inputs.phase == 'cleanup'
+          while read -r RELEASE; do
+            RELEASE_ID=$(gh api "repos/$GITHUB_REPOSITORY/releases/tags/$RELEASE" --jq '.id')
+            gh api --paginate "repos/$GITHUB_REPOSITORY/releases/$RELEASE_ID/assets?per_page=100" \
+              --jq '.[] | [.id, .name] | @tsv' |
+              while IFS=$'\t' read -r ASSET_ID ASSET; do
+                if ! grep -Fqx "$RELEASE	$ASSET" expected-assets.txt; then
+                  echo "Deleting undeclared asset $RELEASE/$ASSET"
+                  gh api -X DELETE "repos/$GITHUB_REPOSITORY/releases/assets/$ASSET_ID"
+                fi
+              done
+          done < <(julia --project=. scripts/resource_release.jl tags)
+
+      - name: Remove obsolete data releases
         env:
           GH_TOKEN: ${{ github.token }}
         shell: bash
@@ -132,6 +87,11 @@ jobs:
             fi
           done
 
+      - name: Recreate the package release without uploaded data assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
           if gh release view v0.1.0 --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
             gh release delete v0.1.0 --repo "$GITHUB_REPOSITORY" --yes
           fi

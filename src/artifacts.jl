@@ -3,25 +3,46 @@ function _unpublished_error(spec::ResourceSpec)
     return ErrorException(
         "resource $(spec.id) is declared but has not been cached yet. Source: $source. " *
             "Merge the declaration to main or run the Cache resources workflow; it will " *
-            "publish the archive and open a generated lock-file pull request."
+            "publish the archive and add the immutable hashes to the resource declaration."
     )
+end
+
+function _artifact_binding(spec::ResourceSpec)
+    spec.available || throw(_unpublished_error(spec))
+    return Dict{String, Any}(
+        spec.backend.artifact_name => Dict{String, Any}(
+            "git-tree-sha1" => String(spec.metadata["git_tree_sha1"]),
+            "lazy" => true,
+            "download" => [
+                Dict{String, Any}(
+                    "url" => resource_download_url(spec),
+                    "sha256" => String(spec.metadata["artifact_sha256"]),
+                ),
+            ],
+        ),
+    )
+end
+
+function _with_artifact_toml(f::Function, spec::ResourceSpec)
+    return mktemp() do path, io
+        TOML.print(io, _artifact_binding(spec); sorted = true)
+        close(io)
+        return f(path)
+    end
 end
 
 function _artifact_hash(spec::ResourceSpec)
     spec.backend isa ArtifactBackend || return nothing
-    toml = _artifacts_toml_path()
-    isfile(toml) || return nothing
-    return Artifacts.artifact_hash(spec.backend.artifact_name, toml)
+    spec.available || return nothing
+    return _with_artifact_toml(spec) do toml
+        Artifacts.artifact_hash(spec.backend.artifact_name, toml)
+    end
 end
 
 function _artifact_root(spec::ResourceSpec)
     spec.available || throw(_unpublished_error(spec))
     hash = _artifact_hash(spec)
-    hash === nothing && throw(
-        ErrorException(
-            "artifact $(spec.backend.artifact_name) for resource $(spec.id) is not bound in $_ARTIFACTS_TOML"
-        )
-    )
+    hash === nothing && throw(ErrorException("resource $(spec.id) has no artifact hash"))
     if !Artifacts.artifact_exists(hash)
         _offline() && throw(
             ErrorException(
@@ -29,9 +50,9 @@ function _artifact_root(spec::ResourceSpec)
                     "Call resource_paths(:$(spec.id)) while online to materialize it."
             )
         )
-        Pkg.Artifacts.ensure_artifact_installed(
-            spec.backend.artifact_name, _artifacts_toml_path()
-        )
+        _with_artifact_toml(spec) do toml
+            Pkg.Artifacts.ensure_artifact_installed(spec.backend.artifact_name, toml)
+        end
     end
     return Artifacts.artifact_path(hash)
 end
@@ -56,13 +77,13 @@ function _artifact_status(spec::ResourceSpec)
     if !spec.available
         return ResourceStatus(
             false, :artifact, nothing, nothing, nothing, nothing,
-            nothing, nothing, nothing, "not cached yet"
+            nothing, nothing, nothing, "not cached yet",
         )
     end
     hash = _artifact_hash(spec)
     hash === nothing && return ResourceStatus(
         false, :artifact, nothing, nothing, nothing, nothing, nothing, nothing,
-        nothing, "artifact is not bound",
+        nothing, "artifact has no tree hash",
     )
     installed = Artifacts.artifact_exists(hash)
     root = installed ? Artifacts.artifact_path(hash) : nothing
@@ -76,7 +97,7 @@ function _artifact_status(spec::ResourceSpec)
     return ResourceStatus(
         present, :artifact, path, nothing, nothing, nothing,
         nothing, nothing, present ? filesize(path) : nothing,
-        installed && !present ? "expected file is missing" : nothing
+        installed && !present ? "expected file is missing" : nothing,
     )
 end
 
@@ -93,7 +114,7 @@ function _scratch_status(spec::ResourceSpec)
     error = haskey(metadata, "last_error") ? String(metadata["last_error"]) : nothing
     return ResourceStatus(
         available, :scratch, available ? path : nothing, fresh,
-        available ? !fresh : false, checked, updated, sha, size, error
+        available ? !fresh : false, checked, updated, sha, size, error,
     )
 end
 
@@ -117,7 +138,7 @@ function verify_resource(id::Symbol; materialize::Bool = false, kwargs...)
     if haskey(_BUNDLES, id)
         return all(
             member -> verify_resource(member; materialize, kwargs...),
-            _bundle_resource_ids(id)
+            _bundle_resource_ids(id),
         )
     end
     spec = resource(id)

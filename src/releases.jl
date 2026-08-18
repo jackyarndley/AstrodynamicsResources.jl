@@ -1,10 +1,6 @@
-module ResourceReleases
+const _RESOURCE_REPOSITORY = "jackyarndley/AstrodynamicsResources.jl"
 
-using AstrodynamicsResources
-
-export RELEASES, release_tag, release_title, source_release
-
-const RELEASES = (
+const RESOURCE_RELEASES = (
     "resources-ephemerides" => "Ephemerides",
     "resources-satellite-ephemerides" => "Satellite Ephemerides",
     "resources-star-catalogues" => "Star Catalogues",
@@ -14,11 +10,7 @@ const RELEASES = (
     "resources-shape-models" => "Shape Models",
 )
 
-function release_tag(spec::ResourceSpec)
-    spec.backend isa ArtifactBackend ||
-        throw(ArgumentError("$(spec.id) is live and does not belong in an immutable release"))
-
-    category = spec.category
+function _release_tag(category::Symbol)
     category in (
         :ephemeris, :lagrange_ephemeris, :station_ephemeris,
         :asteroid_ephemeris, :comet_ephemeris,
@@ -32,19 +24,21 @@ function release_tag(spec::ResourceSpec)
     return "resources-reference"
 end
 
+release_tag(spec::ResourceSpec) = _release_tag(spec.category)
 release_tag(id::Symbol) = release_tag(resource(id))
+resource_asset(spec::ResourceSpec) = "$(spec.id).tar.gz"
+resource_asset(id::Symbol) = resource_asset(resource(id))
 
 function release_title(tag::AbstractString)
-    index = findfirst(item -> first(item) == tag, RELEASES)
+    index = findfirst(item -> first(item) == tag, RESOURCE_RELEASES)
     index === nothing && throw(ArgumentError("unknown resource release $tag"))
-    return last(RELEASES[index])
+    return last(RESOURCE_RELEASES[index])
 end
 
-function source_release(spec::ResourceSpec)
-    url = get(spec.metadata, "download_url", nothing)
-    url === nothing && return nothing
-    result = match(r"/releases/download/([^/]+)/", String(url))
-    return result === nothing ? nothing : String(result.captures[1])
-end
-
+function resource_download_url(spec::ResourceSpec)
+    base = get(
+        ENV, "ASTRODYNAMICS_RESOURCES_RELEASE_BASE",
+        "https://github.com/$(_RESOURCE_REPOSITORY)/releases/download",
+    )
+    return "$(rstrip(base, '/'))/$(release_tag(spec))/$(resource_asset(spec))"
 end
