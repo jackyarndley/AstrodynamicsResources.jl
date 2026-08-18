@@ -5,10 +5,10 @@
 
 **[Documentation](https://jackyarndley.github.io/AstrodynamicsResources.jl/)**
 
-`AstrodynamicsResources.jl` provides lazy local paths to standard
-astrodynamics data files. It manages data; it does not load SPICE kernels,
-propagate orbits, evaluate gravity fields, or interpret Earth-orientation and
-space-weather products.
+`AstrodynamicsResources.jl` provides lazy local paths to standard astrodynamics
+data files. It manages data; it does not load SPICE kernels, propagate orbits,
+evaluate gravity fields, or interpret Earth-orientation and space-weather
+products.
 
 ```julia
 using AstrodynamicsResources
@@ -21,13 +21,13 @@ gravity = only(resource_paths(:ggm05c))
 eop = only(resource_paths(:iers_finals2000a))
 ```
 
-Immutable files use lazy Julia artifacts. Rolling products use a locked,
-conditional, atomic `Scratch.jl` cache. Importing, listing, searching, and
-inspecting bundles never accesses the network.
+Immutable files use Julia's artifact store. Rolling products use a conditional,
+atomic `Scratch.jl` cache. Importing, listing, searching, and inspecting bundles
+never accesses the network.
 
 ## Adding a resource
 
-Edit [`catalog/Resources.toml`](catalog/Resources.toml) and add:
+Add the minimal declaration to one of the catalogue TOML files:
 
 ```toml
 [[resource]]
@@ -35,72 +35,63 @@ name = "example"
 url = "https://authoritative.example/data/example.dat"
 ```
 
-That is the complete required declaration. For a changing upstream file, add
-`live = true`. Optional `ttl`, `filename`, `mirrors`, `metadata_url`,
-`category`, and `provider` fields exist only for exceptions.
+For a changing upstream file, add `live = true`. Optional `ttl`, `filename`,
+`mirrors`, `metadata_url`, `category`, and `provider` fields exist for
+exceptions. License terms are resolved from provider-level `[licenses]`
+tables, with per-resource overrides when needed.
 
-License terms are resolved from the provider-level `[licenses]` table; add
-`license` and `license_url` only to override the provider default.
+After the declaration reaches `main`, **Cache resources** checks the canonical
+resource-family release. If `example.tar.gz` is already there, it verifies and
+adopts that archive instead of rebuilding it. Otherwise it downloads the
+upstream source, creates the deterministic archive, and uploads it without
+overwriting existing bytes. Every successful resource then gets its hashes
+written directly into its own declaration:
 
-After the declaration reaches `main`, the resource-cache workflow finds entries
-that are not published, downloads and validates the source, creates a
-deterministic `example.tar.gz`, uploads it without overwriting existing bytes,
-and opens a PR containing the generated `ResourceLock.toml` and
-`Artifacts.toml` changes. Source downloads are cached between workflow runs and
-package releases.
+```toml
+[[resource]]
+name = "example"
+sha256 = "..."             # authoritative upstream file
+artifact_sha256 = "..."    # published example.tar.gz
+git_tree_sha1 = "..."      # extracted Julia artifact tree
+url = "https://authoritative.example/data/example.dat"
+```
+
+Multi-file resources put `sha256` beside each `[[resource.files]]` URL. A
+`metadata_url` gets a `metadata_sha256`. Release tags, asset names, and download
+URLs are derived from the resource category and name; they are not duplicated
+in the catalogue.
+
+There is no committed generated lock database. The catalogue is the source of
+truth. At materialization time the package creates a tiny temporary Julia
+artifact binding from the inline hashes, then uses the normal `Pkg.Artifacts`
+store.
 
 The outer release asset is named for the resource (`de440s.tar.gz`). Inside it,
 the original upstream filename and bytes are preserved (`data/de440s.bsp`),
-alongside `provenance.toml`. This keeps the release readable without pretending
-that a compressed archive is itself a `.bsp`, `.gfc`, or `.bds` file.
+alongside `provenance.toml`.
 
 Adding a declaration is also an assertion that its content may be redistributed
 under the upstream terms. Package code is MIT licensed; scientific data retain
 their provider terms. This project is not affiliated with NASA, JPL, NAIF,
-IERS, GFZ, NOAA, ICGEM, SILSO, or CelesTrak.
+IERS, GFZ, NOAA, ICGEM, SILSO, CelesTrak, or the NASA PDS.
 
 ## Included families
 
-- multiple JPL DE generations: DE430, DE431, DE432s, DE435, DE438,
-  DE440/DE440s, DE441, and DE442/DE442s
-- natural satellite SPKs for Mars, Jupiter, Saturn, Uranus, Neptune, and Pluto,
-  including complementary solutions, NEP098's ordered parts, and current
-  name-ID frame kernels
-- current DSN and Earth-station SPKs, with ITRF93 and fixed-frame variants
-- Earth–Moon and Sun–Earth L1, L2, L4, and L5 SPKs based on DE441
-- the generic 300-asteroid CODES ephemeris and generic TNO satellite-system
-  ephemerides
-- a long-range Siding Spring comet ephemeris
-- explicitly named extended-range satellite SPKs for Saturn, Uranus, and
-  Neptune; these remain lazy and are separate from normal-epoch bundles
-- NAIF constants, frames, leap seconds, and lunar DE440 orientation
-- GOCO06s and GGM05C spherical-harmonic gravity coefficient files
+- JPL DE planetary ephemerides and Earth/Lagrange/station SPKs
+- natural-satellite and TNO-system ephemerides
+- NAIF constants, frames, leap seconds, and lunar orientation products
+- Earth gravity fields including GGM05C and GOCO06s
+- GRAIL lunar gravity fields including GL0660B and degree-1800 GL1800F variants
 - selected NAIF DSK shape models
-- FK5, Hipparcos, and Tycho-2 star catalogues with their CDS ReadMe files
+- FK5, Hipparcos, and Tycho-2 star catalogues
+- Solar System Scope planet/sky textures
 - live IERS, GFZ, NOAA SWPC, SILSO, CelesTrak, and rolling NAIF products
-
-DE431, DE441, NEP098, and URA184 are split into their official NAIF files and
-exposed as ordered bundles. No artificial Earth-satellite or spacecraft
-kernels are included. The active generic comet directory's remaining files are
-dated mission/event products rather than broadly reusable ephemerides, so
-those files are intentionally not catalogued.
 
 ## Licensing
 
-Every resource records its terms in `catalog/Resources.toml`: a provider-level
-`[licenses]` default, or an explicit `license`/`license_url` override. Terms
-are visible in `resource`, persisted in `ResourceLock.toml`, written into
-each archive's `provenance.toml`, and listed in the resource reference.
-
-| Provider | Terms |
-|:---|:---|
-| NAIF | Redistribution permitted only for unmodified kernels (NAIF Rules Regarding Use of SPICE) |
-| IERS | Free use with acknowledgement |
-| GFZ, ICGEM | CC BY 4.0; attribution mandatory |
-| NOAA SWPC | Public domain (U.S. government work) |
-| SILSO | CC BY-NC 4.0 (non-commercial) |
-| CelesTrak | Freely available; credit CelesTrak and respect its usage policy |
-| CDS, ESA | Cite catalogue authors/publisher; free use with acknowledgement |
+Every resource resolves its terms directly from the catalogue. Those terms are
+visible in `resource`, written into each immutable archive's `provenance.toml`,
+and listed in the generated resource reference.
 
 Package code is MIT licensed; scientific data retain their provider terms.
 
