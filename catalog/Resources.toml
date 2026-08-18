@@ -73,91 +73,201 @@ url = "https://cdsarc.cds.unistra.fr/ftp/I/239/ReadMe"
 
 [[resource]]
 name = "de430"
+artifact_sha256 = "8956125d8cead6a605d95b6da983b6fa23d36f827034c531c0c3a2f74479e886"
+artifact_size_bytes = 113503631
+git_tree_sha1 = "7f2c6a8ab9bc13a9389929d38cbec07d0160ac31"
+sha256 = "6e1b277c5f07135a84950604b83e56b736be696a7f3560bcddb1d4aeb944fca1"
+size_bytes = 119741440
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de430.bsp"
 
 [[resource]]
 name = "de431_part1"
+artifact_sha256 = "66c51e6d84cfe7d5f0012808c184b6b8b1ca1e2157cf5a4d0ef079c6ed339cdd"
+artifact_size_bytes = 1362479064
+git_tree_sha1 = "8a32f24c16c64f894c0ab735f5aebd892d5ce33a"
+sha256 = "dcf8041a435c62216321c836acdb7081afae0058a1c32d343475d732a94ecaed"
+size_bytes = 1436796928
+metadata_sha256 = "f1662da6bfb4b5b3c45c1b9be9c144af13906b162176212f847b4beaedb8775c"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de431_part-1.bsp"
 metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de431_tech-comments.txt"
 
 [[resource]]
 name = "de431_part2"
+artifact_sha256 = "c340a78c3d13ad9609522fb35b5b85dc0d8c12bbef88a1b3994db333f53cb6a7"
+artifact_size_bytes = 1774086320
+git_tree_sha1 = "206a18258a918680a25c47b744e4ba84d9266042"
+sha256 = "a354082a26441d25dbeea252a41c00d5eaa2370daf39cb3239de039392b11ee4"
+size_bytes = 1871023104
+metadata_sha256 = "f1662da6bfb4b5b3c45c1b9be9c144af13906b162176212f847b4beaedb8775c"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de431_part-2.bsp"
 metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de431_tech-comments.txt"
 
 [[resource]]
 name = "de432s"
+artifact_sha256 = "676e35bc70b43af364296cb9cc33480118d7fa26e8322d9cb1450ecef9b28ce6"
+artifact_size_bytes = 10328282
+git_tree_sha1 = "007269e236b634b3ea605db399f0b94097e2eede"
+sha256 = "363f32e14f5255359ac32c4d38080cf28ab55564a5e16696a75f63394b666e9b"
+size_bytes = 10895360
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de432s.bsp"
 
 [[resource]]
 name = "de435"
+artifact_sha256 = "c91eb03f0807e07dd1b2b1c992e32945acf0c77e99e84710c00f5e6c213c656b"
+artifact_size_bytes = 113512045
+git_tree_sha1 = "9eef8a8156395690f35d7671b34aa889c89ecbad"
+sha256 = "fd3081dd33293f744c2f876e8d2ebc1337591a389ef7936257d8b0311a1341a4"
+size_bytes = 119769088
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de435.bsp"
 
 [[resource]]
 name = "de438"
+artifact_sha256 = "fe08bffc78b7fef03cc85d73a2fc6f21f9af40a2051f2700b8bab633e2b5425a"
+artifact_size_bytes = 113511115
+git_tree_sha1 = "ad08a01888542430ed6a9ae799e1b0efd9696257"
+sha256 = "4f0b4e01585de0d8e1f4e5e3f12025c3caefc7b488b4e2a648e1f582f5142b18"
+size_bytes = 119769088
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de438.bsp"
 
 [[resource]]
 name = "de440"
+artifact_sha256 = "a75fb6b143c9749b444442193eee697b6c50e257ad85788df749d592577d3b15"
+artifact_size_bytes = 113519117
+git_tree_sha1 = "d1070011331a4bef727feef75c8d183fa02a283e"
+sha256 = "a4ce9bf9b3282becc9f4b2ac3cebe03a2ae7599981aabd7265fd8482fff7c4b5"
+size_bytes = 119799808
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de440.bsp"
 
 [[resource]]
 name = "de440s"
+artifact_sha256 = "a334ae22d8c2b210d6e04b0e490509b3455142dcc772f03dc0c54477ef6d6f88"
+artifact_size_bytes = 30987140
+git_tree_sha1 = "7d90c47fb19cf3b61fd9fb4c415e05656e2577f5"
+sha256 = "c1c7feeab882263fc493a9d5a5b2ddd71b54826cdf65d8d17a76126b260a49f2"
+size_bytes = 32726016
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de440s.bsp"
 
 [[resource]]
 name = "de441_part1"
+artifact_sha256 = "ee73053644706706898f8d5a5b5efa44a6112607b441ef05caeb803c593e0665"
+artifact_size_bytes = 1565566778
+git_tree_sha1 = "b3f05a41ac2b2da0f905b2deb74c7f31c98ea0b7"
+sha256 = "13757827f5db41b835a24bbd637488636ce79a8ca754062fed17844f7d5b618e"
+size_bytes = 1651119104
+metadata_sha256 = "eda144896f7a09fd810c6261036d05d767ce8c77cb2b3795bc824fb623881007"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de441_part-1.bsp"
 metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de441_tech-comments.txt"
 
 [[resource]]
 name = "de441_part2"
+artifact_sha256 = "812b9d8e86b11f5d81d5f0b6cebc4bc272db8f01315e53aa454a1133406d8a3c"
+artifact_size_bytes = 1571030213
+git_tree_sha1 = "9e220ecfaa596fa04475d9b3ed0ce425c8571b11"
+sha256 = "3abb17dae2d78dd34880377544aacb54892104a0d4462b322cb9f4454d4887f6"
+size_bytes = 1656830976
+metadata_sha256 = "eda144896f7a09fd810c6261036d05d767ce8c77cb2b3795bc824fb623881007"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de441_part-2.bsp"
 metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de441_tech-comments.txt"
 
 [[resource]]
 name = "de442"
+artifact_sha256 = "2a2df3c6c784b26d4177a64ff1f9c17eefd6d1c15b9fffd7d9fb4d6d14c227f8"
+artifact_size_bytes = 113512683
+git_tree_sha1 = "587c8e7180bd87213fac3b36ecad620d6911c7cc"
+sha256 = "8d5001fab315eeff222cc51f7cf7ffcdb43fb38fb9ac73ff09e09a5b361fd388"
+size_bytes = 119771136
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de442.bsp"
 
 [[resource]]
 name = "de442s"
+artifact_sha256 = "74df2c3ebfc7953d3c789b872c78fa0e5e9a7ceee4923270be74ec84a58e3deb"
+artifact_size_bytes = 30984072
+git_tree_sha1 = "bbe4c88886abd272ff1b4152942e322425a72fed"
+sha256 = "54d97562a5b094d298b1b8eafa5a2e17e3e010ce85e1a366d07f003ad159323c"
+size_bytes = 32701440
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de442s.bsp"
 
 [[resource]]
 name = "gm_de440"
+artifact_sha256 = "1ec9ad5ad32015ed1f28982507ed35f09c9100be9a8efd2d23eb9cb87acfdcb9"
+artifact_size_bytes = 4080
+git_tree_sha1 = "0407fdf91a4218bcc9c61fc887e5ab049f82581e"
+sha256 = "924ddf4fb9ead9fe8a1aa55780bcabde40b09d00065d58226e24b68d8092f140"
+size_bytes = 12406
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/gm_de440.tpc"
 
 [[resource]]
 name = "pck00011"
+artifact_sha256 = "9085eabfd523216f562fa3a8948634636d82cac41ca7e16f656b1f0359f806c7"
+artifact_size_bytes = 25093
+git_tree_sha1 = "b66a1783a9ff9470a2a684fc4491bd4e23e5dfb2"
+sha256 = "3dff7b1dbeceaa01f25467767d3fa25816051c85d162d1edf04acb310ee28bb1"
+size_bytes = 131226
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/pck00011.tpc"
 
 [[resource]]
 name = "geophysical"
+artifact_sha256 = "ca4ba37dbfe0b3b6c59d318e8973d24c560153ea57f566f40d91549dc3c6b9f7"
+artifact_size_bytes = 1752
+git_tree_sha1 = "e8ae15d2be129d790f7bc47bc92f324530f64ae9"
+sha256 = "3c60329dc3f5418ba961a6cf36ac01e4bb28bffb91322f230bbdc8c499248987"
+size_bytes = 3186
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/geophysical.ker"
 
 [[resource]]
 name = "earth_fixed"
+artifact_sha256 = "3bd13afdf9e24e093029c9b69efb16f42998fc9dd0a5f2d3fc32e76beb30be8f"
+artifact_size_bytes = 746
+git_tree_sha1 = "cd860bd8b4e9a725909a21cef5766e5f150cf3c6"
+sha256 = "79a79a2ab0bd8c1a27346446e3bcf459c69019bff0c8d420abc4d5d065e36253"
+size_bytes = 975
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/earth_fixed.tf"
 
 [[resource]]
 name = "naif0012"
+artifact_sha256 = "126abdba9b7b32dd58d02ecbaae0fbc4794418413b4c227fad11045fc2e657c4"
+artifact_size_bytes = 1916
+git_tree_sha1 = "b29ffc43eaaf5de8b950fd3e7d1f85e877395cf7"
+sha256 = "678e32bdb5a744117a467cd9601cd6b373f0e9bc9bbde1371d5eee39600a039b"
+size_bytes = 5257
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/lsk/naif0012.tls"
 
 [[resource]]
 name = "moon_pa_de440_200625"
+artifact_sha256 = "43e57ad56bf8dee09eedeb7e020c642dc76ccc8d13f32cf5a655257e67375c7e"
+artifact_size_bytes = 12020742
+git_tree_sha1 = "e5fc787538f1e2e52710e8f136e886c72751edfc"
+sha256 = "60cd55aa401ea2ea97360636f567554bfe4e37bb829f901b4460a455dfaf783f"
+size_bytes = 12863488
+metadata_sha256 = "97d3bb1e75e7807a5e0b76f836a2d1d192e0d5bde0c0a87979b4c13255aef8c1"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/moon_pa_de440_200625.bpc"
 metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/moon_pa_de440_200625.cmt"
 
 [[resource]]
 name = "moon_de440_250416_frames"
+artifact_sha256 = "ba75fdeba8596465d29adbbc590ae4f3041cbc187d5bf2d0cd4814b5878754a3"
+artifact_size_bytes = 6326
+git_tree_sha1 = "6b5bd816d9ed865d3dea50e7274af5d6c08d644d"
+sha256 = "a47c71e9c9f33796bdafb2c9d69a7ee447b6016ecad80f71cd6f3e479f9cf768"
+size_bytes = 19478
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/fk/satellites/moon_de440_250416.tf"
 
 [[resource]]
 name = "moon_assoc_pa"
+artifact_sha256 = "e6f57821692e271f4ea959baf373843ca9e1fb4486cbcc94da5415d1a290a93f"
+artifact_size_bytes = 3313
+git_tree_sha1 = "a09946e39a2c9f2967d60b450160a8d35841e876"
+sha256 = "beab41733f538147f6c82435d5276dd10673ac27f50036cd3081b077be93b592"
+size_bytes = 8479
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/fk/satellites/moon_assoc_pa.tf"
 
 [[resource]]
 name = "moon_assoc_me"
+artifact_sha256 = "c0820642eeabb94f05d467e62853bc5e4391c49c757296aec1ac5956c87f5499"
+artifact_size_bytes = 3310
+git_tree_sha1 = "fa29d979d4ffa514b857a23b76c5612bdf2dc9d7"
+sha256 = "52c622043ce0447d575e59ee01642f1894921e68c10f934ceff065f362da6c1c"
+size_bytes = 8468
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/fk/satellites/moon_assoc_me.tf"
 
 [[resource]]
@@ -168,6 +278,11 @@ description = "Long-range Mars, Phobos, and Deimos ephemeris (NAIF IDs 499, 401,
 
 [[resource]]
 name = "mar099s"
+artifact_sha256 = "f43185689625098a3922101942da77a74f1a7a54a4e6fd0725de57113a78e674"
+artifact_size_bytes = 59028975
+git_tree_sha1 = "24d4f86ea315af460b767f473b14b67358dbab7d"
+sha256 = "997dc93ba640e476da7a494d2237dcdeb145e528db37be8ccee588c615e4e1ff"
+size_bytes = 67594240
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/mar099s.bsp"
 
 [[resource]]
@@ -178,24 +293,50 @@ description = "Jupiter irregular-satellite ephemeris, including the Galilean sys
 
 [[resource]]
 name = "jup348"
+artifact_sha256 = "f5d429597de14a9653d19a3fe82210a11e6d242d22745e6c799ba1cba0bc5b5c"
+artifact_size_bytes = 53336608
+git_tree_sha1 = "af07c3967f6996c5d21e6fa1521ba9864bfc9c47"
+sha256 = "9b04592fb6d5448eba480c347b60ed5f0629d049e59417c40039021b64662701"
+size_bytes = 59772928
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/jup348.bsp"
 
 [[resource]]
 name = "jup349"
+artifact_sha256 = "108d827ef72bb3a802d1ad4c4cbf63bf9a459706be185640c597871cca64623f"
+artifact_size_bytes = 82510722
+git_tree_sha1 = "0f8aa0b1dba55a0f39b8759f020e6a4a71a11870"
+sha256 = "a8f682fd0f156db47ee9672e0276f0842eb70d3ade8533fed59e38b6d5032971"
+size_bytes = 97525760
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/jup349.bsp"
 
 [[resource]]
 name = "jup349_nameid"
+artifact_sha256 = "0327a4848538c2ef9c4a82fe19fd1018660d308d1ac4f2a482983638bfb099e9"
+artifact_size_bytes = 711
+git_tree_sha1 = "edcf4066475f991519f58f0d70e32cd7ef4d8663"
+sha256 = "03ea700f2b05391e9cec4f41117ed6ca8b4b08c8856abb49c09e8aa88648eba7"
+size_bytes = 1287
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/fk/satellites/jup349_nameid.tf"
 
 [[resource]]
 name = "jup365"
+artifact_sha256 = "e0819a0dce3632e56b2a456c0d5c42602f710cab05b9d7447db9295a38ec2e6e"
+artifact_size_bytes = 1022251072
+git_tree_sha1 = "04db3031d6f5c608e9e37c85713978ced2a51b8e"
+sha256 = "dbf016c01ba4d022154838000cf3f06962cf958ddc503a366f7fe8f81495c5cb"
+size_bytes = 1136581632
+metadata_sha256 = "3c851a4b5d1223e155320e7f63558ebcc81908c8f68fb1c7b43985a69663e08a"
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/jup365.bsp"
 metadata_url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/jup365.cmt"
 description = "Jupiter Galilean and inner-moon ephemeris (NAIF IDs 501–505, 514–516, and 599)."
 
 [[resource]]
 name = "sat393_daphnis"
+artifact_sha256 = "aae5d6df04c38a314ac8ae3f45dc1225240d0b7288ece50d5d1668c658ddf0d5"
+artifact_size_bytes = 1855
+git_tree_sha1 = "12317259778e9dd9df82c3bc6843318890036a73"
+sha256 = "8b21b3b68e5603006b67cb02197d789afa2e04925c3495363ac16fe180be2e08"
+size_bytes = 9216
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/sat393_daphnis.bsp"
 
 [[resource]]
@@ -230,38 +371,83 @@ description = "Saturn satellite ephemeris complement from NAIF's active generic 
 
 [[resource]]
 name = "sat456"
+artifact_sha256 = "9b61249321ce64b003203cd03a6bbe21076de57078042ec07fc4fea56e297983"
+artifact_size_bytes = 103110022
+git_tree_sha1 = "ba93082230266c2fd1809f4f40dc88b8ddbd88ca"
+sha256 = "55ea388b1e60e0a8f11fdc12e53a245d653e3f1cbf6f7886209c7d5281f6f811"
+size_bytes = 120824832
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/sat456.bsp"
 
 [[resource]]
 name = "sat457"
+artifact_sha256 = "f1b964422a7955150f99c1f774a63cbd030d827d8d53f52ec850fad5a67958a3"
+artifact_size_bytes = 164356385
+git_tree_sha1 = "82601249fd08657f31cbe7ad7bfee615150a8295"
+sha256 = "f3d6fb99441032f5fae8cdceec37a57455abb09efd94a4235b4b068d7faafc24"
+size_bytes = 199346176
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/sat457.bsp"
 
 [[resource]]
 name = "sat459"
+artifact_sha256 = "1c004e742e22716208e316a6c060f1624ec96a163a7101b2d9053f6cd96e2c1a"
+artifact_size_bytes = 73255179
+git_tree_sha1 = "11451cc191122fde03798723c93cb77936c8cbbc"
+sha256 = "cd9404b7904f1275af857b5d460cb63548eba37e92ad668b7f0b1108a78ca2c2"
+size_bytes = 84349952
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/sat459.bsp"
 
 [[resource]]
 name = "sat459_nameid"
+artifact_sha256 = "f8a42ccb756b7f54274ba2e43aba2fc7d0b4c749d380ca10df4aa8db84c72570"
+artifact_size_bytes = 736
+git_tree_sha1 = "30d8387e10aa44023232c1456db64158bea09ec8"
+sha256 = "e0fc8ba2a487b0d83bf5685411005f29b1bd6c9760c783377eebf042b6888c6e"
+size_bytes = 1596
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/fk/satellites/sat459_nameid.tf"
 
 [[resource]]
 name = "sat480"
+artifact_sha256 = "231a25f6f1bd402a03907bac5dfee08270cc8f320895aba32df071e828e25a60"
+artifact_size_bytes = 11509157
+git_tree_sha1 = "e3150d6630fb964e1fadac4166197d85b385f5ce"
+sha256 = "12d2cfd8da371883bd4edbd67c31fafa98ca7779a09da6819e29d53cdc6daf32"
+size_bytes = 12621824
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/sat480.bsp"
 
 [[resource]]
 name = "sat480_nameid"
+artifact_sha256 = "a4c9fbe9ba6d3efc843e877da78e9f12900f1064418c0664a520af6a6bc151cf"
+artifact_size_bytes = 624
+git_tree_sha1 = "e30f9beb40b7277fd4097f15653834cb730be40d"
+sha256 = "c1c20ff442f69ad1663511b9e447e87627484acd1b27fa0ccae82c747af28acd"
+size_bytes = 320
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/fk/satellites/sat480_nameid.tf"
 
 [[resource]]
 name = "ura184_part1"
+artifact_sha256 = "557ad76202c82fff1b7c90032914965546773fc4ae555d4fa8173290cb0c4244"
+artifact_size_bytes = 1565012031
+git_tree_sha1 = "1898c197f8195656b77aa0d2205bd244d44d79ed"
+sha256 = "6f4cc44f49d56202f93a0fcb5d0dc1422f4c897e095172256a494eb837fd7b7c"
+size_bytes = 2062529536
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/ura184_part-1.bsp"
 
 [[resource]]
 name = "ura184_part2"
+artifact_sha256 = "07a59eb49c0b6cb7c115c672f83a84e61936b8c90ffa799ece8067a7b7b6d5f1"
+artifact_size_bytes = 1518438203
+git_tree_sha1 = "574d3393386aa250af670cefc1077941209ac235"
+sha256 = "2bf29a0ca886324b6eadab3b248b5fd5db6971090903587f774dcc75cbca0225"
+size_bytes = 2062529536
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/ura184_part-2.bsp"
 
 [[resource]]
 name = "ura184_part3"
+artifact_sha256 = "4406bf4d9863f81395aa2e0bc6e3f48bcf271161bbac1952d5d31e77e5e11e9a"
+artifact_size_bytes = 346307386
+git_tree_sha1 = "5e6ca559ba6e5b900e79f9df1e38c86fd4c06796"
+sha256 = "273cd4ccc470d1098562cd4e94fa48fc2b4c6b1c2896308e473c949b87937c53"
+size_bytes = 386885632
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/ura184_part-3.bsp"
 
 [[resource]]
@@ -308,6 +494,11 @@ description = "Extended-range Uranus irregular-satellite ephemeris for NAIF IDs 
 
 [[resource]]
 name = "nep097"
+artifact_sha256 = "a4c0b7127e244e9e5397140a3f6acb94e320f477b0e74de2a9cfb894b783cc22"
+artifact_size_bytes = 90946566
+git_tree_sha1 = "98869c65470a9dbb1bb393244a9fa2d07de20abb"
+sha256 = "5c1132fdc48c54e5d2e4eb663e1ed1a876911eae9433c203f29a5a1b5e1fa9b1"
+size_bytes = 105262080
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/nep097.bsp"
 
 [[resource]]
@@ -342,6 +533,11 @@ description = "NEP098 Neptune satellite ephemeris, part 3 (outer and recently de
 
 [[resource]]
 name = "nep098_nameid"
+artifact_sha256 = "58d9ad202b5bea7879477a4ffee62f475f42211fc81346db75725da022818b3a"
+artifact_size_bytes = 632
+git_tree_sha1 = "ab410fb60409dff92e52f8037f91184aee11be8b"
+sha256 = "c61ecda345d23c5b4b6e0252504e5c59e6debc21fb65774c7dc77c6a71b27f57"
+size_bytes = 330
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/fk/satellites/nep098_nameid.tf"
 
 [[resource]]
@@ -364,10 +560,20 @@ description = "Neptune satellite ephemeris complement from NAIF's active generic
 
 [[resource]]
 name = "nep105"
+artifact_sha256 = "24c98aced89d118a69d292951dc471f33501cb79a2b9711dabe49f6761d28a18"
+artifact_size_bytes = 135907815
+git_tree_sha1 = "d1db9f25b62cef4bea1c84ff94951b6e4a77e9c6"
+sha256 = "be2ea8cd16658c957e803c7896731c81ad1a8afe2caca6fbf87d7b68bc4392c7"
+size_bytes = 210456576
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/nep105.bsp"
 
 [[resource]]
 name = "plu060"
+artifact_sha256 = "189b1e8be99ce78e14e09ee015373bb9715bd590591b46f77719ee2022e84e2b"
+artifact_size_bytes = 110024175
+git_tree_sha1 = "d65dccca03b91b32cfde0b38084f56738c234b01"
+sha256 = "dfbb102491a26ed41ae08ca3f8963f22f0219df1d8f265ab87b9ad825a826fc6"
+size_bytes = 135207936
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/plu060.bsp"
 
 [[resource]]
@@ -572,46 +778,101 @@ description = "Generic TNO satellite-system ephemeris for system barycenter NAIF
 
 [[resource]]
 name = "eros_near_msi_512q"
+artifact_sha256 = "2393a931f98fd0797a52fb345eac5e527f42fc89089038c9f96eb477d388f44c"
+artifact_size_bytes = 39620710
+git_tree_sha1 = "ad417b18f43f946d8f5dde2714bbab28a13507de"
+sha256 = "43aea1117e115ff2fa987bd4ca72daab6faaa94b6978a2a81c9321e6e22d7865"
+size_bytes = 111434752
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/dsk/asteroids/eros/near-a-msi-5-erosshape-v1_0_512q.bds"
 
 [[resource]]
 name = "eros_near_msi_64q"
+artifact_sha256 = "d66b808152b6cdad9f8039085c6b50778b4440fab82e789de68a6eaf6398ab30"
+artifact_size_bytes = 1049248
+git_tree_sha1 = "a762390db6bdfc393d06e702882661b0e911ab77"
+sha256 = "011364b06fde5dce2c8f5e750e542ee531e648bff16b74274e25ac4a2af64ab7"
+size_bytes = 3906560
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/dsk/asteroids/eros/near-a-msi-5-erosshape-v1_0_64q.bds"
 
 [[resource]]
 name = "itokawa_hayabusa_amica_512q"
+artifact_sha256 = "7f2c30558bba807389b28fd88ef3345d44a8d7efb0994bd3dfce9fd8c7501dc6"
+artifact_size_bytes = 40947856
+git_tree_sha1 = "d04ccdc62c6ade9f4e3366f9eab629b262775ebe"
+sha256 = "f73b9d518dadb8b117a3e5285319e8254f90835dfe80f21b390d718fcf1800c4"
+size_bytes = 155977728
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/dsk/asteroids/itokawa/hay_a_amica_5_itokawashape_v1_0_512q.bds"
 
 [[resource]]
 name = "itokawa_hayabusa_amica_64q"
+artifact_sha256 = "796116f17cd74f11efb0f7070824c90363851fd485e002c07350bc643120cf92"
+artifact_size_bytes = 1215835
+git_tree_sha1 = "f09c556f685168e5fc6c956dc03f03c0f68f4430"
+sha256 = "e7ca326b0da7e6af556dfe63c0940331e973e1019f0ab8fa0b2e94077bf180a3"
+size_bytes = 4762624
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/dsk/asteroids/itokawa/hay_a_amica_5_itokawashape_v1_0_64q.bds"
 
 [[resource]]
 name = "phobos512"
+artifact_sha256 = "625bb212770e232c2cc5b2c2f6232b8e564b748ca6bc4220c0e00fbddff8cbb9"
+artifact_size_bytes = 47345742
+git_tree_sha1 = "41b93eee8d93681571ea414b6bd7f5874f42974c"
+sha256 = "0dd5fc807667df0935a285e6db057aef5c5b2f5007fbad04bd0e30d9c864c995"
+size_bytes = 156680192
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/dsk/satellites/phobos512.bds"
 
 [[resource]]
 name = "phobos_2014_09_22"
+artifact_sha256 = "ba5f65d08e7fce9b2981f2d59df24d7b26a2f1150a7a78c1396dc4221f7e3249"
+artifact_size_bytes = 3116555
+git_tree_sha1 = "d35055d9b0632d03fc4e5b8d8abdb92530a223f4"
+sha256 = "8f8fe4ea2dc97355d37279ee8136a974015a0d1b5f1199f43678ba5ad03fd2b6"
+size_bytes = 10460160
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/dsk/satellites/phobos_2014_09_22.bds"
 
 [[resource]]
 name = "phobos_3_3"
+artifact_sha256 = "abed4201e8fe319b61c999085408dfdcdba2e361fa400bafafcf5fa5b7093b77"
+artifact_size_bytes = 6854829
+git_tree_sha1 = "13efedb8f13c752ec890ebed94d9f5c4304e9974"
+sha256 = "2d9653f4ff4f0a131c142c37a871bc504254a1afcd1e2c5c671eae135825f9c7"
+size_bytes = 17214464
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/dsk/satellites/phobos_3_3.bds"
 
 [[resource]]
 name = "vesta_gaskell_256"
+artifact_sha256 = "4fd8b90d83c00219e8e8fbc917a09d582cb6159a100bcbfe6e23058e26884294"
+artifact_size_bytes = 14197018
+git_tree_sha1 = "8d102b253b5c48ba32e574114980b07ddda7b005"
+sha256 = "6106b2a7d47030419faf083134480f9bceea595276d3d004ea862280c26ea34b"
+size_bytes = 41335808
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/dsk/asteroids/vesta/vesta_gaskell_256.bds"
 
 [[resource]]
 name = "vesta_thomas_1997"
+artifact_sha256 = "c0c307a393454c6984862bcc31fe178cd3e2557aada84041bc754fd961b73d7b"
+artifact_size_bytes = 150261
+git_tree_sha1 = "5723f0dad33139e46a66f8579cb3b98bb74efac9"
+sha256 = "0616e5629e646d219ae344f6ecf1c78c96a0943b6cc08aebe233fdadd120cb15"
+size_bytes = 491520
 url = "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/dsk/asteroids/vesta/vesta_thomas_1997.bds"
 
 [[resource]]
 name = "ggm05c"
+artifact_sha256 = "7a1d25232f0759df94f4d9b6d558173b605b3901091ab0eb80bc2d6400e93edf"
+artifact_size_bytes = 1466516
+git_tree_sha1 = "f58a8c392b9f7ff9dcbd2354f7e5ad34fc130913"
+sha256 = "efb1781e748969dab2721f45365cd060b5963ffe4fd497006cc786f9e5241bf2"
+size_bytes = 5229360
 url = "https://icgem.gfz.de/getmodel/gfc/778a683780a5b0ad3163f4772b97b9075a0a13c389d2bd8ea3f891b64cfa383d/GGM05C.gfc"
 
 [[resource]]
 name = "goco06s"
+artifact_sha256 = "f4e8cecdcbc953397e0fff6153a075b51bb5b676bd9cdd4c23a5c5b32a8033d2"
+artifact_size_bytes = 3409214
+git_tree_sha1 = "6e0084f70ca40260bcf4d083a1d6b1f45a8b01d5"
+sha256 = "351d9d20b84cd2c0f52ce77146b1e3b774f408200b579ffaf98593cf3d271819"
+size_bytes = 10451091
 url = "https://datapub.gfz-potsdam.de/download/10.5880.ICGEM.2019.002/GOCO06s.gfc"
 provider = "icgem"
 
@@ -686,6 +947,12 @@ live = true
 
 [[resource]]
 name = "fk5"
+artifact_sha256 = "cc74134bd7994711a236ee3e6ab0fbba2c51490213957fe4e45a9fd46170c07c"
+artifact_size_bytes = 109917
+git_tree_sha1 = "a208856839fdf9e226a57519652f435fb24e3d96"
+sha256 = "67a228e2adacdb559ea5ec8305ca84d1d81f278af70483aac46beacd8e308a13"
+size_bytes = 104467
+metadata_sha256 = "9b35679eb2bc623538baecbb1a4f94d1e7522c58928feaf8509a34b6ce59f7d8"
 url = "https://cdsarc.cds.unistra.fr/ftp/I/149A/catalog.gz"
 metadata_url = "https://cdsarc.cds.unistra.fr/ftp/I/149A/ReadMe"
 category = "star_catalogue"
@@ -695,6 +962,12 @@ citation = "Fricke et al. 1988, FK5 Part I (VizieR On-line Data Catalogue I/149A
 
 [[resource]]
 name = "hipparcos"
+artifact_sha256 = "e5ce35292ff9c3bec27df0e0ccdf0db78c162495067dbdfa9a287ff542812708"
+artifact_size_bytes = 13735715
+git_tree_sha1 = "ef5974e1835e9701ab42b24b711f0705f9e84d84"
+sha256 = "58ceabb104d647160d9437ce6e513a02a036bb4ad9f8879a5a22fd52943616e0"
+size_bytes = 53316318
+metadata_sha256 = "49a24be0c342a74e2357a048d2434a77cbb165690afe34b3c18989a4c24d0272"
 url = "https://cdsarc.cds.unistra.fr/ftp/I/239/hip_main.dat"
 metadata_url = "https://cdsarc.cds.unistra.fr/ftp/I/239/ReadMe"
 category = "star_catalogue"
@@ -705,6 +978,10 @@ citation = "ESA, 1997, The Hipparcos and Tycho Catalogues, ESA SP-1200 (VizieR I
 
 [[resource]]
 name = "tycho2"
+artifact_sha256 = "effd19046fd33058e240bc5de4f91d64a098fb84bd943926bc6fd3090c299e56"
+artifact_size_bytes = 166155467
+git_tree_sha1 = "6d0b2c3b061d97dbbb5fae2f082ae1c68231c259"
+metadata_sha256 = "86ad999ea84071c9c424201ca41cb16ac8f715c9e462a008f804c7a0b9a0f5c6"
 metadata_url = "https://cdsarc.cds.unistra.fr/ftp/I/259/ReadMe"
 category = "star_catalogue"
 provider = "esa"
@@ -714,60 +991,100 @@ citation = "Høg et al. 2000, A&A 355, L27 (VizieR I/259)."
 
   [[resource.files]]
   url = "https://cdsarc.cds.unistra.fr/ftp/I/259/tyc2.dat.00.gz"
+sha256 = "1b224570fc6eb151984ce106fdf797728649d1ea77aaf3effd2d3444cfac6df6"
+size_bytes = 8407799
 
   [[resource.files]]
   url = "https://cdsarc.cds.unistra.fr/ftp/I/259/tyc2.dat.01.gz"
+sha256 = "36221f4a5cdd9c5009d64299d2e6409f8d4cdf924321768780165bd3e2a2a99a"
+size_bytes = 8375063
 
   [[resource.files]]
   url = "https://cdsarc.cds.unistra.fr/ftp/I/259/tyc2.dat.02.gz"
+sha256 = "e2ea4eeb7d204dde70ac54d172b1c429540c0d23d62ec0d7500561adc44cc57b"
+size_bytes = 8351549
 
   [[resource.files]]
   url = "https://cdsarc.cds.unistra.fr/ftp/I/259/tyc2.dat.03.gz"
+sha256 = "29e0cb57cba7e1651455efcb528276b0c28e1fe83f47f8ebe963e48d8b180afb"
+size_bytes = 8426693
 
   [[resource.files]]
   url = "https://cdsarc.cds.unistra.fr/ftp/I/259/tyc2.dat.04.gz"
+sha256 = "d04868329b470aa320f0fe5e9c525be619a7a228b364433e5f114f2178946d9b"
+size_bytes = 8487663
 
   [[resource.files]]
   url = "https://cdsarc.cds.unistra.fr/ftp/I/259/tyc2.dat.05.gz"
+sha256 = "51f08772197dcf0cd26ff098c866036340b797f71ee04be22712517c10c73c4e"
+size_bytes = 8247134
 
   [[resource.files]]
   url = "https://cdsarc.cds.unistra.fr/ftp/I/259/tyc2.dat.06.gz"
+sha256 = "f55503a66abce0e11d1a4ccbcde1f4c97a6e3e769de85e005f57ba963086ab03"
+size_bytes = 8039302
 
   [[resource.files]]
   url = "https://cdsarc.cds.unistra.fr/ftp/I/259/tyc2.dat.07.gz"
+sha256 = "bc15b5b1f6308477360fbb93f6a98d9029601cab68973202be0f8764c127f524"
+size_bytes = 8129883
 
   [[resource.files]]
   url = "https://cdsarc.cds.unistra.fr/ftp/I/259/tyc2.dat.08.gz"
+sha256 = "315ac34c678bc2e0f568b43b6b2d7c3d7c9cf9c089b51115d18b872864e50426"
+size_bytes = 8224049
 
   [[resource.files]]
   url = "https://cdsarc.cds.unistra.fr/ftp/I/259/tyc2.dat.09.gz"
+sha256 = "d66c671fa29aad10bc5fd697f68c918bb774c1ffc3c7db9c20234895268390d5"
+size_bytes = 8424804
 
   [[resource.files]]
   url = "https://cdsarc.cds.unistra.fr/ftp/I/259/tyc2.dat.10.gz"
+sha256 = "d86529df819ebdf3f4b8892510973ee10e1db06930814e014dd467193e740d52"
+size_bytes = 8512497
 
   [[resource.files]]
   url = "https://cdsarc.cds.unistra.fr/ftp/I/259/tyc2.dat.11.gz"
+sha256 = "fc0c3203b3d2787da54c43d9963e363c8a3926576c383b101a15350a7ca23e9c"
+size_bytes = 8497732
 
   [[resource.files]]
   url = "https://cdsarc.cds.unistra.fr/ftp/I/259/tyc2.dat.12.gz"
+sha256 = "68fd9d7e7353d52dea0de043cc62b45c04d234104eb05c063dc23ea7b6759576"
+size_bytes = 8350212
 
   [[resource.files]]
   url = "https://cdsarc.cds.unistra.fr/ftp/I/259/tyc2.dat.13.gz"
+sha256 = "a08ecc092e6d134742c0f594c56c5c2e02b8fd5e76cffb1779877f2fcefac3fc"
+size_bytes = 8360023
 
   [[resource.files]]
   url = "https://cdsarc.cds.unistra.fr/ftp/I/259/tyc2.dat.14.gz"
+sha256 = "2846e8cc489795a4d8160d2d5b64ff0e9a00598adba35a52a4f8ccf4c5e38b3e"
+size_bytes = 8472405
 
   [[resource.files]]
   url = "https://cdsarc.cds.unistra.fr/ftp/I/259/tyc2.dat.15.gz"
+sha256 = "74784a3656382090a70d778820335f4a781509dbe3fcb9e92d18cf96b2c46c72"
+size_bytes = 8455626
 
   [[resource.files]]
   url = "https://cdsarc.cds.unistra.fr/ftp/I/259/tyc2.dat.16.gz"
+sha256 = "320560e3d551cc40fa1f54ef7133709bf4bd45efa6688f808be7c09be5544a4d"
+size_bytes = 8416328
 
   [[resource.files]]
   url = "https://cdsarc.cds.unistra.fr/ftp/I/259/tyc2.dat.17.gz"
+sha256 = "a8154e940aa0a0e8f31d91b4bd9fd56e6849da42cddb13c7dda772439b06991a"
+size_bytes = 8171031
 
   [[resource.files]]
   url = "https://cdsarc.cds.unistra.fr/ftp/I/259/tyc2.dat.18.gz"
+sha256 = "5e951a1a51df7956f205b83cbfa5501d357c843640a253c1e6d3917bebe7d928"
+size_bytes = 8077674
 
   [[resource.files]]
   url = "https://cdsarc.cds.unistra.fr/ftp/I/259/tyc2.dat.19.gz"
+sha256 = "f59605a38116f517a31a7dbdee3469c077658f2f40b8afe5da2aeb832eaee3dd"
+size_bytes = 8195964

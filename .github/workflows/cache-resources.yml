@@ -23,8 +23,10 @@ jobs:
   scan:
     runs-on: ubuntu-latest
     outputs:
-      uncached: ${{ steps.scan.outputs.uncached }}
-      uncached_count: ${{ steps.scan.outputs.uncached_count }}
+      build: ${{ steps.scan.outputs.build }}
+      build_count: ${{ steps.scan.outputs.build_count }}
+      adopt: ${{ steps.scan.outputs.adopt }}
+      adopt_count: ${{ steps.scan.outputs.adopt_count }}
     steps:
       - uses: actions/checkout@v7.0.1
       - uses: julia-actions/setup-julia@v3.0.2
@@ -32,7 +34,7 @@ jobs:
           version: "1"
       - name: Instantiate
         run: julia --project=. -e 'using Pkg; Pkg.instantiate()'
-      - name: Compare catalogue with canonical releases
+      - name: Compare declarations with canonical release assets
         id: scan
         env:
           GH_TOKEN: ${{ github.token }}
@@ -40,16 +42,18 @@ jobs:
         run: |
           : > release-assets.txt
           while read -r RELEASE; do
-            gh release view "$RELEASE" --repo "$GITHUB_REPOSITORY" --json assets \
-              --jq '.assets[].name' 2>/dev/null | \
-              while read -r ASSET; do printf '%s\t%s\n' "$RELEASE" "$ASSET"; done || true
+            RELEASE_ID=$(gh api "repos/$GITHUB_REPOSITORY/releases/tags/$RELEASE" --jq '.id' 2>/dev/null || true)
+            [ -z "$RELEASE_ID" ] && continue
+            gh api --paginate "repos/$GITHUB_REPOSITORY/releases/$RELEASE_ID/assets?per_page=100" \
+              --jq '.[].name' |
+              while read -r ASSET; do printf '%s\t%s\n' "$RELEASE" "$ASSET"; done
           done < <(julia --project=. scripts/resource_release.jl tags)
           sort -u -o release-assets.txt release-assets.txt
           julia --project=. scripts/release_audit.jl release-assets.txt
 
   prepare:
     needs: scan
-    if: needs.scan.outputs.uncached_count != '0'
+    if: needs.scan.outputs.build_count != '0' || needs.scan.outputs.adopt_count != '0'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7.0.1
@@ -73,13 +77,13 @@ jobs:
 
   build:
     needs: [scan, prepare]
-    if: needs.scan.outputs.uncached_count != '0'
+    if: needs.scan.outputs.build_count != '0'
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       max-parallel: 2
       matrix:
-        name: ${{ fromJSON(needs.scan.outputs.uncached) }}
+        name: ${{ fromJSON(needs.scan.outputs.build) }}
     steps:
       - uses: actions/checkout@v7.0.1
       - uses: julia-actions/setup-julia@v3.0.2
@@ -98,21 +102,22 @@ jobs:
         env:
           ASTRODYNAMICS_RESOURCES_DOWNLOAD_ATTEMPTS: "8"
         run: julia --project=scripts scripts/catalog.jl build "${{ matrix.name }}"
-      - name: Publish to canonical release without overwriting
+      - name: Publish without overwriting immutable bytes
         env:
           GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
-          RESOURCE_RELEASE=$(julia --project=. scripts/resource_release.jl tag "${{ matrix.name }}")
+          RELEASE=$(julia --project=. scripts/resource_release.jl tag "${{ matrix.name }}")
+          RELEASE_ID=$(gh api "repos/$GITHUB_REPOSITORY/releases/tags/$RELEASE" --jq '.id')
           ASSET="build/artifacts/${{ matrix.name }}.tar.gz"
           NAME=$(basename "$ASSET")
-          REMOTE=$(gh release view "$RESOURCE_RELEASE" --repo "$GITHUB_REPOSITORY" \
-            --json assets --jq ".assets[] | select(.name == \"$NAME\") | .digest")
+          REMOTE=$(gh api --paginate "repos/$GITHUB_REPOSITORY/releases/$RELEASE_ID/assets?per_page=100" \
+            --jq ".[] | select(.name == \"$NAME\") | .digest")
           LOCAL="sha256:$(sha256sum "$ASSET" | cut -d' ' -f1)"
           if [ -n "$REMOTE" ]; then
             test "$REMOTE" = "$LOCAL"
           else
-            gh release upload "$RESOURCE_RELEASE" "$ASSET" --repo "$GITHUB_REPOSITORY"
+            gh release upload "$RELEASE" "$ASSET" --repo "$GITHUB_REPOSITORY"
           fi
       - uses: actions/upload-artifact@v7.0.1
         with:
@@ -120,13 +125,52 @@ jobs:
           path: build/reports/${{ matrix.name }}.toml
           retention-days: 1
 
-  update-lock:
-    needs: [scan, build]
-    if: always() && needs.scan.outputs.uncached_count != '0' && needs.build.result == 'success'
+  adopt:
+    needs: [scan, prepare]
+    if: needs.scan.outputs.adopt_count != '0'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        name: ${{ fromJSON(needs.scan.outputs.adopt) }}
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: julia-actions/setup-julia@v3.0.2
+        with:
+          version: "1"
+      - name: Instantiate
+        run: |
+          julia --project=. -e 'using Pkg; Pkg.instantiate()'
+          julia --project=scripts -e 'using Pkg; Pkg.develop(path="."); Pkg.instantiate()'
+      - name: Verify existing release archive and recover hashes
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          RELEASE=$(julia --project=. scripts/resource_release.jl tag "${{ matrix.name }}")
+          mkdir -p build/adopted build/extracted
+          gh release download "$RELEASE" --repo "$GITHUB_REPOSITORY" \
+            --pattern "${{ matrix.name }}.tar.gz" --dir build/adopted
+          tar -xzf "build/adopted/${{ matrix.name }}.tar.gz" -C build/extracted
+          julia --project=scripts scripts/catalog.jl adopt \
+            "${{ matrix.name }}" \
+            "build/adopted/${{ matrix.name }}.tar.gz" \
+            build/extracted
+      - uses: actions/upload-artifact@v7.0.1
+        with:
+          name: resource-report-${{ matrix.name }}
+          path: build/reports/${{ matrix.name }}.toml
+          retention-days: 1
+
+  update-catalogue:
+    needs: [scan, build, adopt]
+    if: always() && needs.scan.result == 'success' && (needs.scan.outputs.build_count != '0' || needs.scan.outputs.adopt_count != '0')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7.0.1
       - uses: actions/download-artifact@v8.0.1
+        continue-on-error: true
         with:
           pattern: resource-report-*
           path: build/reports
@@ -136,32 +180,24 @@ jobs:
           version: "1"
       - name: Instantiate
         run: julia --project=. -e 'using Pkg; Pkg.instantiate()'
-      - name: Generate lock and artifact bindings by release family
+      - name: Inline hashes for every successful resource
         shell: bash
         run: |
-          mkdir -p build/reports-by-release
-          for REPORT in build/reports/*.toml; do
-            NAME=$(basename "$REPORT" .toml)
-            RELEASE=$(julia --project=. scripts/resource_release.jl tag "$NAME")
-            mkdir -p "build/reports-by-release/$RELEASE"
-            cp "$REPORT" "build/reports-by-release/$RELEASE/"
-          done
-
-          while read -r RELEASE; do
-            DIR="build/reports-by-release/$RELEASE"
-            if [ -d "$DIR" ] && compgen -G "$DIR/*.toml" >/dev/null; then
-              julia --project=. scripts/catalog.jl update-lock "$DIR" \
-                "https://github.com/${GITHUB_REPOSITORY}/releases/download/${RELEASE}"
-            fi
-          done < <(julia --project=. scripts/resource_release.jl tags)
-
-          julia --project=. scripts/catalog.jl validate
+          if compgen -G "build/reports/*.toml" >/dev/null; then
+            julia --project=. scripts/catalog.jl update build/reports
+            julia --project=. scripts/catalog.jl validate
+          else
+            echo "No successful resource reports were produced."
+          fi
       - uses: peter-evans/create-pull-request@v8.1.1
         with:
-          branch: automation/resource-lock
+          branch: automation/resource-metadata
           delete-branch: true
-          title: "Lock newly cached resources"
-          commit-message: "Lock newly cached resources"
+          title: "Record cached resource hashes"
+          commit-message: "Record cached resource hashes"
           body: |
-            Generated immutable hashes and lazy Julia artifact bindings for new
-            declarations, with each asset published in its canonical resource release.
+            Records source, archive, and artifact-tree hashes directly in each
+            successful resource declaration. No separate resource lock files are used.
+
+            Successful matrix members are recorded even when another resource fails,
+            so already-published assets are not rebuilt on the next workflow run.

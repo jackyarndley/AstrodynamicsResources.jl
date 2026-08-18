@@ -17,10 +17,7 @@ abstract type AbstractResourceBackend end
 """
     ArtifactBackend(artifact_name)
 
-Immutable lazy-artifact backend.
-
-# Fields
-- `artifact_name::String`: name of the Julia artifact binding.
+Immutable Julia-artifact backend.
 """
 struct ArtifactBackend <: AbstractResourceBackend
     artifact_name::String
@@ -30,11 +27,6 @@ end
     ScratchBackend(key, urls, ttl)
 
 Mutable URL-backed scratch cache with a refresh TTL.
-
-# Fields
-- `key::String`: scratch-cache key.
-- `urls::Vector{String}`: upstream URLs tried in order.
-- `ttl::Second`: cache freshness lifetime.
 """
 struct ScratchBackend <: AbstractResourceBackend
     key::String
@@ -42,16 +34,7 @@ struct ScratchBackend <: AbstractResourceBackend
     ttl::Second
 end
 
-"""
-    ResourceFile(path, role, primary)
-
-A relative path and role within a resource.
-
-# Fields
-- `path::String`: path relative to the resource root.
-- `role::Symbol`: file role (for example `:spk` or `:metadata`).
-- `primary::Bool`: whether this is the primary file.
-"""
+"""A relative path and role within a resource."""
 struct ResourceFile
     path::String
     role::Symbol
@@ -59,23 +42,12 @@ struct ResourceFile
 end
 
 """
-    ResourceSpec(id, aliases, title, description, category, provider, version,
-                 backend, files, metadata, available)
-
 Catalogue metadata for one independently materializable resource.
 
-# Fields
-- `id::Symbol`: canonical resource identifier.
-- `aliases::Vector{Symbol}`: accepted alias identifiers.
-- `title::String`: human-readable title.
-- `description::String`: short description.
-- `category::Symbol`: resource family.
-- `provider::Symbol`: data provider.
-- `version::String`: pinned version or `"rolling"`.
-- `backend::AbstractResourceBackend`: artifact or scratch backend.
-- `files::Vector{ResourceFile}`: files included in the resource.
-- `metadata::Dict{String, Any}`: inferred and locked metadata.
-- `available::Bool`: whether the resource is locked or live.
+For immutable resources, `metadata` contains the integrity metadata declared
+alongside the source URL(s). `available` means those source/archive/tree hashes
+are complete. For rolling resources, `available` means a live endpoint is
+configured; local presence is reported separately by `resource_status`.
 """
 struct ResourceSpec
     id::Symbol
@@ -91,18 +63,7 @@ struct ResourceSpec
     available::Bool
 end
 
-"""
-    ResourceBundle(id, members, title, description, metadata)
-
-Ordered logical collection of resource IDs.
-
-# Fields
-- `id::Symbol`: bundle identifier.
-- `members::Vector{Symbol}`: member resource or bundle IDs in order.
-- `title::String`: human-readable title.
-- `description::String`: short description.
-- `metadata::Dict{String, Any}`: bundle metadata.
-"""
+"""Ordered logical collection of resource IDs."""
 struct ResourceBundle
     id::Symbol
     members::Vector{Symbol}
@@ -111,24 +72,7 @@ struct ResourceBundle
     metadata::Dict{String, Any}
 end
 
-"""
-    ResourceStatus(available, backend, path, fresh, stale, last_checked,
-                   last_updated, sha256, size_bytes, error)
-
-Local availability, freshness, and checksum diagnostics.
-
-# Fields
-- `available::Bool`: whether the resource is present locally.
-- `backend::Symbol`: `:artifact` or `:scratch`.
-- `path::Union{Nothing, String}`: primary local path when available.
-- `fresh::Union{Nothing, Bool}`: freshness for scratch resources.
-- `stale::Union{Nothing, Bool}`: staleness for scratch resources.
-- `last_checked::Union{Nothing, DateTime}`: last validation time.
-- `last_updated::Union{Nothing, DateTime}`: last download time.
-- `sha256::Union{Nothing, String}`: cached content checksum.
-- `size_bytes::Union{Nothing, Int64}`: cached file size.
-- `error::Union{Nothing, String}`: last recorded error message.
-"""
+"""Local availability, freshness, and checksum diagnostics."""
 struct ResourceStatus
     available::Bool
     backend::Symbol
@@ -142,9 +86,6 @@ struct ResourceStatus
     error::Union{Nothing, String}
 end
 
-backend_symbol(::ArtifactBackend) = :artifact
-backend_symbol(::ScratchBackend) = :scratch
-
 function Base.show(io::IO, status::ResourceStatus)
     print(io, "ResourceStatus(", status.backend, ", ")
     print(io, status.available ? "available" : "missing")
@@ -154,6 +95,9 @@ function Base.show(io::IO, status::ResourceStatus)
     status.error !== nothing && print(io, ", error=", repr(status.error))
     return print(io, ")")
 end
+
+backend_symbol(::ArtifactBackend) = :artifact
+backend_symbol(::ScratchBackend) = :scratch
 
 const _TRUE_VALUES = Set(("1", "true", "yes", "on"))
 const _FALSE_VALUES = Set(("0", "false", "no", "off"))
