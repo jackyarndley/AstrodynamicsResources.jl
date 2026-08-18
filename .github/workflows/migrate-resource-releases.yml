@@ -6,8 +6,9 @@ on:
 permissions:
   contents: write
 
+# Serialize with Cache resources because both workflows can create/edit releases.
 concurrency:
-  group: resource-release-organization
+  group: resource-release-mutations
   cancel-in-progress: false
 
 jobs:
@@ -20,6 +21,7 @@ jobs:
           version: "1"
       - name: Instantiate
         run: julia --project=. -e 'using Pkg; Pkg.instantiate()'
+
       - name: Require inline metadata layout
         shell: bash
         run: |
@@ -55,52 +57,12 @@ jobs:
               while read -r ASSET; do printf '%s\t%s\n' "$RELEASE" "$ASSET"; done
           done < <(julia --project=. scripts/resource_release.jl tags)
           sort -u -o release-assets.txt release-assets.txt
-          julia --project=. scripts/release_audit.jl release-assets.txt
+          julia --project=. scripts/release_audit.jl release-assets.txt --strict
 
-      - name: Remove undeclared assets from canonical releases
-        env:
-          GH_TOKEN: ${{ github.token }}
+      - name: Report compatibility policy
         shell: bash
         run: |
-          julia --project=. scripts/resource_release.jl manifest |
-            cut -f2,3 | awk -F'\t' '{print $2 "\t" $1}' | sort -u > expected-assets.txt
-
-          while read -r RELEASE; do
-            RELEASE_ID=$(gh api "repos/$GITHUB_REPOSITORY/releases/tags/$RELEASE" --jq '.id')
-            gh api --paginate "repos/$GITHUB_REPOSITORY/releases/$RELEASE_ID/assets?per_page=100" \
-              --jq '.[] | [.id, .name] | @tsv' |
-              while IFS=$'\t' read -r ASSET_ID ASSET; do
-                PAIR=$(printf '%s\t%s' "$RELEASE" "$ASSET")
-                if ! grep -Fqx "$PAIR" expected-assets.txt; then
-                  echo "Deleting undeclared asset $RELEASE/$ASSET"
-                  gh api -X DELETE "repos/$GITHUB_REPOSITORY/releases/assets/$ASSET_ID"
-                fi
-              done
-          done < <(julia --project=. scripts/resource_release.jl tags)
-
-      - name: Remove obsolete data releases
-        env:
-          GH_TOKEN: ${{ github.token }}
-        shell: bash
-        run: |
-          for RELEASE in \
-            resources-geopotential \
-            resources-ephemerides-v1 resources-satellite-ephemerides-v1 \
-            resources-star-catalogues-v1 resources-geopotential-v1 \
-            resources-textures-v1 resources-reference-v1 resources-shape-models-v1; do
-            if gh release view "$RELEASE" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
-              gh release delete "$RELEASE" --repo "$GITHUB_REPOSITORY" --cleanup-tag --yes
-            fi
-          done
-
-      - name: Recreate package release without uploaded data assets
-        env:
-          GH_TOKEN: ${{ github.token }}
-        shell: bash
-        run: |
-          if gh release view v0.1.0 --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
-            gh release delete v0.1.0 --repo "$GITHUB_REPOSITORY" --yes
-          fi
-          gh release create v0.1.0 --repo "$GITHUB_REPOSITORY" \
-            --verify-tag --generate-notes --latest \
-            --title "AstrodynamicsResources.jl v0.1.0"
+          echo "Canonical release layout is valid."
+          echo "No releases or assets are deleted by this workflow."
+          echo "In particular, v0.1.0 is retained because released v0.1.0 code"
+          echo "contains artifact URLs that still reference its uploaded data assets."
