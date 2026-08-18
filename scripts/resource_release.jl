@@ -14,10 +14,22 @@ function usage(io::IO = stdout)
           tag RESOURCE     Print the immutable release tag for RESOURCE.
           title RELEASE    Print the display title for a resource release.
           tags             Print all canonical resource-family release tags.
+          source-tags      Print release tags currently referenced by locked artifacts.
           releases         Print tab-separated release tag and display title pairs.
           manifest         Print ID, asset, target release, and current source release.
         """,
     )
+end
+
+function source_tags()
+    tags = String[]
+    for spec in list_resources(backend = :artifact)
+        spec.available || continue
+        source = source_release(spec)
+        source === nothing && error("$(spec.id) has no release-backed download URL")
+        push!(tags, source)
+    end
+    return sort!(unique!(tags))
 end
 
 function main(args = ARGS)
@@ -29,6 +41,8 @@ function main(args = ARGS)
         return println(release_title(args[2]))
     elseif command == "tags" && length(args) == 1
         return foreach(item -> println(first(item)), RELEASES)
+    elseif command == "source-tags" && length(args) == 1
+        return foreach(println, source_tags())
     elseif command == "releases" && length(args) == 1
         return foreach(item -> println(first(item), '\t', last(item)), RELEASES)
     elseif command == "manifest" && length(args) == 1
