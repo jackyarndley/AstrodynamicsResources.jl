@@ -42,19 +42,25 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
-          # Keep the inventory on disk. The previous workflow only printed these
-          # pairs to stdout, leaving release-assets.txt empty and consequently
-          # classifying every resource as missing.
+          # Ensure every configured family exists before classifying resources.
+          # Once a release exists, its asset query is required to succeed: a
+          # transient GitHub API failure must never be mistaken for an empty
+          # release and trigger expensive rebuilds.
           {
-            while read -r RELEASE; do
-              RELEASE_ID=$(gh api "repos/$GITHUB_REPOSITORY/releases/tags/$RELEASE" --jq '.id' 2>/dev/null || true)
-              [ -z "$RELEASE_ID" ] && continue
+            while IFS=$'\t' read -r RELEASE TITLE; do
+              if ! gh release view "$RELEASE" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+                gh release create "$RELEASE" --repo "$GITHUB_REPOSITORY" \
+                  --target main --latest=false --title "$TITLE" \
+                  --notes "Immutable data assets for the $TITLE resource family."
+              fi
+
+              RELEASE_ID=$(gh api "repos/$GITHUB_REPOSITORY/releases/tags/$RELEASE" --jq '.id')
               gh api --paginate "repos/$GITHUB_REPOSITORY/releases/$RELEASE_ID/assets?per_page=100" \
                 --jq '.[].name' |
                 while read -r ASSET; do
                   printf '%s\t%s\n' "$RELEASE" "$ASSET"
                 done
-            done < <(julia --project=. scripts/resource_release.jl tags)
+            done < <(julia --project=. scripts/resource_release.jl releases)
           } | tee release-assets.txt
 
           sort -u -o release-assets.txt release-assets.txt
@@ -63,32 +69,8 @@ jobs:
           test "$ASSET_COUNT" -gt 0
           julia --project=. scripts/release_audit.jl release-assets.txt
 
-  prepare:
-    needs: scan
-    if: needs.scan.outputs.build_count != '0' || needs.scan.outputs.adopt_count != '0'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7.0.1
-      - uses: julia-actions/setup-julia@v3.0.2
-        with:
-          version: "1"
-      - name: Instantiate
-        run: julia --project=. -e 'using Pkg; Pkg.instantiate()'
-      - name: Ensure canonical releases exist
-        env:
-          GH_TOKEN: ${{ github.token }}
-        shell: bash
-        run: |
-          while IFS=$'\t' read -r RELEASE TITLE; do
-            if ! gh release view "$RELEASE" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
-              gh release create "$RELEASE" --repo "$GITHUB_REPOSITORY" \
-                --target main --latest=false --title "$TITLE" \
-                --notes "Immutable data assets for the $TITLE resource family."
-            fi
-          done < <(julia --project=. scripts/resource_release.jl releases)
-
   adopt:
-    needs: [scan, prepare]
+    needs: scan
     if: needs.scan.outputs.adopt_count != '0'
     runs-on: ubuntu-latest
     strategy:
@@ -126,7 +108,7 @@ jobs:
           retention-days: 1
 
   build:
-    needs: [scan, prepare]
+    needs: scan
     if: needs.scan.outputs.build_count != '0'
     runs-on: ubuntu-latest
     strategy:
