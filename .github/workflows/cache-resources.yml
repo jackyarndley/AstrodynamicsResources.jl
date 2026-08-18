@@ -111,9 +111,12 @@ jobs:
     needs: scan
     if: needs.scan.outputs.build_count != '0'
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     strategy:
       fail-fast: false
-      max-parallel: 2
+      # Resource caching is rare, and several upstream providers rate-limit
+      # concurrent downloads. Prefer reliability over a large download burst.
+      max-parallel: 1
       matrix:
         name: ${{ fromJSON(needs.scan.outputs.build) }}
     steps:
@@ -132,8 +135,24 @@ jobs:
           julia --project=scripts -e 'using Pkg; Pkg.develop(path="."); Pkg.instantiate()'
       - name: Build deterministic archive
         env:
-          ASTRODYNAMICS_RESOURCES_DOWNLOAD_ATTEMPTS: "8"
-        run: julia --project=scripts scripts/catalog.jl build "${{ matrix.name }}"
+          ASTRODYNAMICS_RESOURCES_DOWNLOAD_ATTEMPTS: "10"
+        shell: bash
+        run: |
+          # The downloader already retries individual HTTP requests. Retry the
+          # complete resource once as well so long-lived 202/rate-limit states
+          # get a fresh request after a cooldown while keeping the same runner's
+          # resumable source cache.
+          for attempt in 1 2; do
+            if julia --project=scripts scripts/catalog.jl build "${{ matrix.name }}"; then
+              exit 0
+            fi
+            if [ "$attempt" -eq 2 ]; then
+              echo "Resource build failed after two complete attempts."
+              exit 1
+            fi
+            echo "::warning::Resource build attempt $attempt failed; retrying in 60 seconds."
+            sleep 60
+          done
       - name: Publish immutable archive
         env:
           GH_TOKEN: ${{ github.token }}
@@ -190,15 +209,49 @@ jobs:
           else
             echo "No successful resource reports were produced."
           fi
-      - uses: peter-evans/create-pull-request@v8.1.1
-        with:
-          branch: automation/resource-metadata
-          delete-branch: true
-          title: "Record cached resource hashes"
-          commit-message: "Record cached resource hashes"
-          body: |
-            Records source, archive, and artifact-tree hashes directly in each
-            successful resource declaration. No separate resource lock files are used.
+      - name: Commit metadata branch and update pull request
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          if git diff --quiet -- catalog; then
+            echo "No catalogue metadata changes to publish."
+            exit 0
+          fi
 
-            Existing release archives are adopted rather than rebuilt, and successful
-            matrix members are recorded even if an unrelated resource fails.
+          BRANCH="automation/resource-metadata"
+          TITLE="Record cached resource hashes"
+          BODY_FILE=$(mktemp)
+          cat > "$BODY_FILE" <<'EOF'
+          Records source, archive, and artifact-tree hashes directly in each
+          successful resource declaration. No separate resource lock files are used.
+
+          Existing release archives are adopted rather than rebuilt, and successful
+          matrix members are recorded even if an unrelated resource fails.
+          EOF
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -B "$BRANCH"
+          git add catalog
+          git commit -m "$TITLE"
+          git push --force origin "HEAD:refs/heads/$BRANCH"
+
+          PR=$(gh pr list --repo "$GITHUB_REPOSITORY" --head "$BRANCH" --base main \
+            --state open --json number --jq '.[0].number // empty')
+          if [ -n "$PR" ]; then
+            gh pr edit "$PR" --repo "$GITHUB_REPOSITORY" \
+              --title "$TITLE" --body-file "$BODY_FILE"
+            echo "Updated metadata PR #$PR."
+          elif gh pr create --repo "$GITHUB_REPOSITORY" --base main --head "$BRANCH" \
+              --title "$TITLE" --body-file "$BODY_FILE"; then
+            echo "Created metadata PR."
+          else
+            # Repository settings can forbid GITHUB_TOKEN from creating PRs even
+            # when contents/pull-requests permissions are write. The metadata is
+            # still safely committed on the automation branch, so do not turn a
+            # successful cache run into a failure solely because of that policy.
+            echo "::warning::Metadata branch was pushed, but repository policy blocked gh pr create."
+            echo "Enable 'Allow GitHub Actions to create and approve pull requests'"
+            echo "under Settings > Actions > General to make PR creation automatic."
+          fi
