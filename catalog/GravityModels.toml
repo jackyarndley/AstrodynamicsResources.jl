@@ -8,6 +8,12 @@ url = "https://pds.nasa.gov/datastandards/citing/"
 
 [[resource]]
 name = "grail_gl0420a"
+artifact_sha256 = "86ef363d283908ca34dcaf5934df877cd10c8f10bf62034fae538942d3e2a188"
+artifact_size_bytes = 2709875
+git_tree_sha1 = "0204a36625cdc6d015481dda11172361d09222af"
+sha256 = "962355f81ae40dab0ec39753e3820d731d4505633a262fc543afd6f6c7c0e50d"
+size_bytes = 10837504
+metadata_sha256 = "f31c53f123e759f8abd065236895bb9be6a7619041364b0401e8dc1f69d0192f"
 url = "https://pds-geosciences.wustl.edu/grail/grail-l-lgrs-5-rdr-v1/grail_1001/shadr/jggrx_0420a_sha.tab"
 metadata_url = "https://pds-geosciences.wustl.edu/grail/grail-l-lgrs-5-rdr-v1/grail_1001/shadr/jggrx_0420a_sha.xml"
 provider = "nasa_pds"
@@ -18,6 +24,12 @@ citation = "Kahan, D. S. (2013), GRAIL Moon LGRS Derived Gravity Science Data Pr
 
 [[resource]]
 name = "grail_gl0660b"
+artifact_sha256 = "28efa7e29b907e76bb8230010ec82ba75d7daff2fd18572fe3388578a4494fee"
+artifact_size_bytes = 6589914
+git_tree_sha1 = "0416914c2b10133212ecdcd7d17e521aa318b41b"
+sha256 = "500e47e0ae2fa32d30615ea4af9ed6cca3a60e05c332d918692596a425708534"
+size_bytes = 26692624
+metadata_sha256 = "b9b37be529cbe0381f1e4db4466cd7db98abd64b86b0312f4162d80c01b90ab3"
 url = "https://pds-geosciences.wustl.edu/grail/grail-l-lgrs-5-rdr-v1/grail_1001/shadr/jggrx_0660b_sha.tab"
 metadata_url = "https://pds-geosciences.wustl.edu/grail/grail-l-lgrs-5-rdr-v1/grail_1001/shadr/jggrx_0660b_sha.xml"
 provider = "nasa_pds"
@@ -28,6 +40,12 @@ citation = "Konopliv et al. (2013), JGR Planets 118, 1415-1434, doi:10.1002/jgre
 
 [[resource]]
 name = "grail_gl0900c"
+artifact_sha256 = "006bf2752bb972c7c6ae339bc3d742782c338ac00763fd5acf77a63b800173b4"
+artifact_size_bytes = 12228651
+git_tree_sha1 = "d280f3ae566eb14a267a0f1cb046b4a45f42b051"
+sha256 = "935499c105dfa6ecba414da9948dc4c1a08f5f01b573baa9ec10537ed6cf4a6d"
+size_bytes = 49574944
+metadata_sha256 = "bb8f5bb4c3c7c5673fdfe95b0c48277eaf58ca73e6d29cc94264a5061ccfb023"
 url = "https://pds-geosciences.wustl.edu/grail/grail-l-lgrs-5-rdr-v1/grail_1001/shadr/jggrx_0900c_sha.tab"
 metadata_url = "https://pds-geosciences.wustl.edu/grail/grail-l-lgrs-5-rdr-v1/grail_1001/shadr/jggrx_0900c_sha.xml"
 provider = "nasa_pds"
@@ -38,6 +56,12 @@ citation = "Kahan, D. S. (2013), NASA PDS GRAIL LGRS RDR, doi:10.17189/1519529."
 
 [[resource]]
 name = "grail_gl0900d"
+artifact_sha256 = "5c036cd89302a2f65872c2e805047127390383c0b245df33f95ed9c9d4efb9dc"
+artifact_size_bytes = 12291895
+git_tree_sha1 = "93a58c811ec8b4eb170a27ea6c616ce6b9206a19"
+sha256 = "0ead4e6260729c53fe29dcc6d954d473e87eb3ae1f4d932496a1417fd62fcdc6"
+size_bytes = 49574944
+metadata_sha256 = "0c04fa5d7d904c33dace1d66b3c4a70f5763a6b1a0f282a18eeb3c43cb3f7f83"
 url = "https://pds-geosciences.wustl.edu/grail/grail-l-lgrs-5-rdr-v1/grail_1001/shadr/jggrx_0900d_sha.tab"
 metadata_url = "https://pds-geosciences.wustl.edu/grail/grail-l-lgrs-5-rdr-v1/grail_1001/shadr/jggrx_0900d_sha.xml"
 provider = "nasa_pds"
@@ -48,6 +72,12 @@ citation = "Kahan, D. S. (2013), NASA PDS GRAIL LGRS RDR, doi:10.17189/1519529."
 
 [[resource]]
 name = "grail_gl1500e"
+artifact_sha256 = "05ca84844ac4516f61ef723b79acda0d7f7d456fd5e12b5b822b61313c2db357"
+artifact_size_bytes = 33549255
+git_tree_sha1 = "ce02b689ef2112437c2aec2dda77213badde9f24"
+sha256 = "93a7467b9241f6f94c131126c87fd3b81cfc3d223c474ee3444bf162b7c97f5a"
+size_bytes = 137524744
+metadata_sha256 = "b082ec80d939e1b9580ee51015754e832159ce90f9e4ac25bd012caea00aa0fd"
 url = "https://pds-geosciences.wustl.edu/grail/grail-l-lgrs-5-rdr-v1/grail_1001/shadr/jggrx_1500e_sha.tab"
 metadata_url = "https://pds-geosciences.wustl.edu/grail/grail-l-lgrs-5-rdr-v1/grail_1001/shadr/jggrx_1500e_sha.xml"
 provider = "nasa_pds"
@@ -58,6 +88,12 @@ citation = "Kahan, D. S. (2013), NASA PDS GRAIL LGRS RDR, doi:10.17189/1519529."
 
 [[resource]]
 name = "grail_gl1800f"
+artifact_sha256 = "b127a8a423b4d3f1a085970c65aac83ec0d5f068e80435d6706ea9ceff7377d3"
+artifact_size_bytes = 51014559
+git_tree_sha1 = "c0b53d035972984e1ef2992bf0b0c9efa27349eb"
+sha256 = "d2a552067a78bf1d2755807ae14ee1d6843a8f6a4228e01ce59a665516738fec"
+size_bytes = 197969644
+metadata_sha256 = "84410da03a117fdcf17d5157e71e0eeda7d69176ebef1070877e8b21a5ddd199"
 url = "https://pds-geosciences.wustl.edu/grail/grail-l-lgrs-5-rdr-v1/grail_1001/shadr/jggrx_1800f_sha.tab"
 metadata_url = "https://pds-geosciences.wustl.edu/grail/grail-l-lgrs-5-rdr-v1/grail_1001/shadr/jggrx_1800f_sha.xml"
 provider = "nasa_pds"
@@ -68,6 +104,12 @@ citation = "NASA PDS GRAIL LGRS RDR, doi:10.17189/1519529; PDS release dated 202
 
 [[resource]]
 name = "grail_gl1800f_me"
+artifact_sha256 = "2ae0e0044b1bfaf9d583798bbe42b30f4ea2b99ae6e39130ab18824c81761243"
+artifact_size_bytes = 48592551
+git_tree_sha1 = "e9571ab142aeb1432f55290b3124fdb991814764"
+sha256 = "7fe5bd8ef4c5171ba11657308da1827f9e98114e5b6ab3d3c9e59feba80c3662"
+size_bytes = 197969644
+metadata_sha256 = "5b8d025ac73daf3b5ff3b4d9e288cf0005b072cf4ffdb5b9b13c3ae9fc95a35e"
 url = "https://pds-geosciences.wustl.edu/grail/grail-l-lgrs-5-rdr-v1/grail_1001/shadr/jggrx_1800f_me_sha.tab"
 metadata_url = "https://pds-geosciences.wustl.edu/grail/grail-l-lgrs-5-rdr-v1/grail_1001/shadr/jggrx_1800f_me_sha.xml"
 provider = "nasa_pds"
@@ -78,6 +120,12 @@ citation = "NASA PDS GRAIL LGRS RDR, doi:10.17189/1519529; PDS release dated 202
 
 [[resource]]
 name = "grail_grgm660prim"
+artifact_sha256 = "4487ab7bb6a98b4e0d68be51b3e99550acc89bc8a9841a7f08bdd38b3c66b525"
+artifact_size_bytes = 8499844
+git_tree_sha1 = "a0391319500e1541c4a1caec3396f8056f52bccf"
+sha256 = "a77ee9996aff7341ef89f69aa401f39ba0c2949ed80411505fb4826b771dd63e"
+size_bytes = 26692624
+metadata_sha256 = "41994cab490b589184c0ae839325762bc4d72e73e96d296c912b78b1667fceea"
 url = "https://pds-geosciences.wustl.edu/grail/grail-l-lgrs-5-rdr-v1/grail_1001/shadr/gggrx_0660pm_sha.tab"
 metadata_url = "https://pds-geosciences.wustl.edu/grail/grail-l-lgrs-5-rdr-v1/grail_1001/shadr/gggrx_0660pm_sha.xml"
 provider = "nasa_pds"
@@ -88,6 +136,12 @@ citation = "NASA PDS GRAIL LGRS RDR, doi:10.17189/1519529."
 
 [[resource]]
 name = "grail_grgm900c"
+artifact_sha256 = "0fe63a0911111635e002496e1eeaca009bfb1e0c4d2b7c268455ef3abd32ee75"
+artifact_size_bytes = 16122166
+git_tree_sha1 = "24b808135bec375c936bea8fb535ad707b5f7b21"
+sha256 = "dab6ab06e0d3d7cbc594ea4bd03151a65534ed5fdf4f147ae38662428c04454e"
+size_bytes = 49574944
+metadata_sha256 = "703e0dcc9006678a80cacc08e7556986dfbe76665d50942368e963e762fc573e"
 url = "https://pds-geosciences.wustl.edu/grail/grail-l-lgrs-5-rdr-v1/grail_1001/shadr/gggrx_0900c_sha.tab"
 metadata_url = "https://pds-geosciences.wustl.edu/grail/grail-l-lgrs-5-rdr-v1/grail_1001/shadr/gggrx_0900c_sha.xml"
 provider = "nasa_pds"
@@ -98,6 +152,12 @@ citation = "NASA PDS GRAIL LGRS RDR, doi:10.17189/1519529."
 
 [[resource]]
 name = "grail_grgm1200a"
+artifact_sha256 = "cdb69f2eba05fcebbd530dc0bd94473972770e9d3523c5e073ac6782fa581d15"
+artifact_size_bytes = 28116933
+git_tree_sha1 = "e1f9e441ba60a11e19fea67bfe234052d8e04253"
+sha256 = "fa04c3dce9376948ad243f3df74144e2602f12d183ea4d179604ed0a79da7ded"
+size_bytes = 88059844
+metadata_sha256 = "afdbf62dd7dbc0448a2d905c4d3ddaeeee6fb2ea16984f956795a406c058a1b6"
 url = "https://pds-geosciences.wustl.edu/grail/grail-l-lgrs-5-rdr-v1/grail_1001/shadr/gggrx_1200a_sha.tab"
 metadata_url = "https://pds-geosciences.wustl.edu/grail/grail-l-lgrs-5-rdr-v1/grail_1001/shadr/gggrx_1200a_sha.xml"
 provider = "nasa_pds"
@@ -108,6 +168,12 @@ citation = "NASA PDS GRAIL LGRS RDR, doi:10.17189/1519529."
 
 [[resource]]
 name = "grail_grgm1200b"
+artifact_sha256 = "9d4c4a78875b44b25bc69126c91b3e16bb2cea695080667760cbe9d2bcf5a1d1"
+artifact_size_bytes = 17555361
+git_tree_sha1 = "7a7ce57564c99531caf68251f8f3d876feff036a"
+sha256 = "4285057bd66f7cbe5bb869ac3149a8d5219cc993e9fe93f3f254551d95d51dd0"
+size_bytes = 88059844
+metadata_sha256 = "6d93f06f8565a1f9682401932676b8db35e6c3a47e10e089dab11e3e055c8af1"
 url = "https://pds-geosciences.wustl.edu/grail/grail-l-lgrs-5-rdr-v1/grail_1001/shadr/gggrx_1200b_sha.tab"
 metadata_url = "https://pds-geosciences.wustl.edu/grail/grail-l-lgrs-5-rdr-v1/grail_1001/shadr/gggrx_1200b_sha.xml"
 provider = "nasa_pds"
@@ -118,6 +184,12 @@ citation = "NASA PDS GRAIL LGRS RDR, doi:10.17189/1519529."
 
 [[resource]]
 name = "grail_grgm1200b_lambda1"
+artifact_sha256 = "91095f916e80089888860c62698fcb74c8c6b90b487ecada0e172c94d82c8b7a"
+artifact_size_bytes = 20151092
+git_tree_sha1 = "83dad04af7223e065b24faf53b3bb221b5fa7e60"
+sha256 = "c9156b8cdce6194a7e41f0abfa8ac60fd70e1d125a1149ea8b74927afd7657d5"
+size_bytes = 88059844
+metadata_sha256 = "2c3b6e25b7be2e5f364935e469c05d38b61533ba22e312240340aa34b84ed627"
 url = "https://pds-geosciences.wustl.edu/grail/grail-l-lgrs-5-rdr-v1/grail_1001/shadr/gggrx_1200b_lambda1_sha.tab"
 metadata_url = "https://pds-geosciences.wustl.edu/grail/grail-l-lgrs-5-rdr-v1/grail_1001/shadr/gggrx_1200b_lambda1_sha.xml"
 provider = "nasa_pds"
@@ -128,6 +200,12 @@ citation = "NASA PDS GRAIL LGRS RDR, doi:10.17189/1519529."
 
 [[resource]]
 name = "grail_grgm1200l"
+artifact_sha256 = "2f47e2ce8c88bca96082194b3864b57d75dc1628f91a5cd2b6393de1bee299be"
+artifact_size_bytes = 14438634
+git_tree_sha1 = "043a819aef00bda283fc583597f879e7d64fe1c3"
+sha256 = "1ed040ce978d5802305fd93b1930a87ed5fcc1571cae2ade9dcf31f902cfb868"
+size_bytes = 87913322
+metadata_sha256 = "3e103362389662952870336ef0ed975ceca2927ea2c65ffd3d6b6088a7aa9091"
 url = "https://pds-geosciences.wustl.edu/grail/grail-l-lgrs-5-rdr-v1/grail_1001/shadr/gggrx_1200l_sha.tab"
 metadata_url = "https://pds-geosciences.wustl.edu/grail/grail-l-lgrs-5-rdr-v1/grail_1001/shadr/gggrx_1200l_sha.xml"
 provider = "nasa_pds"
